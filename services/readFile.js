@@ -1,11 +1,8 @@
-var fs= require('fs');
+const fs = require('fs');
+const util = require('util');
 
-exports.rf = function*(path){
-	// fs.readFile(path, function(err, data){
-	// 	var text  = yield data;
-	// 	console.log(data)
-	// });
-	// var text  = yield path;
-	var text = yield fs.readFile(path);
-	console.log("text**********"+text);
+const readFile = util.promisify(fs.readFile);//node 8.0新增api
+
+exports.rf = function (path) {
+	return fs.readFile(path);
 }

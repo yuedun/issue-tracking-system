@@ -1,4 +1,5 @@
-const router = require('koa-router')()
+const router = require('koa-router')();
+const fs = require('../services/readFile')
 
 router.get('/', async (ctx, next) => {
   await ctx.render('index', {
@@ -17,7 +18,8 @@ router.get('/json', async (ctx, next) => {
 })
 
 router.get('/test', async (ctx, next) => {
-  await ctx.render('test', { title: 'Koa2-Easy' })
+  const data = await fs.rf('npm-debug.log');
+  await ctx.render('test', { title: 'Koa2-Easy',data: data })
 })
 
 module.exports = router
