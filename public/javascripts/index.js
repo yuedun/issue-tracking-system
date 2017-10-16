@@ -1,25 +1,17 @@
-/**
-  项目JS主入口
-  以依赖layui的layer和form模块为例
-**/    
-layui.define(['layer', 'form'], function(exports){
-    //此块内容在被use的时候就执行
-    var layer = layui.layer
-    ,form = layui.form;
-    
-    // layer.msg('Hello World');
-    function a(params) {
-        console.log(">>>>>>>>>>function a")
-    }
-    function b(params) {
-        console.log(">>>>>>>>>>function b")
-    }
-    exports('index', function(){
-        //此块内容被use后择时执行
-        // layer.msg('Hello World');
-        return {
-            a: a,
-            b: b
-        }
-    }); //注意，这里是模块输出的核心，模块名必须和use时的模块名一致
-  });  
+layui.config({
+    base: '/javascripts/' //你存放新模块的目录，注意，不是layui的模块目录
+    , version: false //一般用于更新模块缓存，默认不开启。设为true即让浏览器不缓存。也可以设为一个固定的值，如：201610
+    , debug: true //用于开启调试模式，默认false，如果设为true，则JS模块的节点会保留在页面
+}).use(['element', 'layer', 'login', 'home'], function () {
+    var element = layui.element,
+        layer = layui.layer,
+        login = layui.login,
+        home = layui.home;
+    var aa = new login()
+    aa.a();
+    aa.b();
+    home();
+    element.on('nav(filter)', function (elem) {
+        console.log(elem); //得到当前点击的DOM对象
+    });
+}); //加载入口

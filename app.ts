@@ -15,7 +15,7 @@ const admin = require('./routes/admin')
 onerror(app)
 
 // middlewares
-app.use(async function (ctx, next) {
+app.use(async function (ctx: any, next: Function) {
   ctx.set("Access-Control-Allow-Origin", ctx.request.header.origin)
   ctx.set("Access-Control-Allow-Credentials", true);
   ctx.set("Access-Control-Max-Age", 86400000);
@@ -38,7 +38,7 @@ app.use(views(__dirname + '/views', {
 }))
 
 // logger
-app.use(async function (ctx, next) {
+app.use(async function (ctx: any, next: Function) {
   const start = new Date()
   await next()
   const ms = new Date() - start
