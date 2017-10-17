@@ -7,9 +7,9 @@ const bodyparser = require('koa-bodyparser')
 const logger = require('koa-logger')
 const cors = require('koa2-cors')
 
-const index = require('./routes/index')
-const users = require('./routes/users')
-const admin = require('./routes/admin')
+import { router as index } from './routes/index'
+import { router as users } from './routes/users'
+import { router as admin } from './routes/admin'
 
 // error handler
 onerror(app)
@@ -39,9 +39,9 @@ app.use(views(__dirname + '/views', {
 
 // logger
 app.use(async function (ctx: any, next: Function) {
-  const start = new Date()
+  const start = new Date().getTime()
   await next()
-  const ms = new Date() - start
+  const ms = new Date().getTime() - start;
   console.log(`${ctx.method} ${ctx.url} - ${ms}ms`)
 })
 
@@ -50,4 +50,4 @@ app.use(index.routes(), index.allowedMethods())
 app.use(users.routes(), users.allowedMethods())
 app.use(admin.routes(), admin.allowedMethods())
 
-module.exports = app
+export { app }

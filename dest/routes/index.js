@@ -35,7 +35,9 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 var _this = this;
+Object.defineProperty(exports, "__esModule", { value: true });
 var router = require('koa-router')();
+exports.router = router;
 var fs = require('../services/readFile');
 router.get('/', function (ctx, next) { return __awaiter(_this, void 0, void 0, function () {
     return __generator(this, function (_a) {
@@ -77,5 +79,4 @@ router.get('/test', function (ctx, next) { return __awaiter(_this, void 0, void 
         }
     });
 }); });
-module.exports = router;
 //# sourceMappingURL=index.js.map

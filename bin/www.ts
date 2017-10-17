@@ -4,7 +4,7 @@
  * Module dependencies.
  */
 
-var app = require('../app');
+import { app } from '../app';
 var debug = require('debug')('yuedun:server');
 var http = require('http');
 
@@ -33,7 +33,7 @@ server.on('listening', onListening);
  * Normalize a port into a number, string, or false.
  */
 
-function normalizePort(val) {
+function normalizePort(val: string) {
   var port = parseInt(val, 10);
 
   if (isNaN(port)) {
@@ -53,7 +53,7 @@ function normalizePort(val) {
  * Event listener for HTTP server "error" event.
  */
 
-function onError(error) {
+function onError(error: any) {
   if (error.syscall !== 'listen') {
     throw error;
   }

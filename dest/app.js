@@ -34,17 +34,19 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
+Object.defineProperty(exports, "__esModule", { value: true });
 var Koa = require('koa');
 var app = new Koa();
+exports.app = app;
 var views = require('koa-views');
 var json = require('koa-json');
 var onerror = require('koa-onerror');
 var bodyparser = require('koa-bodyparser');
 var logger = require('koa-logger');
 var cors = require('koa2-cors');
-var index = require('./routes/index');
-var users = require('./routes/users');
-var admin = require('./routes/admin');
+var index_1 = require("./routes/index");
+var users_1 = require("./routes/users");
+var admin_1 = require("./routes/admin");
 // error handler
 onerror(app);
 // middlewares
@@ -85,11 +87,11 @@ app.use(function (ctx, next) {
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
-                    start = new Date();
+                    start = new Date().getTime();
                     return [4 /*yield*/, next()];
                 case 1:
                     _a.sent();
-                    ms = new Date() - start;
+                    ms = new Date().getTime() - start;
                     console.log(ctx.method + " " + ctx.url + " - " + ms + "ms");
                     return [2 /*return*/];
             }
@@ -97,8 +99,7 @@ app.use(function (ctx, next) {
     });
 });
 // routes
-app.use(index.routes(), index.allowedMethods());
-app.use(users.routes(), users.allowedMethods());
-app.use(admin.routes(), admin.allowedMethods());
-module.exports = app;
+app.use(index_1.router.routes(), index_1.router.allowedMethods());
+app.use(users_1.router.routes(), users_1.router.allowedMethods());
+app.use(admin_1.router.routes(), admin_1.router.allowedMethods());
 //# sourceMappingURL=app.js.map
