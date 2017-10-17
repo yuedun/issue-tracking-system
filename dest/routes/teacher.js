@@ -38,18 +38,22 @@ var _this = this;
 Object.defineProperty(exports, "__esModule", { value: true });
 var router = require('koa-router')();
 var fs = require('../services/readFile');
-router.get('/', function (ctx, next) { return __awaiter(_this, void 0, void 0, function () {
-    return __generator(this, function (_a) {
-        switch (_a.label) {
-            case 0: return [4 /*yield*/, ctx.render('index', {
-                    title: 'Hello Koa 2!'
-                })];
-            case 1:
-                _a.sent();
-                return [2 /*return*/];
-        }
+router.prefix('/teacher');
+router.get('/', function (ctx, next) {
+    return __awaiter(this, void 0, void 0, function () {
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0: return [4 /*yield*/, ctx.render('teacher', {
+                        title: 'hello teacher',
+                        body: "<h1>这是讲师APP</h1>"
+                    })];
+                case 1:
+                    _a.sent();
+                    return [2 /*return*/];
+            }
+        });
     });
-}); });
+});
 router.get('/string', function (ctx, next) { return __awaiter(_this, void 0, void 0, function () {
     return __generator(this, function (_a) {
         ctx.body = 'koa2 string';
@@ -79,4 +83,4 @@ router.get('/test', function (ctx, next) { return __awaiter(_this, void 0, void 
     });
 }); });
 exports.default = router;
-//# sourceMappingURL=index.js.map
+//# sourceMappingURL=teacher.js.map

@@ -7,12 +7,13 @@ const bodyparser = require('koa-bodyparser')
 const logger = require('koa-logger')
 const cors = require('koa2-cors')
 
-import { router as index } from './routes/index'
-import { router as users } from './routes/users'
-import { router as admin } from './routes/admin'
+import { default as admin } from './routes/admin'
+import { default as teacher } from './routes/teacher'
+import { default as client } from './routes/client'
+import { default as others } from './routes/other'
 
 // error handler
-onerror(app)
+onerror(app);
 
 // middlewares
 app.use(async function (ctx: any, next: Function) {
@@ -46,8 +47,9 @@ app.use(async function (ctx: any, next: Function) {
 })
 
 // routes
-app.use(index.routes(), index.allowedMethods())
-app.use(users.routes(), users.allowedMethods())
 app.use(admin.routes(), admin.allowedMethods())
+app.use(teacher.routes(), teacher.allowedMethods())
+app.use(client.routes(), admin.allowedMethods())
+app.use(others.routes(), admin.allowedMethods())
 
-export { app }
+export default app;

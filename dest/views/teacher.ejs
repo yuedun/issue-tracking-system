@@ -2,15 +2,7 @@
 <html>
 
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <title>开始使用layui</title>
-  <link rel="stylesheet" href="vendor/layui-v2.1.5/layui/css/layui.css">
-  <style>
-    .layui-col-md4 {
-      border: 1px solid red;
-    }
-  </style>
+  <%include layui-head.ejs%>
 </head>
 
 <body class="layui-layout-body">
@@ -24,15 +16,13 @@
       <div class="layui-container">
         <div class="layui-row">
           <div class="layui-col-md">
-            dsgdf
+            <%-body%>
           </div>
         </div>
       </div>
     </div>
     <!-- 中间内容区 -->
-
-    <script src="vendor/layui-v2.1.5/layui/layui.js"></script>
-    <script src="dist/app.bundle.js"></script>
+    <script src="javascripts/teacher.js"></script>
 </body>
 
 </html>

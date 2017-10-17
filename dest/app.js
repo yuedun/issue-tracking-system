@@ -37,16 +37,16 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var Koa = require('koa');
 var app = new Koa();
-exports.app = app;
 var views = require('koa-views');
 var json = require('koa-json');
 var onerror = require('koa-onerror');
 var bodyparser = require('koa-bodyparser');
 var logger = require('koa-logger');
 var cors = require('koa2-cors');
-var index_1 = require("./routes/index");
-var users_1 = require("./routes/users");
 var admin_1 = require("./routes/admin");
+var teacher_1 = require("./routes/teacher");
+var client_1 = require("./routes/client");
+var other_1 = require("./routes/other");
 // error handler
 onerror(app);
 // middlewares
@@ -99,7 +99,9 @@ app.use(function (ctx, next) {
     });
 });
 // routes
-app.use(index_1.router.routes(), index_1.router.allowedMethods());
-app.use(users_1.router.routes(), users_1.router.allowedMethods());
-app.use(admin_1.router.routes(), admin_1.router.allowedMethods());
+app.use(admin_1.default.routes(), admin_1.default.allowedMethods());
+app.use(teacher_1.default.routes(), teacher_1.default.allowedMethods());
+app.use(client_1.default.routes(), admin_1.default.allowedMethods());
+app.use(other_1.default.routes(), admin_1.default.allowedMethods());
+exports.default = app;
 //# sourceMappingURL=app.js.map

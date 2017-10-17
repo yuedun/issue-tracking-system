@@ -1,8 +1,18 @@
-body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+.system-description{
+  height: 160px;
+  text-align: center;
+  padding: 0 140px;
+}
+.system-description p{
+  font-size: 24px;
 }
 
-a {
-  color: #00B7FF;
+.entry{
+  height: 200px;
+  text-align: center;
+  vertical-align: middle;
+  line-height: 200px;
+}
+.entry:hover{
+  -moz-box-shadow:2px 2px 5px #333333; -webkit-box-shadow:2px 2px 5px #333333; box-shadow:2px 2px 5px #333333;
 }

@@ -12,7 +12,7 @@ var port = normalizePort(process.env.PORT || '3000');
 /**
  * Create HTTP server.
  */
-var server = http.createServer(app_1.app.callback());
+var server = http.createServer(app_1.default.callback());
 /**
  * Listen on provided port, on all network interfaces.
  */
