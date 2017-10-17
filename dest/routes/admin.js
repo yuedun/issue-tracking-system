@@ -35,7 +35,9 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var router = require('koa-router')();
+// const router = require('koa-router')()
+var Router = require("koa-router");
+var router = new Router();
 router.prefix('/admin');
 router.get('/', function (ctx, next) {
     return __awaiter(this, void 0, void 0, function () {

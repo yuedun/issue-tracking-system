@@ -35,8 +35,10 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var Koa = require('koa');
+var Koa = require("koa");
 var app = new Koa();
+var Router = require("koa-router");
+var router = new Router();
 var views = require('koa-views');
 var json = require('koa-json');
 var onerror = require('koa-onerror');
@@ -99,9 +101,9 @@ app.use(function (ctx, next) {
     });
 });
 // routes
-app.use(admin_1.default.routes(), admin_1.default.allowedMethods());
-app.use(teacher_1.default.routes(), teacher_1.default.allowedMethods());
-app.use(client_1.default.routes(), admin_1.default.allowedMethods());
-app.use(other_1.default.routes(), admin_1.default.allowedMethods());
+app.use(admin_1.default.routes());
+app.use(teacher_1.default.routes());
+app.use(client_1.default.routes());
+app.use(other_1.default.routes());
 exports.default = app;
 //# sourceMappingURL=app.js.map
