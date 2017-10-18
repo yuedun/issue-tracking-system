@@ -45,10 +45,13 @@ var onerror = require('koa-onerror');
 var bodyparser = require('koa-bodyparser');
 var logger = require('koa-logger');
 var cors = require('koa2-cors');
-var admin_1 = require("./routes/admin");
-var teacher_1 = require("./routes/teacher");
-var client_1 = require("./routes/client");
-var other_1 = require("./routes/other");
+var index_1 = require("./routes/index");
+// import { default as teacher } from './routes/teacher'
+// import { default as client } from './routes/client'
+// import { default as others } from './routes/other'
+/**
+ * app.env defaulting to the NODE_ENV or "development"
+ */
 // error handler
 onerror(app);
 // middlewares
@@ -100,10 +103,31 @@ app.use(function (ctx, next) {
         });
     });
 });
+/**
+ * next参数返回的是Promise，所以用await方式执行
+ */
+app.use(function (ctx, next) {
+    return __awaiter(this, void 0, void 0, function () {
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0:
+                    //url重写：当url为"/"时，将url重写为"/admin"，
+                    //相当于请求”/admin”，有redirect的作用，但不是重定向，浏览器url还是“/”
+                    if (ctx.url == '/') {
+                        ctx.url = '/admin';
+                    }
+                    return [4 /*yield*/, next()];
+                case 1:
+                    _a.sent();
+                    return [2 /*return*/];
+            }
+        });
+    });
+});
 // routes
-app.use(admin_1.default.routes());
-app.use(teacher_1.default.routes());
-app.use(client_1.default.routes());
-app.use(other_1.default.routes());
+app.use(index_1.default.routes());
+// app.use(teacher.routes())
+// app.use(client.routes())
+// app.use(others.routes())
 exports.default = app;
 //# sourceMappingURL=app.js.map
