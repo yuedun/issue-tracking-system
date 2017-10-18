@@ -9,11 +9,14 @@ const bodyparser = require('koa-bodyparser')
 const logger = require('koa-logger')
 const cors = require('koa2-cors')
 
-import { default as admin } from './routes/admin'
-import { default as teacher } from './routes/teacher'
-import { default as client } from './routes/client'
-import { default as others } from './routes/other'
+import { default as index } from './routes/index'
+// import { default as teacher } from './routes/teacher'
+// import { default as client } from './routes/client'
+// import { default as others } from './routes/other'
 
+/**
+ * app.env defaulting to the NODE_ENV or "development"
+ */
 // error handler
 onerror(app);
 
@@ -47,10 +50,21 @@ app.use(async function (ctx: any, next: Function) {
 	const ms = new Date().getTime() - start;
 	console.log(`${ctx.method} ${ctx.url} - ${ms}ms`)
 })
+/**
+ * next参数返回的是Promise，所以用await方式执行
+ */
+app.use(async function(ctx: any, next: Function){
+	//url重写：当url为"/"时，将url重写为"/admin"，
+	//相当于请求”/admin”，有redirect的作用，但不是重定向，浏览器url还是“/”
+	if (ctx.url == '/') {
+		ctx.url = '/admin'
+	}
+	await next();
+});
 // routes
-app.use(admin.routes())
-app.use(teacher.routes())
-app.use(client.routes())
-app.use(others.routes())
+app.use(index.routes())
+// app.use(teacher.routes())
+// app.use(client.routes())
+// app.use(others.routes())
 
 export default app;

@@ -34,49 +34,143 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-var _this = this;
 Object.defineProperty(exports, "__esModule", { value: true });
-var router = require('koa-router')();
-var fs = require('../services/readFile');
-router.get('/', function (ctx, next) { return __awaiter(_this, void 0, void 0, function () {
-    return __generator(this, function (_a) {
-        switch (_a.label) {
-            case 0: return [4 /*yield*/, ctx.render('index', {
-                    title: 'Hello Koa 2!'
-                })];
-            case 1:
-                _a.sent();
-                return [2 /*return*/];
-        }
+// const router = require('koa-router')()
+var Router = require("koa-router");
+var router = new Router();
+var debug = require('debug')('yuedun:admin');
+router.get('/admin', function (ctx, next) {
+    return __awaiter(this, void 0, void 0, function () {
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0:
+                    debug(">>>admin输出");
+                    return [4 /*yield*/, ctx.render('admin', {
+                            title: 'hello admin',
+                            body: "<h1>这是管理平台</h1>"
+                        })];
+                case 1:
+                    _a.sent();
+                    return [2 /*return*/];
+            }
+        });
     });
-}); });
-router.get('/string', function (ctx, next) { return __awaiter(_this, void 0, void 0, function () {
-    return __generator(this, function (_a) {
-        ctx.body = 'koa2 string';
-        return [2 /*return*/];
+});
+router.get('/teacher', function (ctx, next) {
+    return __awaiter(this, void 0, void 0, function () {
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0:
+                    debug(">>>teacher输出");
+                    return [4 /*yield*/, ctx.render('teacher', {
+                            title: 'hello teacher',
+                            body: "<h1>这是老师APP</h1>"
+                        })];
+                case 1:
+                    _a.sent();
+                    return [2 /*return*/];
+            }
+        });
     });
-}); });
-router.get('/json', function (ctx, next) { return __awaiter(_this, void 0, void 0, function () {
-    return __generator(this, function (_a) {
-        ctx.body = {
-            title: 'koa2 json'
-        };
-        return [2 /*return*/];
+});
+router.get('/client', function (ctx, next) {
+    return __awaiter(this, void 0, void 0, function () {
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0:
+                    debug(">>>client输出");
+                    return [4 /*yield*/, ctx.render('client', {
+                            title: 'hello client',
+                            body: "<h1>这是教学客户端</h1>"
+                        })];
+                case 1:
+                    _a.sent();
+                    return [2 /*return*/];
+            }
+        });
     });
-}); });
-router.get('/test', function (ctx, next) { return __awaiter(_this, void 0, void 0, function () {
-    var data;
-    return __generator(this, function (_a) {
-        switch (_a.label) {
-            case 0: return [4 /*yield*/, fs.rf('npm-debug.log')];
-            case 1:
-                data = _a.sent();
-                return [4 /*yield*/, ctx.render('test', { title: 'Koa2-Easy', data: data })];
-            case 2:
-                _a.sent();
-                return [2 /*return*/];
-        }
+});
+router.get('/others/a', function (ctx, next) {
+    return __awaiter(this, void 0, void 0, function () {
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0:
+                    debug(">>>admin输出");
+                    return [4 /*yield*/, ctx.render('admin', {
+                            title: 'hello admin',
+                            body: "<h1>这是管理平台</h1>"
+                        })];
+                case 1:
+                    _a.sent();
+                    return [2 /*return*/];
+            }
+        });
     });
-}); });
+});
+router.get('/others/b', function (ctx, next) {
+    return __awaiter(this, void 0, void 0, function () {
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0:
+                    debug(">>>admin输出");
+                    return [4 /*yield*/, ctx.render('admin', {
+                            title: 'hello admin',
+                            body: "<h1>这是管理平台</h1>"
+                        })];
+                case 1:
+                    _a.sent();
+                    return [2 /*return*/];
+            }
+        });
+    });
+});
+router.get('/others/c', function (ctx, next) {
+    return __awaiter(this, void 0, void 0, function () {
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0:
+                    debug(">>>admin输出");
+                    return [4 /*yield*/, ctx.render('admin', {
+                            title: 'hello admin',
+                            body: "<h1>这是管理平台</h1>"
+                        })];
+                case 1:
+                    _a.sent();
+                    return [2 /*return*/];
+            }
+        });
+    });
+});
+router.get('/admin/help', function (ctx, next) {
+    return __awaiter(this, void 0, void 0, function () {
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0:
+                    debug(">>>ask-for-help", "dgds");
+                    return [4 /*yield*/, ctx.render('ask-for-help', {
+                            title: 'ask-for-help',
+                            body: "<h1>这是管理平台</h1>"
+                        })];
+                case 1:
+                    _a.sent();
+                    return [2 /*return*/];
+            }
+        });
+    });
+});
+/**
+ * 创建协助
+ */
+router.post('/admin/help', function (ctx, next) {
+    return __awaiter(this, void 0, void 0, function () {
+        return __generator(this, function (_a) {
+            debug(">>>post help", ctx.request.body);
+            ctx.body = {
+                msg: "创建成功"
+            };
+            return [2 /*return*/];
+        });
+    });
+});
 exports.default = router;
 //# sourceMappingURL=index.js.map
