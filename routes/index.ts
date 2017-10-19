@@ -1,7 +1,9 @@
 // const router = require('koa-router')()
 import * as Router from 'koa-router';
 const router = new Router();
-var debug = require('debug')('yuedun:admin');
+const debug = require('debug')('yuedun:admin');
+import { select } from '../utils/db-connection';
+import { default as AssistanceModel, ModelAttributes as AssistancePOJO, ModelInstance as AssistanceInstance } from '../models/assistance-model';
 
 router.get('/admin', async function (ctx: any, next: Function) {
 	debug(">>>admin输出");
@@ -53,9 +55,12 @@ router.get('/others/c', async function (ctx: any, next: Function) {
 
 router.get('/admin/help', async function (ctx: any, next: Function) {
 	debug(">>>ask-for-help", "dgds");
+	let assistance = await AssistanceModel.findAll();
+	debug(JSON.stringify(assistance))
 	await ctx.render('ask-for-help', {
 		title: 'ask-for-help',
-		body: "<h1>这是管理平台</h1>"
+		body: "<h1>这是管理平台</h1>",
+		assistance: assistance,
 	})
 })
 
@@ -63,9 +68,14 @@ router.get('/admin/help', async function (ctx: any, next: Function) {
  * 创建协助
  */
 router.post('/admin/help', async function (ctx: any, next: Function) {
-	debug(">>>post help", ctx.request.body);
+	let args = ctx.request.body;
+	let assistance = await AssistanceModel.create({
+		title: args.title,
+		description: args.desc
+	})
 	ctx.body = {
-		msg: "创建成功"
+		msg: "创建成功",
+		assistance: assistance
 	}
 })
 

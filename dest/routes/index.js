@@ -39,6 +39,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var Router = require("koa-router");
 var router = new Router();
 var debug = require('debug')('yuedun:admin');
+var assistance_model_1 = require("../models/assistance-model");
 router.get('/admin', function (ctx, next) {
     return __awaiter(this, void 0, void 0, function () {
         return __generator(this, function (_a) {
@@ -143,15 +144,21 @@ router.get('/others/c', function (ctx, next) {
 });
 router.get('/admin/help', function (ctx, next) {
     return __awaiter(this, void 0, void 0, function () {
+        var assistance;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
                     debug(">>>ask-for-help", "dgds");
+                    return [4 /*yield*/, assistance_model_1.default.findAll()];
+                case 1:
+                    assistance = _a.sent();
+                    debug(JSON.stringify(assistance));
                     return [4 /*yield*/, ctx.render('ask-for-help', {
                             title: 'ask-for-help',
-                            body: "<h1>这是管理平台</h1>"
+                            body: "<h1>这是管理平台</h1>",
+                            assistance: assistance,
                         })];
-                case 1:
+                case 2:
                     _a.sent();
                     return [2 /*return*/];
             }
@@ -163,12 +170,23 @@ router.get('/admin/help', function (ctx, next) {
  */
 router.post('/admin/help', function (ctx, next) {
     return __awaiter(this, void 0, void 0, function () {
+        var args, assistance;
         return __generator(this, function (_a) {
-            debug(">>>post help", ctx.request.body);
-            ctx.body = {
-                msg: "创建成功"
-            };
-            return [2 /*return*/];
+            switch (_a.label) {
+                case 0:
+                    args = ctx.request.body;
+                    return [4 /*yield*/, assistance_model_1.default.create({
+                            title: args.title,
+                            description: args.desc
+                        })];
+                case 1:
+                    assistance = _a.sent();
+                    ctx.body = {
+                        msg: "创建成功",
+                        assistance: assistance
+                    };
+                    return [2 /*return*/];
+            }
         });
     });
 });
