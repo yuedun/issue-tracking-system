@@ -17,37 +17,53 @@
         <div class="layui-row">
           <div class="layui-col-md12">
             <div class="system-description">
-              <p>高效率的模块建站工具、全自由度的网页前端设计工具、可视化的小程序UI设计工具，三款专业工具满足您不同阶段的设计需求</p>
+              <p>业务适用方发起请求协助，可指定一个或多个协助人，问题会发送邮件和短信至被请求协助</p>
             </div>
           </div>
         </div>
-        <form class="layui-form" action="">
-          <div class="layui-form-item">
-            <label class="layui-form-label">标题</label>
-            <div class="layui-input-block">
-              <input type="text" name="title" id="title" required lay-verify="required" placeholder="请输入标题" autocomplete="off" class="layui-input">
-            </div>
-          </div>
-          <div class="layui-form-item layui-form-text">
-            <label class="layui-form-label">问题描述</label>
-            <div class="layui-input-block">
-              <textarea id="desc" name="desc" placeholder="请输入内容" class="layui-textarea"></textarea>
-            </div>
-          </div>
-          <div class="layui-form-item">
-            <div class="layui-input-block">
-              <button class="layui-btn J-submit" lay-submit lay-filter="formSubmit">立即提交</button>
-            </div>
-          </div>
-        </form>
         <div class="layui-row">
-          <div class="layui-col-md12">
-            <!-- <br>----
-            <% assistance.forEach(function(item, index){%>
-              <p>
-                <%=item.title%>
-              </p>
-              <%})%> -->
+          <div class="layui-col-md8 layui-col-md-offset2">
+            <form class="layui-form" action="">
+              <input type="hidden", name="user_agent" value="<%= userAgent%>">
+              <div class="layui-form-item">
+                <label class="layui-form-label">标题<span class="required">*</span></label>
+                <div class="layui-input-block">
+                  <input type="text" name="title" id="title" required lay-verify="required" placeholder="请输入标题" autocomplete="off" class="layui-input">
+                </div>
+              </div>
+              <div class="layui-form-item layui-form-text">
+                <label class="layui-form-label">问题描述<span class="required">*</span></label>
+                <div class="layui-input-block">
+                  <textarea id="desc" name="desc" required lay-verify="required" placeholder="请输入内容" class="layui-textarea"></textarea>
+                </div>
+              </div>
+              <div class="layui-form-item">
+                <div class="layui-inline">
+                  <label class="layui-form-label">协助人</label>
+                  <div class="layui-input-inline" style="width: 100px;">
+                    <input type="text" name="first_help_people" placeholder="第一协助人" autocomplete="off" class="layui-input">
+                  </div>
+                  <div class="layui-input-inline" style="width: 100px;">
+                    <input type="text" name="second_help_people" placeholder="第二协助人" autocomplete="off" class="layui-input">
+                  </div>
+                </div>
+              </div>
+              <div class="layui-form-item">
+                <label class="layui-form-label">问题来源页面<span class="required">*</span></label>
+                <div class="layui-input-block">
+                  <input type="text" name="referer" id="referer" value="<%= referer%>" required lay-verify="required" placeholder="问题来源页面url" autocomplete="off" class="layui-input">
+                </div>
+              </div>
+              <div class="layui-form-item">
+                <div class="layui-input-block">
+                  <button class="layui-btn J-submit" lay-submit lay-filter="formSubmit">立即提交</button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+        <div class="layui-row">
+          <div class="layui-col-md8 layui-col-md-offset2">
             <ul class="layui-timeline">
               <% assistance.forEach(function(item, index){%>
               <li class="layui-timeline-item">
@@ -55,9 +71,7 @@
                 <div class="layui-timeline-content layui-text">
                   <h3 class="layui-timeline-title"><%=item.title%></h3>
                   <p>
-                    layui 2.0 的一切准备工作似乎都已到位。发布之弦，一触即发。
-                    <br>不枉近百个日日夜夜与之为伴。因小而大，因弱而强。
-                    <br>无论它能走多远，抑或如何支撑？至少我曾倾注全心，无怨无悔 <i class="layui-icon"></i>
+                    <%- item.description%>
                   </p>
                 </div>
               </li>
@@ -83,9 +97,15 @@
         form.on('submit(formSubmit)', function(data){
           console.log(JSON.stringify(data.field))
           // return false;
-          var title = data.field.title;
+          var datas = data.field;
           var content = layedit.getContent(editnum);
-          $.post("/admin/help", { title: title, desc: content }, function (data) {
+          $.post("/admin/help", { 
+            title: datas.title, 
+            desc: content,
+            first_help_people: datas.first_help_people,
+            second_help_people: datas.second_help_people,
+            referer: datas.referer
+          }, function (data) {
             layer.msg(data.msg);
           })
           return false;

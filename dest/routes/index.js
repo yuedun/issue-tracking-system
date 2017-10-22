@@ -35,11 +35,13 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-// const router = require('koa-router')()
 var Router = require("koa-router");
 var router = new Router();
 var debug = require('debug')('yuedun:admin');
 var assistance_model_1 = require("../models/assistance-model");
+/**
+ * render 函数是koa-views中间件赋予ctx的，是一个promise函数，所以需要用await修饰
+ */
 router.get('/admin', function (ctx, next) {
     return __awaiter(this, void 0, void 0, function () {
         return __generator(this, function (_a) {
@@ -142,20 +144,25 @@ router.get('/others/c', function (ctx, next) {
         });
     });
 });
+/**
+ * 进入协助申请页面
+ */
 router.get('/admin/help', function (ctx, next) {
     return __awaiter(this, void 0, void 0, function () {
-        var assistance;
+        var userAgent, referer, assistance;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
-                    debug(">>>ask-for-help", "dgds");
+                    userAgent = ctx.req.headers['user-agent'];
+                    referer = ctx.req.headers['referer'];
+                    debug(">>>>>>>>>>>ask-for-help", userAgent, referer);
                     return [4 /*yield*/, assistance_model_1.default.findAll()];
                 case 1:
                     assistance = _a.sent();
-                    debug(JSON.stringify(assistance));
                     return [4 /*yield*/, ctx.render('ask-for-help', {
-                            title: 'ask-for-help',
-                            body: "<h1>这是管理平台</h1>",
+                            title: '申请协助',
+                            userAgent: userAgent,
+                            referer: referer,
                             assistance: assistance,
                         })];
                 case 2:
@@ -175,9 +182,14 @@ router.post('/admin/help', function (ctx, next) {
             switch (_a.label) {
                 case 0:
                     args = ctx.request.body;
+                    debug(">>>>>>>>>>>>>post", args);
                     return [4 /*yield*/, assistance_model_1.default.create({
                             title: args.title,
-                            description: args.desc
+                            description: args.desc,
+                            first_help_people: args.first_help_people,
+                            second_help_people: args.second_help_people,
+                            referer: args.referer,
+                            user_agent: args.user_agent
                         })];
                 case 1:
                     assistance = _a.sent();

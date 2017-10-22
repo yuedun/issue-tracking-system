@@ -6,9 +6,12 @@ import sequelize from '../utils/db-connection';
  */
 export interface ModelAttributes {
     id?: number;
-    title?:string;
-    abcDef?: string;
+    title?: string;
     description?: string;
+    first_help_people?: string;
+    second_help_people?: string;
+    user_agent?: string;
+    referer?: string;
 }
 
 export interface ModelInstance
@@ -18,7 +21,10 @@ var Model = sequelize.define<ModelInstance, ModelAttributes>(
     'Assistance', {
         title: Sequelize.STRING,
         description: Sequelize.STRING,
-        abcDef: Sequelize.STRING
+        first_help_people: Sequelize.STRING,
+        second_help_people: Sequelize.STRING,
+        user_agent:Sequelize.STRING,
+        referer: Sequelize.STRING,
     }, {
         underscored: true,
         tableName: 'assistance',
@@ -27,6 +33,6 @@ var Model = sequelize.define<ModelInstance, ModelAttributes>(
     }
 );
 
-Model.sync({alter: true});
+Model.sync({ alter: true });
 
 export default Model;

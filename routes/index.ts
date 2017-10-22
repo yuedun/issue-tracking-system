@@ -1,10 +1,15 @@
-// const router = require('koa-router')()
 import * as Router from 'koa-router';
-const router = new Router();
+const router = new Router(
+	// {
+	// 	prefix: "/index"
+	// }
+);
 const debug = require('debug')('yuedun:admin');
 import { select } from '../utils/db-connection';
 import { default as AssistanceModel, ModelAttributes as AssistancePOJO, ModelInstance as AssistanceInstance } from '../models/assistance-model';
-
+/**
+ * render 函数是koa-views中间件赋予ctx的，是一个promise函数，所以需要用await修饰
+ */
 router.get('/admin', async function (ctx: any, next: Function) {
 	debug(">>>admin输出");
 	await ctx.render('admin', {
@@ -53,14 +58,19 @@ router.get('/others/c', async function (ctx: any, next: Function) {
 	})
 })
 
+/**
+ * 进入协助申请页面
+ */
 router.get('/admin/help', async function (ctx: any, next: Function) {
-	debug(">>>ask-for-help", "dgds");
+	let userAgent = ctx.req.headers['user-agent'];
+	let referer = ctx.req.headers['referer'];
+	debug(">>>>>>>>>>>ask-for-help", userAgent, referer);
 	let assistance = await AssistanceModel.findAll();
-	debug(JSON.stringify(assistance))
 	await ctx.render('ask-for-help', {
-		title: 'ask-for-help',
-		body: "<h1>这是管理平台</h1>",
-		assistance: assistance,
+		title: '申请协助',
+		userAgent,
+		referer,
+		assistance,
 	})
 })
 
@@ -69,9 +79,14 @@ router.get('/admin/help', async function (ctx: any, next: Function) {
  */
 router.post('/admin/help', async function (ctx: any, next: Function) {
 	let args = ctx.request.body;
+	debug(">>>>>>>>>>>>>post",args)
 	let assistance = await AssistanceModel.create({
 		title: args.title,
-		description: args.desc
+		description: args.desc,
+		first_help_people: args.first_help_people,
+		second_help_people: args.second_help_people,
+		referer: args.referer,
+		user_agent: args.user_agent
 	})
 	ctx.body = {
 		msg: "创建成功",

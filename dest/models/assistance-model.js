@@ -6,7 +6,10 @@ var db_connection_1 = require("../utils/db-connection");
 var Model = db_connection_1.default.define('Assistance', {
     title: Sequelize.STRING,
     description: Sequelize.STRING,
-    abcDef: Sequelize.STRING
+    first_help_people: Sequelize.STRING,
+    second_help_people: Sequelize.STRING,
+    user_agent: Sequelize.STRING,
+    referer: Sequelize.STRING,
 }, {
     underscored: true,
     tableName: 'assistance',

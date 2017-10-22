@@ -10,7 +10,7 @@ const logger = require('koa-logger')
 const cors = require('koa2-cors')
 
 import { default as index } from './routes/index'
-// import { default as teacher } from './routes/teacher'
+import { default as teacher } from './routes/teacher'
 // import { default as client } from './routes/client'
 // import { default as others } from './routes/other'
 
@@ -63,7 +63,7 @@ app.use(async function(ctx: any, next: Function){
 });
 // routes
 app.use(index.routes())
-// app.use(teacher.routes())
+app.use(teacher.routes())
 // app.use(client.routes())
 // app.use(others.routes())
 
