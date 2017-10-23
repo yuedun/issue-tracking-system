@@ -3,7 +3,7 @@
 /**
  * Module dependencies.
  */
-
+import 'source-map-support/register';
 import app from '../app';
 var debug = require('debug')('yuedun:server');
 var http = require('http');
@@ -86,5 +86,5 @@ function onListening() {
   var bind = typeof addr === 'string'
     ? 'pipe ' + addr
     : 'port ' + addr.port;
-  debug('Listening on ' + bind);
+  debug(new Date() + 'Listening on ' + bind);
 }

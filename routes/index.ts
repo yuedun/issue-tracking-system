@@ -7,6 +7,7 @@ const router = new Router(
 const debug = require('debug')('yuedun:admin');
 import { select } from '../utils/db-connection';
 import { default as AssistanceModel, ModelAttributes as AssistancePOJO, ModelInstance as AssistanceInstance } from '../models/assistance-model';
+import { default as AssistancePeopleModel, ModelAttributes as AssistancePeoplePOJO, ModelInstance as AssistancePeopleInstance } from '../models/assistance-people-model';
 /**
  * render 函数是koa-views中间件赋予ctx的，是一个promise函数，所以需要用await修饰
  */
@@ -65,12 +66,13 @@ router.get('/admin/help', async function (ctx: any, next: Function) {
 	let userAgent = ctx.req.headers['user-agent'];
 	let referer = ctx.req.headers['referer'];
 	debug(">>>>>>>>>>>ask-for-help", userAgent, referer);
-	let assistance = await AssistanceModel.findAll();
+	let assistancies = await AssistanceModel.findAll();
+	let assistancePeople = await AssistancePeopleModel.findAll();
 	await ctx.render('ask-for-help', {
 		title: '申请协助',
 		userAgent,
 		referer,
-		assistance,
+		assistancies,
 	})
 })
 
@@ -86,7 +88,9 @@ router.post('/admin/help', async function (ctx: any, next: Function) {
 		first_help_people: args.first_help_people,
 		second_help_people: args.second_help_people,
 		referer: args.referer,
-		user_agent: args.user_agent
+		user_agent: args.user_agent,
+		user_id: 1,
+		state: 0
 	})
 	ctx.body = {
 		msg: "创建成功",

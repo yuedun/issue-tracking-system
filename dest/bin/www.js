@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+require("source-map-support/register");
 var app_1 = require("../app");
 var debug = require('debug')('yuedun:server');
 var http = require('http');
@@ -66,6 +67,6 @@ function onListening() {
     var bind = typeof addr === 'string'
         ? 'pipe ' + addr
         : 'port ' + addr.port;
-    debug('Listening on ' + bind);
+    debug(new Date() + 'Listening on ' + bind);
 }
 //# sourceMappingURL=www.js.map

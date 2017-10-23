@@ -39,6 +39,7 @@ var Router = require("koa-router");
 var router = new Router();
 var debug = require('debug')('yuedun:admin');
 var assistance_model_1 = require("../models/assistance-model");
+var assistance_people_model_1 = require("../models/assistance-people-model");
 /**
  * render 函数是koa-views中间件赋予ctx的，是一个promise函数，所以需要用await修饰
  */
@@ -149,7 +150,7 @@ router.get('/others/c', function (ctx, next) {
  */
 router.get('/admin/help', function (ctx, next) {
     return __awaiter(this, void 0, void 0, function () {
-        var userAgent, referer, assistance;
+        var userAgent, referer, assistancies, assistancePeople;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
@@ -158,14 +159,17 @@ router.get('/admin/help', function (ctx, next) {
                     debug(">>>>>>>>>>>ask-for-help", userAgent, referer);
                     return [4 /*yield*/, assistance_model_1.default.findAll()];
                 case 1:
-                    assistance = _a.sent();
+                    assistancies = _a.sent();
+                    return [4 /*yield*/, assistance_people_model_1.default.findAll()];
+                case 2:
+                    assistancePeople = _a.sent();
                     return [4 /*yield*/, ctx.render('ask-for-help', {
                             title: '申请协助',
                             userAgent: userAgent,
                             referer: referer,
-                            assistance: assistance,
+                            assistancies: assistancies,
                         })];
-                case 2:
+                case 3:
                     _a.sent();
                     return [2 /*return*/];
             }
@@ -189,7 +193,9 @@ router.post('/admin/help', function (ctx, next) {
                             first_help_people: args.first_help_people,
                             second_help_people: args.second_help_people,
                             referer: args.referer,
-                            user_agent: args.user_agent
+                            user_agent: args.user_agent,
+                            user_id: 1,
+                            state: 0
                         })];
                 case 1:
                     assistance = _a.sent();

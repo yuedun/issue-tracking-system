@@ -22,7 +22,7 @@
           </div>
         </div>
         <div class="layui-row">
-          <div class="layui-col-md8 layui-col-md-offset2">
+          <div class="layui-col-md9 layui-col-md-offset1">
             <form class="layui-form" action="">
               <input type="hidden", name="user_agent" value="<%= userAgent%>">
               <div class="layui-form-item">
@@ -38,13 +38,32 @@
                 </div>
               </div>
               <div class="layui-form-item">
+                <label class="layui-form-label">紧急程度</label>
+                <div class="layui-input-block">
+                  <input type="radio" name="urgency_level" value="0" title="2小时内解决">
+                  <input type="radio" name="urgency_level" value="1" title="4小时内解决" checked>
+                  <input type="radio" name="urgency_level" value="2" title="今日内解决">
+                  <input type="radio" name="urgency_level" value="3" title="明日内解决">
+                </div>
+              </div>
+              <div class="layui-form-item">
                 <div class="layui-inline">
                   <label class="layui-form-label">协助人</label>
                   <div class="layui-input-inline" style="width: 100px;">
-                    <input type="text" name="first_help_people" placeholder="第一协助人" autocomplete="off" class="layui-input">
+                    <select name="first_help_people" lay-verify="" lay-search>
+                      <option value="011">第一协助人</option>
+                      <option value="010">layer</option>
+                      <option value="021">form</option>
+                      <option value="0571">layim</option>
+                    </select>
                   </div>
                   <div class="layui-input-inline" style="width: 100px;">
-                    <input type="text" name="second_help_people" placeholder="第二协助人" autocomplete="off" class="layui-input">
+                    <select name="second_help_people" lay-verify="" lay-search>
+                      <option value="011">第二协助人</option>
+                      <option value="010">layer</option>
+                      <option value="021">form</option>
+                      <option value="0571">layim</option>
+                    </select>
                   </div>
                 </div>
               </div>
@@ -63,7 +82,7 @@
           </div>
         </div>
         <div class="layui-row">
-          <div class="layui-col-md8 layui-col-md-offset2">
+          <div class="layui-col-md9 layui-col-md-offset1">
             <ul class="layui-timeline">
               <% assistance.forEach(function(item, index){%>
               <li class="layui-timeline-item">
