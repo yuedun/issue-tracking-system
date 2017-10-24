@@ -9,7 +9,10 @@ var db_connection_1 = require("../utils/db-connection");
 var Model = db_connection_1.default.define('AssistancePeople', {
     user_name: Sequelize.STRING,
     mobile: Sequelize.STRING,
-    email: Sequelize.STRING,
+    email: {
+        type: Sequelize.STRING,
+        validate: { isEmail: true }
+    },
     superior: Sequelize.INTEGER,
     in_charge_of: Sequelize.STRING,
     is_main: {

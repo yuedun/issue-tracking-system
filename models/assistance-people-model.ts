@@ -20,7 +20,10 @@ var Model = sequelize.define<ModelInstance, ModelAttributes>(
     'AssistancePeople', {
         user_name: Sequelize.STRING,
         mobile: Sequelize.STRING,
-        email: Sequelize.STRING,
+        email: {
+            type: Sequelize.STRING,
+            validate: { isEmail: true }
+        },
         superior: Sequelize.INTEGER,//上级主管
         in_charge_of: Sequelize.STRING,//负责的功能，字符串：逗号分割
         is_main: {

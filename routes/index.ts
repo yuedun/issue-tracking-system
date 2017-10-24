@@ -73,6 +73,7 @@ router.get('/admin/help', async function (ctx: any, next: Function) {
 		userAgent,
 		referer,
 		assistancies,
+		assistancePeople,
 	})
 })
 
@@ -81,7 +82,7 @@ router.get('/admin/help', async function (ctx: any, next: Function) {
  */
 router.post('/admin/help', async function (ctx: any, next: Function) {
 	let args = ctx.request.body;
-	debug(">>>>>>>>>>>>>post",args)
+	debug(">>>>>>>>>>>>>post", args)
 	let assistance = await AssistanceModel.create({
 		title: args.title,
 		description: args.desc,
@@ -95,6 +96,45 @@ router.post('/admin/help', async function (ctx: any, next: Function) {
 	ctx.body = {
 		msg: "创建成功",
 		assistance: assistance
+	}
+})
+
+/**
+ * 创建协助人
+ */
+router.post('/admin/assitance-people', async function (ctx: any, next: Function) {
+	let args = ctx.request.body;
+	debug(">>>>>>>>>>>>>post assistance people:", args)
+	let assistancePeople = await AssistancePeopleModel.create({
+		user_name: args.user_name,
+		mobile: args.mobile,
+		email: args.email,
+		in_charge_of: args.in_charge_of,
+		is_main: args.is_main,
+	})
+	ctx.body = {
+		msg: "创建成功",
+		assistancePeople
+	}
+})
+
+/**
+ * 修改协助人
+ */
+router.patch('/admin/assitance-people', async function (ctx: any, next: Function) {
+	let args = ctx.request.body;
+	debug(">>>>>>>>>>>>>post assistance people:", args)
+	let assistancePeople = await AssistancePeopleModel.update({
+		user_name: args.user_name,
+		mobile: args.mobile,
+		email: args.email,
+		in_charge_of: args.in_charge_of
+	}, {
+			where: { id: 1 }
+		})
+	ctx.body = {
+		msg: "修改成功",
+		assistancePeople
 	}
 })
 

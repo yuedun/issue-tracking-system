@@ -168,6 +168,7 @@ router.get('/admin/help', function (ctx, next) {
                             userAgent: userAgent,
                             referer: referer,
                             assistancies: assistancies,
+                            assistancePeople: assistancePeople,
                         })];
                 case 3:
                     _a.sent();
@@ -202,6 +203,65 @@ router.post('/admin/help', function (ctx, next) {
                     ctx.body = {
                         msg: "创建成功",
                         assistance: assistance
+                    };
+                    return [2 /*return*/];
+            }
+        });
+    });
+});
+/**
+ * 创建协助人
+ */
+router.post('/admin/assitance-people', function (ctx, next) {
+    return __awaiter(this, void 0, void 0, function () {
+        var args, assistancePeople;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0:
+                    args = ctx.request.body;
+                    debug(">>>>>>>>>>>>>post assistance people:", args);
+                    return [4 /*yield*/, assistance_people_model_1.default.create({
+                            user_name: args.user_name,
+                            mobile: args.mobile,
+                            email: args.email,
+                            in_charge_of: args.in_charge_of,
+                            is_main: args.is_main,
+                        })];
+                case 1:
+                    assistancePeople = _a.sent();
+                    ctx.body = {
+                        msg: "创建成功",
+                        assistancePeople: assistancePeople
+                    };
+                    return [2 /*return*/];
+            }
+        });
+    });
+});
+/**
+ * 修改协助人
+ */
+router.patch('/admin/assitance-people', function (ctx, next) {
+    return __awaiter(this, void 0, void 0, function () {
+        var args, assistancePeople;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0:
+                    args = ctx.request.body;
+                    debug(">>>>>>>>>>>>>post assistance people:", args);
+                    return [4 /*yield*/, assistance_people_model_1.default.update({
+                            user_name: args.user_name,
+                            mobile: args.mobile,
+                            email: args.email,
+                            in_charge_of: args.in_charge_of
+                        }, {
+                            where: { id: 1 }
+                        })];
+                case 1:
+                    assistancePeople = _a.sent();
+                    ctx.body = {
+                        msg: "修改成功",
+                        assistancePeople: assistancePeople
                     };
                     return [2 /*return*/];
             }

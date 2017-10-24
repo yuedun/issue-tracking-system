@@ -28,6 +28,7 @@
     "koa-views": "^6.1.1",
     "koa2-cors": "^2.0.3",
     "mysql2": "^1.4.2",
+    "nodemailer": "^4.3.0",
     "semver": "^5.4.1",
     "sequelize": "^4.15.0"
   },
