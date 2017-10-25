@@ -17,7 +17,7 @@ router.get('/admin', async function (ctx: any, next: Function) {
 		title: 'hello admin',
 		body: "<h1>这是管理平台</h1>"
 	})
-})
+});
 
 router.get('/teacher', async function (ctx: any, next: Function) {
 	debug(">>>teacher输出");
@@ -25,7 +25,7 @@ router.get('/teacher', async function (ctx: any, next: Function) {
 		title: 'hello teacher',
 		body: "<h1>这是老师APP</h1>"
 	})
-})
+});
 
 router.get('/client', async function (ctx: any, next: Function) {
 	debug(">>>client输出");
@@ -33,7 +33,7 @@ router.get('/client', async function (ctx: any, next: Function) {
 		title: 'hello client',
 		body: "<h1>这是教学客户端</h1>"
 	})
-})
+});
 
 router.get('/others/a', async function (ctx: any, next: Function) {
 	debug(">>>admin输出");
@@ -41,7 +41,7 @@ router.get('/others/a', async function (ctx: any, next: Function) {
 		title: 'hello admin',
 		body: "<h1>这是管理平台</h1>"
 	})
-})
+});
 
 router.get('/others/b', async function (ctx: any, next: Function) {
 	debug(">>>admin输出");
@@ -49,7 +49,7 @@ router.get('/others/b', async function (ctx: any, next: Function) {
 		title: 'hello admin',
 		body: "<h1>这是管理平台</h1>"
 	})
-})
+});
 
 router.get('/others/c', async function (ctx: any, next: Function) {
 	debug(">>>admin输出");
@@ -57,7 +57,7 @@ router.get('/others/c', async function (ctx: any, next: Function) {
 		title: 'hello admin',
 		body: "<h1>这是管理平台</h1>"
 	})
-})
+});
 
 /**
  * 进入协助申请页面
@@ -75,17 +75,16 @@ router.get('/admin/help', async function (ctx: any, next: Function) {
 		assistancies,
 		assistancePeople,
 	})
-})
+});
 
 /**
- * 创建协助
+ * 创建协助请求
  */
 router.post('/admin/help', async function (ctx: any, next: Function) {
 	let args = ctx.request.body;
 	debug(">>>>>>>>>>>>>post", args)
 	let assistance = await AssistanceModel.create({
-		title: args.title,
-		description: args.desc,
+		description: args.description,
 		first_help_people: args.first_help_people,
 		second_help_people: args.second_help_people,
 		referer: args.referer,
@@ -97,7 +96,20 @@ router.post('/admin/help', async function (ctx: any, next: Function) {
 		msg: "创建成功",
 		assistance: assistance
 	}
-})
+});
+/**
+ * 删除协助
+ */
+router.delete('/admin/help/:id/:aaa', async function (ctx: any, next: Function) {
+	let [id, name] = ctx.captures;
+	debug(">>>>>>>>>>>>>delete", id, name)
+	// let assistance = await AssistanceModel.destroy({
+	// 	where: {id: args.id}
+	// })
+	ctx.body = {
+		msg: "删除成功"
+	}
+});
 
 /**
  * 创建协助人
@@ -116,8 +128,24 @@ router.post('/admin/assitance-people', async function (ctx: any, next: Function)
 		msg: "创建成功",
 		assistancePeople
 	}
-})
+});
 
+/**
+ * 获取协助人
+ */
+router.get('/admin/assistance-peolpe', async function (ctx: any, next: Function) {
+	let args = ctx.request.query;
+	debug(">>>>>>>>>>>>>post assistance people:", args)
+	let assistancePeople = await AssistancePeopleModel.findAll({
+		where: {
+			user_name: { $like: `${args.user_name}%` }
+		}
+	})
+	ctx.body = {
+		msg: "获取成功",
+		assistancePeople
+	}
+});
 /**
  * 修改协助人
  */
@@ -136,6 +164,6 @@ router.patch('/admin/assitance-people', async function (ctx: any, next: Function
 		msg: "修改成功",
 		assistancePeople
 	}
-})
+});
 
 export default router

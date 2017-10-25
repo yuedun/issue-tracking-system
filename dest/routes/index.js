@@ -178,7 +178,7 @@ router.get('/admin/help', function (ctx, next) {
     });
 });
 /**
- * 创建协助
+ * 创建协助请求
  */
 router.post('/admin/help', function (ctx, next) {
     return __awaiter(this, void 0, void 0, function () {
@@ -189,8 +189,7 @@ router.post('/admin/help', function (ctx, next) {
                     args = ctx.request.body;
                     debug(">>>>>>>>>>>>>post", args);
                     return [4 /*yield*/, assistance_model_1.default.create({
-                            title: args.title,
-                            description: args.desc,
+                            description: args.description,
                             first_help_people: args.first_help_people,
                             second_help_people: args.second_help_people,
                             referer: args.referer,
@@ -206,6 +205,25 @@ router.post('/admin/help', function (ctx, next) {
                     };
                     return [2 /*return*/];
             }
+        });
+    });
+});
+/**
+ * 删除协助
+ */
+router.delete('/admin/help/:id/:aaa', function (ctx, next) {
+    return __awaiter(this, void 0, void 0, function () {
+        var _a, id, name;
+        return __generator(this, function (_b) {
+            _a = ctx.captures, id = _a[0], name = _a[1];
+            debug(">>>>>>>>>>>>>delete", id, name);
+            // let assistance = await AssistanceModel.destroy({
+            // 	where: {id: args.id}
+            // })
+            ctx.body = {
+                msg: "删除成功"
+            };
+            return [2 /*return*/];
         });
     });
 });
@@ -231,6 +249,33 @@ router.post('/admin/assitance-people', function (ctx, next) {
                     assistancePeople = _a.sent();
                     ctx.body = {
                         msg: "创建成功",
+                        assistancePeople: assistancePeople
+                    };
+                    return [2 /*return*/];
+            }
+        });
+    });
+});
+/**
+ * 获取协助人
+ */
+router.get('/admin/assistance-peolpe', function (ctx, next) {
+    return __awaiter(this, void 0, void 0, function () {
+        var args, assistancePeople;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0:
+                    args = ctx.request.query;
+                    debug(">>>>>>>>>>>>>post assistance people:", args);
+                    return [4 /*yield*/, assistance_people_model_1.default.findAll({
+                            where: {
+                                user_name: { $like: args.user_name + "%" }
+                            }
+                        })];
+                case 1:
+                    assistancePeople = _a.sent();
+                    ctx.body = {
+                        msg: "获取成功",
                         assistancePeople: assistancePeople
                     };
                     return [2 /*return*/];

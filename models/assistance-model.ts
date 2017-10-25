@@ -7,7 +7,6 @@ import sequelize from '../utils/db-connection';
 export interface ModelAttributes {
     id?: number;
     user_id?: number;
-    title?: string;
     description?: string;
     first_help_people?: string;
     second_help_people?: string;
@@ -25,7 +24,6 @@ export interface ModelInstance
 var Model = sequelize.define<ModelInstance, ModelAttributes>(
     'Assistance', {
         user_id: Sequelize.INTEGER,//发贴人
-        title: Sequelize.STRING,
         description: Sequelize.STRING,
         first_help_people: Sequelize.STRING,
         second_help_people: Sequelize.STRING,

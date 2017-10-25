@@ -25,16 +25,17 @@
           <div class="layui-col-md9 layui-col-md-offset1">
             <form class="layui-form" action="">
               <input type="hidden", name="user_agent" value="<%= userAgent%>">
-              <div class="layui-form-item">
-                <label class="layui-form-label">标题<span class="required">*</span></label>
-                <div class="layui-input-block">
-                  <input type="text" name="title" id="title" required lay-verify="required" placeholder="请输入标题" autocomplete="off" class="layui-input">
-                </div>
-              </div>
               <div class="layui-form-item layui-form-text">
                 <label class="layui-form-label">问题描述<span class="required">*</span></label>
                 <div class="layui-input-block">
-                  <textarea id="desc" name="desc" required lay-verify="required" placeholder="请输入内容" class="layui-textarea"></textarea>
+                  <textarea id="description" name="description" placeholder="请输入内容" class="layui-textarea" required lay-verify="required" maxlength="255"></textarea>
+                </div>
+                <div class="layui-input-block">
+                  <div class="tool">
+                      <a href="javascript:void(0)"><i class="layui-icon" style="font-size: 30px; color: #FF5722;">&#xe60d;</i>图片</a>
+                      <a href="javascript:void(0)"><i class="layui-icon" style="font-size: 30px; color: #FF5722;">&#xe60c;</i>图片</a>
+                      <a href="javascript:void(0)"><i class="layui-icon" style="font-size: 30px; color: #FF5722;">&#xe660;</i>图片</a>
+                  </div>
                 </div>
               </div>
               <div class="layui-form-item">
@@ -83,44 +84,44 @@
         </div>
         <div class="layui-row">
           <div class="layui-col-md9 layui-col-md-offset1">
-            <ul class="layui-timeline">
-              <% assistancies.forEach(function(item, index){%>
-              <li class="layui-timeline-item">
-                <i class="layui-icon layui-timeline-axis">&#xe63f;</i>
-                <div class="layui-timeline-content layui-text">
-                  <h3 class="layui-timeline-title"><%=item.title%></h3>
-                  <p>
-                    <%- item.description%>
-                  </p>
-                </div>
-              </li>
-              <%})%>
-            </ul>
+            <% assistancies.forEach(function(item, index){%>
+            <article class="article">
+              <section>
+                <%- item.description%>
+              </section>
+              <hr>
+              <ul>
+                <li><a href="">顶起</a></li>
+                <li><a href="">评论</a></li>
+                <li><a href="javascript:void(0)" id="J-del" data-id="<%=item.id%>">删除</a></li>
+                <li><a href="">转发</a></li>
+              </ul>
+            </article>
+            <%})%>
           </div>
         </div>
       </div>
     </div>
+  </div>
     <!-- 中间内容区 -->
-
+  <div class="layer_notice" style="display:none;">
+    <ul style="font-size:24px;padding:10px;">
+      <!-- <li><a href="">sdkjhgd</a></li>
+      <li><a href="">sdkjhgd</a></li>
+      <li><a href="">sdkjhgd</a></li> -->
+    </ul>
+  </div>
     <script>
-      layui.use(['layedit', 'jquery', 'layer', 'form'], function () {
+      layui.use(['jquery', 'layer', 'form'], function () {
         var layedit = layui.layedit,
           layer = layui.layer,
           form = layui.form,
           $ = layui.jquery;
-        var editnum = layedit.build('desc', {
-          uploadImage: {
-            url: '/uploadImg'
-          }
-        }); //建立编辑器
         form.on('submit(formSubmit)', function(data){
           console.log(JSON.stringify(data.field))
-          // return false;
           var datas = data.field;
-          var content = layedit.getContent(editnum);
-          $.post("/admin/help", { 
-            title: datas.title, 
-            desc: content,
+          $.post("/admin/help", {
+            description: datas.description,
             first_help_people: datas.first_help_people,
             second_help_people: datas.second_help_people,
             referer: datas.referer
@@ -128,6 +129,47 @@
             layer.msg(data.msg);
           })
           return false;
+        });
+        //删除协助
+        $(".article").on("click", "#J-del", function(){
+          var id = $(this).data("id");
+          console.log(id)
+          $.ajax({
+            url: "/admin/help/"+id +"/woeighi",
+            type: "delete",
+            success: function(data){
+              layer.msg(data.msg);
+            }
+          })
+        })
+        //监听@
+        $("#description").on("input propertychange", function(e){
+          var value = $(this).val();
+          //正则：/@[^\s\n]*[\s$]+/g.test(value)
+          //匹配@开头的字符串
+          if (/@[^\s\n]*/g.test(value)) {
+            console.log(">>>>>>>>", value)
+            var user_name = value.replace(/[^\s\n]*@/, '');
+            console.log("截取后：", user_name)
+            if (user_name) {
+              $.get("/admin/assistance-peolpe", {
+                user_name: user_name
+              }, function (data) {
+                console.log(data)
+                var html = "";
+                data.assistancePeople.forEach(function(element) {
+                  html +='<li><a href="javascript:void(0)">'+element.user_name+'</a></li>'
+                }, this);
+                $(".layer_notice ul").empty().append(html);
+                layer.open({
+                  type: 1,
+                  shade: false,
+                  title: false, //不显示标题
+                  content: $('.layer_notice'), //捕获的元素，注意：最好该指定的元素要存放在body最外层，否则可能被其它的相对元素所影响
+                });
+              })
+            }
+          }
         })
       });
     </script>

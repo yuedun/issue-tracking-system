@@ -8,7 +8,6 @@ var db_connection_1 = require("../utils/db-connection");
  */
 var Model = db_connection_1.default.define('Assistance', {
     user_id: Sequelize.INTEGER,
-    title: Sequelize.STRING,
     description: Sequelize.STRING,
     first_help_people: Sequelize.STRING,
     second_help_people: Sequelize.STRING,
