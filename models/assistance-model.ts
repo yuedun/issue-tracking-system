@@ -1,5 +1,6 @@
 import * as Sequelize from 'sequelize';
 import sequelize from '../utils/db-connection';
+import { ModelInstance as UserInstance } from './user-model';
 
 /**
  * 定义方式@types/sequelize GitHub上有示例
@@ -14,10 +15,14 @@ export interface ModelAttributes {
     referer?: string;
     urgency_level?: number;
     state?: number;
+    created_at?: string;
+    updated_at?: string;
 }
 
 export interface ModelInstance
-    extends Sequelize.Instance<ModelInstance>, ModelAttributes { };
+    extends Sequelize.Instance<ModelInstance>, ModelAttributes { 
+        getUser: Sequelize.BelongsToGetAssociationMixin<UserInstance>;
+    };
 /**
  * 申请的协助信息
  */
@@ -27,7 +32,7 @@ var Model = sequelize.define<ModelInstance, ModelAttributes>(
         description: Sequelize.STRING,
         first_help_people: Sequelize.STRING,
         second_help_people: Sequelize.STRING,
-        user_agent:Sequelize.STRING,//浏览器
+        user_agent: Sequelize.STRING,//浏览器
         referer: Sequelize.STRING,//来源页面
         urgency_level: {
             type: Sequelize.INTEGER,

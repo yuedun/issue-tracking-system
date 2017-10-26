@@ -36,6 +36,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var Router = require("koa-router");
+var moment = require("moment");
 var router = new Router();
 var debug = require('debug')('yuedun:admin');
 var assistance_model_1 = require("../models/assistance-model");
@@ -150,24 +151,31 @@ router.get('/others/c', function (ctx, next) {
  */
 router.get('/admin/help', function (ctx, next) {
     return __awaiter(this, void 0, void 0, function () {
-        var userAgent, referer, assistancies, assistancePeople;
+        var userAgent, referer, assistancies, assistancePeople, assistanceInfos;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
                     userAgent = ctx.req.headers['user-agent'];
                     referer = ctx.req.headers['referer'];
-                    debug(">>>>>>>>>>>ask-for-help", userAgent, referer);
-                    return [4 /*yield*/, assistance_model_1.default.findAll()];
+                    return [4 /*yield*/, assistance_model_1.default.findAll({
+                            order: [['created_at', 'desc']]
+                        })];
                 case 1:
                     assistancies = _a.sent();
                     return [4 /*yield*/, assistance_people_model_1.default.findAll()];
                 case 2:
                     assistancePeople = _a.sent();
+                    assistanceInfos = assistancies;
+                    assistanceInfos.forEach(function (item) {
+                        item.user_name = "管理员";
+                        item.setDataValue("created_at", moment(item.created_at).format("YYYY-MM-DD HH:ss:mm"));
+                    });
+                    console.info(JSON.stringify(assistanceInfos));
                     return [4 /*yield*/, ctx.render('ask-for-help', {
                             title: '申请协助',
                             userAgent: userAgent,
                             referer: referer,
-                            assistancies: assistancies,
+                            assistanceInfos: assistanceInfos,
                             assistancePeople: assistancePeople,
                         })];
                 case 3:
@@ -211,19 +219,24 @@ router.post('/admin/help', function (ctx, next) {
 /**
  * 删除协助
  */
-router.delete('/admin/help/:id/:aaa', function (ctx, next) {
+router.delete('/admin/help/:id', function (ctx, next) {
     return __awaiter(this, void 0, void 0, function () {
-        var _a, id, name;
-        return __generator(this, function (_b) {
-            _a = ctx.captures, id = _a[0], name = _a[1];
-            debug(">>>>>>>>>>>>>delete", id, name);
-            // let assistance = await AssistanceModel.destroy({
-            // 	where: {id: args.id}
-            // })
-            ctx.body = {
-                msg: "删除成功"
-            };
-            return [2 /*return*/];
+        var id, assistance;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0:
+                    id = ctx.captures[0];
+                    debug(">>>>>>>>>>>>>delete", id);
+                    return [4 /*yield*/, assistance_model_1.default.destroy({
+                            where: { id: id }
+                        })];
+                case 1:
+                    assistance = _a.sent();
+                    ctx.body = {
+                        msg: "删除成功"
+                    };
+                    return [2 /*return*/];
+            }
         });
     });
 });

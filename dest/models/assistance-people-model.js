@@ -4,7 +4,7 @@ var Sequelize = require("sequelize");
 var db_connection_1 = require("../utils/db-connection");
 ;
 /**
- * 可以选择的协助人信息
+ * 可以选择的协助人信息，此类人不一定在业务用户表中，所以需要单独设置
  */
 var Model = db_connection_1.default.define('AssistancePeople', {
     user_name: Sequelize.STRING,

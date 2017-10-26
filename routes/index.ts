@@ -1,4 +1,6 @@
 import * as Router from 'koa-router';
+import * as moment from 'moment';
+
 const router = new Router(
 	// {
 	// 	prefix: "/index"
@@ -59,20 +61,30 @@ router.get('/others/c', async function (ctx: any, next: Function) {
 	})
 });
 
+interface AssistanceInfo extends AssistanceInstance {
+	user_name?: string;
+}
 /**
  * 进入协助申请页面
  */
 router.get('/admin/help', async function (ctx: any, next: Function) {
 	let userAgent = ctx.req.headers['user-agent'];
 	let referer = ctx.req.headers['referer'];
-	debug(">>>>>>>>>>>ask-for-help", userAgent, referer);
-	let assistancies = await AssistanceModel.findAll();
+	let assistancies = await AssistanceModel.findAll({
+		order: [['created_at', 'desc']]
+	});
 	let assistancePeople = await AssistancePeopleModel.findAll();
+	let assistanceInfos: AssistanceInfo[] = assistancies;
+	assistanceInfos.forEach(item => {
+		item.user_name = "管理员";
+		item.setDataValue("created_at", moment(item.created_at).format("YYYY-MM-DD HH:ss:mm"));
+	})
+	console.info(JSON.stringify(assistanceInfos));
 	await ctx.render('ask-for-help', {
 		title: '申请协助',
 		userAgent,
 		referer,
-		assistancies,
+		assistanceInfos,
 		assistancePeople,
 	})
 });
@@ -100,12 +112,12 @@ router.post('/admin/help', async function (ctx: any, next: Function) {
 /**
  * 删除协助
  */
-router.delete('/admin/help/:id/:aaa', async function (ctx: any, next: Function) {
-	let [id, name] = ctx.captures;
-	debug(">>>>>>>>>>>>>delete", id, name)
-	// let assistance = await AssistanceModel.destroy({
-	// 	where: {id: args.id}
-	// })
+router.delete('/admin/help/:id', async function (ctx: any, next: Function) {
+	let [id] = ctx.captures;
+	debug(">>>>>>>>>>>>>delete", id)
+	let assistance = await AssistanceModel.destroy({
+		where: { id }
+	})
 	ctx.body = {
 		msg: "删除成功"
 	}

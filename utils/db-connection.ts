@@ -56,3 +56,5 @@ export function select(sql: string) {
 }
 
 export default sequelize;
+
+require("../models/models-relation");

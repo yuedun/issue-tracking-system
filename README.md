@@ -8,6 +8,12 @@ linux下npm脚本：
 windows:
 "dev": "set DEBUG=yuedun:*& cd ./dest & nodemon ./bin/www.js",
 
+koa.js获取url参数
+
+`ctx.request.body`获取`post body`中的参数
+`ctx.captures`获取`/user/123` `/user/:id`此类URL中的id,`ctx.captures`是个数组，按照URL中参数的顺序，ES6可以用这种方法接收：
+`let [id] = ctx.captures`，如果是多个参数`/user/123/yuedun` `/user/:id/:name` `let [id, name] = ctx.captures`
+`ctx.query`获取`/user/?name=yuedun`
 
 # 需求设计
 

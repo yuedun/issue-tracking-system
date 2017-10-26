@@ -84,17 +84,21 @@
         </div>
         <div class="layui-row">
           <div class="layui-col-md9 layui-col-md-offset1">
-            <% assistancies.forEach(function(item, index){%>
+            <% assistanceInfos.forEach(function(item, index){%>
             <article class="article">
+              <header>
+                <p><b><%=item.user_name%></b></p>
+                <time class="time-text"><%=item.created_at%></time>
+              </header>
               <section>
-                <%- item.description%>
+                <%=item.description%>
               </section>
               <hr>
               <ul>
-                <li><a href="">顶起</a></li>
-                <li><a href="">评论</a></li>
-                <li><a href="javascript:void(0)" id="J-del" data-id="<%=item.id%>">删除</a></li>
-                <li><a href="">转发</a></li>
+                <li><a href="javascript:void(0)" id="J-up" data-id="<%=item.id%>"><span><i class="layui-icon">&#xe756;</i>顶起</span></a></li>
+                <li><a href="javascript:void(0)" id="J-comment" data-id="<%=item.id%>"><span><i class="layui-icon">&#xe63a;</i>评论</span></a></li>
+                <li><a href="javascript:void(0)" id="J-del" data-id="<%=item.id%>"><span><i class="layui-icon">&#xe640;</i>删除</span></a></li>
+                <li><a href="javascript:void(0)" id="J-transform" data-id="<%=item.id%>"><span><i class="layui-icon">&#xe756;</i>转发</span></a></li>
               </ul>
             </article>
             <%})%>
@@ -135,7 +139,7 @@
           var id = $(this).data("id");
           console.log(id)
           $.ajax({
-            url: "/admin/help/"+id +"/woeighi",
+            url: "/admin/help/"+id,
             type: "delete",
             success: function(data){
               layer.msg(data.msg);

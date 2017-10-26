@@ -27,6 +27,7 @@
     "koa-static": "^4.0.1",
     "koa-views": "^6.1.1",
     "koa2-cors": "^2.0.3",
+    "moment": "^2.19.1",
     "mysql2": "^1.4.2",
     "nodemailer": "^4.3.0",
     "semver": "^5.4.1",
@@ -35,6 +36,7 @@
   "devDependencies": {
     "@types/koa": "^2.0.39",
     "@types/koa-router": "^7.0.23",
+    "@types/moment": "^2.13.0",
     "@types/node": "^8.0.46",
     "@types/sequelize": "^4.0.77",
     "css-loader": "^0.28.7",
