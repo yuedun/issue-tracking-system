@@ -151,6 +151,7 @@ router.get('/others/c', function (ctx, next) {
  */
 router.get('/admin/help', function (ctx, next) {
     return __awaiter(this, void 0, void 0, function () {
+        var _this = this;
         var userAgent, referer, assistancies, assistancePeople, assistanceInfos;
         return __generator(this, function (_a) {
             switch (_a.label) {
@@ -166,11 +167,19 @@ router.get('/admin/help', function (ctx, next) {
                 case 2:
                     assistancePeople = _a.sent();
                     assistanceInfos = assistancies;
-                    assistanceInfos.forEach(function (item) {
-                        item.user_name = "管理员";
-                        item.setDataValue("created_at", moment(item.created_at).format("YYYY-MM-DD HH:ss:mm"));
-                    });
-                    console.info(JSON.stringify(assistanceInfos));
+                    assistanceInfos.forEach(function (item) { return __awaiter(_this, void 0, void 0, function () {
+                        var userRecord;
+                        return __generator(this, function (_a) {
+                            switch (_a.label) {
+                                case 0: return [4 /*yield*/, item.getUser()];
+                                case 1:
+                                    userRecord = _a.sent();
+                                    item.user_name = userRecord.user_name;
+                                    item.setDataValue("created_at", moment(item.created_at).format("YYYY-MM-DD HH:ss:mm"));
+                                    return [2 /*return*/];
+                            }
+                        });
+                    }); });
                     return [4 /*yield*/, ctx.render('ask-for-help', {
                             title: '申请协助',
                             userAgent: userAgent,

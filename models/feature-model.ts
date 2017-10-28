@@ -7,7 +7,7 @@ export interface ModelAttributes {
 }
 
 export interface ModelInstance
-    extends Sequelize.Instance<ModelInstance>, ModelAttributes { };
+    extends Sequelize.Instance<ModelAttributes> { };
 /**
  * 功能列表
  */

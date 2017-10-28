@@ -8,7 +8,7 @@ export interface ModelAttributes {
 }
 
 export interface ModelInstance
-    extends Sequelize.Instance<ModelInstance>, ModelAttributes { };
+    extends Sequelize.Instance<ModelAttributes>, ModelAttributes { };
 /**
  * 用户表，该表为实际业务人员信息表
  */
@@ -25,5 +25,4 @@ var Model = sequelize.define<ModelInstance, ModelAttributes>(
 );
 
 Model.sync({ alter: true });
-
 export default Model;

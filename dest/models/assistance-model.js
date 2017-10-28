@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 var Sequelize = require("sequelize");
 var db_connection_1 = require("../utils/db-connection");
+var user_model_1 = require("./user-model");
 ;
 /**
  * 申请的协助信息
@@ -31,6 +32,8 @@ var Model = db_connection_1.default.define('Assistance', {
     charset: 'utf8',
     collate: 'utf8_unicode_ci'
 });
-Model.sync({ alter: true });
+// Model.sync({ alter: true });
+console.log(">>>>>>3");
 exports.default = Model;
+Model.belongsTo(user_model_1.default);
 //# sourceMappingURL=assistance-model.js.map

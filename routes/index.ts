@@ -10,6 +10,7 @@ const debug = require('debug')('yuedun:admin');
 import { select } from '../utils/db-connection';
 import { default as AssistanceModel, ModelAttributes as AssistancePOJO, ModelInstance as AssistanceInstance } from '../models/assistance-model';
 import { default as AssistancePeopleModel, ModelAttributes as AssistancePeoplePOJO, ModelInstance as AssistancePeopleInstance } from '../models/assistance-people-model';
+import { default as UserModel, ModelAttributes as UserPOJO, ModelInstance as UserInstance } from '../models/user-model';
 /**
  * render 函数是koa-views中间件赋予ctx的，是一个promise函数，所以需要用await修饰
  */
@@ -75,11 +76,11 @@ router.get('/admin/help', async function (ctx: any, next: Function) {
 	});
 	let assistancePeople = await AssistancePeopleModel.findAll();
 	let assistanceInfos: AssistanceInfo[] = assistancies;
-	assistanceInfos.forEach(item => {
-		item.user_name = "管理员";
+	assistanceInfos.forEach(async item => {
+		let userRecord = await item.getUser();
+		item.user_name = userRecord.user_name;
 		item.setDataValue("created_at", moment(item.created_at).format("YYYY-MM-DD HH:ss:mm"));
 	})
-	console.info(JSON.stringify(assistanceInfos));
 	await ctx.render('ask-for-help', {
 		title: '申请协助',
 		userAgent,

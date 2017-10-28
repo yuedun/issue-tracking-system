@@ -54,5 +54,4 @@ function select(sql) {
 }
 exports.select = select;
 exports.default = sequelize;
-require("../models/models-relation");
 //# sourceMappingURL=db-connection.js.map

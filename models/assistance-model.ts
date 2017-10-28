@@ -1,6 +1,6 @@
 import * as Sequelize from 'sequelize';
 import sequelize from '../utils/db-connection';
-import { ModelInstance as UserInstance } from './user-model';
+import { default as UserModel, ModelInstance as UserInstance } from './user-model';
 
 /**
  * 定义方式@types/sequelize GitHub上有示例
@@ -20,7 +20,7 @@ export interface ModelAttributes {
 }
 
 export interface ModelInstance
-    extends Sequelize.Instance<ModelInstance>, ModelAttributes { 
+    extends Sequelize.Instance<ModelAttributes>, ModelAttributes { 
         getUser: Sequelize.BelongsToGetAssociationMixin<UserInstance>;
     };
 /**
@@ -54,6 +54,8 @@ var Model = sequelize.define<ModelInstance, ModelAttributes>(
     }
 );
 
-Model.sync({ alter: true });
-
+// Model.sync({ alter: true });
+console.log(">>>>>>3")
 export default Model;
+
+Model.belongsTo(UserModel);

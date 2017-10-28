@@ -12,7 +12,7 @@ export interface ModelAttributes {
 }
 
 export interface ModelInstance
-    extends Sequelize.Instance<ModelInstance>, ModelAttributes { };
+    extends Sequelize.Instance<ModelAttributes>, ModelAttributes { };
 /**
  * 可以选择的协助人信息，此类人不一定在业务用户表中，所以需要单独设置
  */
