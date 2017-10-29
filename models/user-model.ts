@@ -1,5 +1,6 @@
 import * as Sequelize from 'sequelize';
 import sequelize from '../utils/db-connection';
+import { default as AssistanceModel, ModelInstance as AssistanceInstance } from './assistance-model';
 
 export interface ModelAttributes {
     id?: number;
@@ -25,4 +26,5 @@ var Model = sequelize.define<ModelInstance, ModelAttributes>(
 );
 
 Model.sync({ alter: true });
+
 export default Model;

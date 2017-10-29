@@ -22,7 +22,7 @@
           </div>
         </div>
         <div class="layui-row">
-          <div class="layui-col-md9 layui-col-md-offset1">
+          <div class="layui-col-md7 layui-col-md-offset1">
             <form class="layui-form" action="">
               <input type="hidden", name="user_agent" value="<%= userAgent%>">
               <div class="layui-form-item layui-form-text">
@@ -80,28 +80,75 @@
                 </div>
               </div>
             </form>
+            <% assistanceInfos.forEach(function(item, index){%>
+              <article class="article">
+                <header>
+                  <p><b><%=item.user_name%></b></p>
+                  <time class="time-text"><%=item.created_at%></time>
+                </header>
+                <section>
+                  <p><%=item.description%></p>
+                </section>
+                <hr>
+                <ul>
+                  <li><a href="javascript:void(0)" id="J-up" data-id="<%=item.id%>"><span><i class="layui-icon">&#xe756;</i>顶起</span></a></li>
+                  <li><a href="javascript:void(0)" id="J-comment" data-id="<%=item.id%>"><span><i class="layui-icon">&#xe63a;</i>评论</span></a></li>
+                  <li><a href="javascript:void(0)" id="J-del" data-id="<%=item.id%>"><span><i class="layui-icon">&#xe640;</i>删除</span></a></li>
+                  <li><a href="javascript:void(0)" id="J-transform" data-id="<%=item.id%>"><span><i class="layui-icon">&#xe756;</i>转发</span></a></li>
+                </ul>
+              </article>
+              <%})%>
+          </div>
+          <div class="layui-col-md4">
+            <div class="asider">
+              <p>【褚时健背后的女人，只读过三年书，却在丈夫锒铛入狱后，露出了绝不一般的真面目…】在褚时健的起伏人生中，始终藏着一个女人的身影。王石、王健林等商界大佬，在她面前都自愧不如，甘当学生。
+                她只读过三年的书，却影响了褚时健一辈子！而在褚时健跌落谷底，锒铛入狱之时，一向贤惠、低调的她，也露出 </p>
+              <p>XSS攻击全称跨站脚本攻击，是为不和层叠样式表(Cascading Style Sheets, CSS)的缩写混淆，
+                故将跨站脚本攻击缩写为XSS，XSS是一种在web应用中的计算机安全漏洞，它允许恶意web用户将代码植入到
+                提供给其它用户使用的页面中。从而达到攻击的目的。如，盗取用户Cookie、破坏页面结构、重定向到其它网站等。
+                  XSS攻击案例：
+                  
+                  新浪微博遭受XX攻击：
+                  
+                  http://soft.yesky.com/security/156/30179156.shtml
+                  
+                  人人网遭受XSS攻击：
+                  
+                  http://www.freebuf.com/articles/6295.html
+                  简单的测试方法：
+                  
+                  所有提交数据的地方都有可能存在XSS，可以用最简单脚本进行测试：
+
+                  XSS攻击类型
+                  
+                  反射型：
+                  
+                  黑客构造一个包含XSS代码的URL（服务器中没有这样的页面和内容），诱导或等待用户去点击链接，才能触发XSS代码，达到劫持访问、获取cookies的目的。一般容易出现在搜索页面。 例如：https://m.wuage.com/search/self-shop?memberId=4lv8ll4g&keywords=x%22alert(1)%22&psa=M3.s10.0.j4 （此漏洞已经修复，请勿再测，造成访问压力。）
+                  
+                  图片描述
+                  
+                  持久型：
+                  
+                  如果黑客可以将脚本代码通过发布内容（如发论坛、博文、写留言等）的方式发布后，存储在服务端的数据库或者文件中，成为某个url正常的页面的一部分，所有访问这个页面的所有用户都是受害者，看似正常的url，则其页面已经包含了xss代码，持久型XSS更具有隐蔽性，带来的危害也更大
+                  
+                  例如：在页面中不容注意的地方加一段js脚本（如下），当页面被打开时，页面会加载这段脚本，加系统登录的cookies发送到远端hacker的手中。
+                  
+                  DOM型：
+                  
+                  图片描述
+                  DOM就是一个树状的模型，你可以编写Javascript代码根据DOM一层一层的节点，去遍历/获取/修改对应的节点，
+                  对象，值。dom xss并不复杂，他也属于反射型xss的一种(，domxss取决于输出位置，并不取决于输出环境，
+                  因此domxss既有可能是反射型的，也有可能是存储型的)，简单去理解就是因为他输出点在DOM，所以在道哥的
+                  《白帽子讲Web安全里》也有详细介绍。xss代码可能是简短的插入script节点的语句，载入来自第三方域的含有
+                  具体恶意代码的脚本。具体的恶意代码，常见的行为是读取cookie，构造例如一个img标签，将其src属性指向
+                  恶意第三方网站，将cookie的内容作为参数附在src的url上，这样黑客就能在其网站上获得你的cookie信息，
+                  这就是所谓的cookie劫持。</p>
+            </div>
           </div>
         </div>
         <div class="layui-row">
-          <div class="layui-col-md9 layui-col-md-offset1">
-            <% assistanceInfos.forEach(function(item, index){%>
-            <article class="article">
-              <header>
-                <p><b><%=item.user_name%></b></p>
-                <time class="time-text"><%=item.created_at%></time>
-              </header>
-              <section>
-                <%=item.description%>
-              </section>
-              <hr>
-              <ul>
-                <li><a href="javascript:void(0)" id="J-up" data-id="<%=item.id%>"><span><i class="layui-icon">&#xe756;</i>顶起</span></a></li>
-                <li><a href="javascript:void(0)" id="J-comment" data-id="<%=item.id%>"><span><i class="layui-icon">&#xe63a;</i>评论</span></a></li>
-                <li><a href="javascript:void(0)" id="J-del" data-id="<%=item.id%>"><span><i class="layui-icon">&#xe640;</i>删除</span></a></li>
-                <li><a href="javascript:void(0)" id="J-transform" data-id="<%=item.id%>"><span><i class="layui-icon">&#xe756;</i>转发</span></a></li>
-              </ul>
-            </article>
-            <%})%>
+          <div class="layui-col-md7 layui-col-md-offset1">
+            
           </div>
         </div>
       </div>

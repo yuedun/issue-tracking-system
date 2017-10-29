@@ -14,6 +14,7 @@ var Model = db_connection_1.default.define('Assistance', {
     second_help_people: Sequelize.STRING,
     user_agent: Sequelize.STRING,
     referer: Sequelize.STRING,
+    images: Sequelize.STRING,
     urgency_level: {
         type: Sequelize.INTEGER,
         defaultValue: 1,
@@ -32,8 +33,7 @@ var Model = db_connection_1.default.define('Assistance', {
     charset: 'utf8',
     collate: 'utf8_unicode_ci'
 });
-// Model.sync({ alter: true });
-console.log(">>>>>>3");
+Model.sync({ alter: true });
 exports.default = Model;
 Model.belongsTo(user_model_1.default);
 //# sourceMappingURL=assistance-model.js.map

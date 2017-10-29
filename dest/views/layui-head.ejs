@@ -5,3 +5,8 @@
 <link rel="stylesheet" href="/stylesheets/style.css">
 <script src="/vendor/layui-v2.1.5/layui/layui.js"></script>
 <script src="/javascripts/top-nav.js"></script>
+<script type="application/json">
+    <% if(this.api){%>
+    <%- JSON.stringify(api)%>
+    <%}%>
+</script>

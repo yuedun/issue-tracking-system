@@ -45,6 +45,7 @@ var onerror = require('koa-onerror');
 var bodyparser = require('koa-bodyparser');
 var logger = require('koa-logger');
 var cors = require('koa2-cors');
+var test_1 = require("./routes/test");
 var index_1 = require("./routes/index");
 var teacher_1 = require("./routes/teacher");
 // import { default as client } from './routes/client'
@@ -125,6 +126,7 @@ app.use(function (ctx, next) {
     });
 });
 // routes
+app.use(test_1.default.routes());
 app.use(index_1.default.routes());
 app.use(teacher_1.default.routes());
 // app.use(client.routes())

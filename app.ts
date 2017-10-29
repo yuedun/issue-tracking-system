@@ -9,6 +9,7 @@ const bodyparser = require('koa-bodyparser')
 const logger = require('koa-logger')
 const cors = require('koa2-cors')
 
+import { default as test } from './routes/test'
 import { default as index } from './routes/index'
 import { default as teacher } from './routes/teacher'
 // import { default as client } from './routes/client'
@@ -62,8 +63,9 @@ app.use(async function(ctx: any, next: Function){
 	await next();
 });
 // routes
-app.use(index.routes())
-app.use(teacher.routes())
+app.use(test.routes());
+app.use(index.routes());
+app.use(teacher.routes());
 // app.use(client.routes())
 // app.use(others.routes())
 

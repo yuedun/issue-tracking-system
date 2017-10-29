@@ -37,6 +37,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var Router = require("koa-router");
 var moment = require("moment");
+var Bluebird = require("bluebird");
 var router = new Router();
 var debug = require('debug')('yuedun:admin');
 var assistance_model_1 = require("../models/assistance-model");
@@ -167,27 +168,33 @@ router.get('/admin/help', function (ctx, next) {
                 case 2:
                     assistancePeople = _a.sent();
                     assistanceInfos = assistancies;
-                    assistanceInfos.forEach(function (item) { return __awaiter(_this, void 0, void 0, function () {
-                        var userRecord;
-                        return __generator(this, function (_a) {
-                            switch (_a.label) {
-                                case 0: return [4 /*yield*/, item.getUser()];
-                                case 1:
-                                    userRecord = _a.sent();
-                                    item.user_name = userRecord.user_name;
-                                    item.setDataValue("created_at", moment(item.created_at).format("YYYY-MM-DD HH:ss:mm"));
-                                    return [2 /*return*/];
-                            }
-                        });
-                    }); });
+                    return [4 /*yield*/, Bluebird.map(assistanceInfos, function (item, index) { return __awaiter(_this, void 0, void 0, function () {
+                            var userRecord;
+                            return __generator(this, function (_a) {
+                                switch (_a.label) {
+                                    case 0: return [4 /*yield*/, item.getUser()];
+                                    case 1:
+                                        userRecord = _a.sent();
+                                        item.user_name = userRecord.user_name;
+                                        // item.images = item.images.split(",")
+                                        item.setDataValue("created_at", moment(item.created_at).format("YYYY-MM-DD HH:ss:mm"));
+                                        return [2 /*return*/, item];
+                                }
+                            });
+                        }); })];
+                case 3:
+                    _a.sent();
                     return [4 /*yield*/, ctx.render('ask-for-help', {
                             title: '申请协助',
                             userAgent: userAgent,
                             referer: referer,
                             assistanceInfos: assistanceInfos,
                             assistancePeople: assistancePeople,
+                            api: {
+                                assistance: '/admin/help'
+                            }
                         })];
-                case 3:
+                case 4:
                     _a.sent();
                     return [2 /*return*/];
             }

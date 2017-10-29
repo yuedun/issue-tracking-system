@@ -13,6 +13,7 @@ export interface ModelAttributes {
     second_help_people?: string;
     user_agent?: string;
     referer?: string;
+    images?: string|string[];
     urgency_level?: number;
     state?: number;
     created_at?: string;
@@ -34,6 +35,7 @@ var Model = sequelize.define<ModelInstance, ModelAttributes>(
         second_help_people: Sequelize.STRING,
         user_agent: Sequelize.STRING,//浏览器
         referer: Sequelize.STRING,//来源页面
+        images: Sequelize.STRING,//图片
         urgency_level: {
             type: Sequelize.INTEGER,
             defaultValue: 1,
@@ -54,8 +56,8 @@ var Model = sequelize.define<ModelInstance, ModelAttributes>(
     }
 );
 
-// Model.sync({ alter: true });
-console.log(">>>>>>3")
+Model.sync({ alter: true });
+
 export default Model;
 
 Model.belongsTo(UserModel);

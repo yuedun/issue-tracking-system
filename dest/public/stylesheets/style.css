@@ -1,5 +1,5 @@
 .system-description{
-  height: 160px;
+  min-height: 160px;
   text-align: center;
   padding: 0 140px;
 }
@@ -37,7 +37,7 @@
 }
 .article ul li{
   display: inline-block;
-  width: 23%;
+  width: 22%;
   border-left: bisque solid 1px;
   padding: 0 5px;
   border-right: bisque solid 1px;
@@ -52,4 +52,7 @@
 }
 a i{
   color: #FF5722;
+}
+.asider{
+  padding-left: 10px;
 }

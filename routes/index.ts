@@ -1,5 +1,6 @@
 import * as Router from 'koa-router';
 import * as moment from 'moment';
+import * as Bluebird from 'bluebird';
 
 const router = new Router(
 	// {
@@ -76,10 +77,12 @@ router.get('/admin/help', async function (ctx: any, next: Function) {
 	});
 	let assistancePeople = await AssistancePeopleModel.findAll();
 	let assistanceInfos: AssistanceInfo[] = assistancies;
-	assistanceInfos.forEach(async item => {
+	await Bluebird.map(assistanceInfos, async (item, index)=>{
 		let userRecord = await item.getUser();
 		item.user_name = userRecord.user_name;
+		// item.images = item.images.split(",")
 		item.setDataValue("created_at", moment(item.created_at).format("YYYY-MM-DD HH:ss:mm"));
+		return item;
 	})
 	await ctx.render('ask-for-help', {
 		title: '申请协助',
@@ -87,6 +90,9 @@ router.get('/admin/help', async function (ctx: any, next: Function) {
 		referer,
 		assistanceInfos,
 		assistancePeople,
+		api: {
+			assistance: '/admin/help'
+		}
 	})
 });
 
