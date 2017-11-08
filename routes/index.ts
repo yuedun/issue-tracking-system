@@ -65,6 +65,7 @@ router.get('/others/c', async function (ctx: any, next: Function) {
 
 interface AssistanceInfo extends AssistanceInstance {
 	user_name?: string;
+	imageArr?: string[];
 }
 /**
  * 进入协助申请页面
@@ -80,7 +81,9 @@ router.get('/admin/help', async function (ctx: any, next: Function) {
 	await Bluebird.map(assistanceInfos, async (item, index)=>{
 		let userRecord = await item.getUser();
 		item.user_name = userRecord.user_name;
-		// item.images = item.images.split(",")
+		item.imageArr = item.images? item.imageArr = item.images.split(","): [];
+		console.log(item.imageArr);
+		
 		item.setDataValue("created_at", moment(item.created_at).format("YYYY-MM-DD HH:ss:mm"));
 		return item;
 	})

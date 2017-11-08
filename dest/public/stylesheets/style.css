@@ -46,6 +46,10 @@
   display: block;
   text-align: center;
 }
+.article section img{
+  width: 49%;
+  height: auto;
+}
 .time-text{
   color: #c2c2c2;
   font-size: 10px;

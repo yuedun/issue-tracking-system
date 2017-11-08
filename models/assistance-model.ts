@@ -13,7 +13,7 @@ export interface ModelAttributes {
     second_help_people?: string;
     user_agent?: string;
     referer?: string;
-    images?: string|string[];
+    images?: string;
     urgency_level?: number;
     state?: number;
     created_at?: string;
@@ -21,9 +21,9 @@ export interface ModelAttributes {
 }
 
 export interface ModelInstance
-    extends Sequelize.Instance<ModelAttributes>, ModelAttributes { 
-        getUser: Sequelize.BelongsToGetAssociationMixin<UserInstance>;
-    };
+    extends Sequelize.Instance<ModelAttributes>, ModelAttributes {
+    getUser: Sequelize.BelongsToGetAssociationMixin<UserInstance>;
+};
 /**
  * 申请的协助信息
  */

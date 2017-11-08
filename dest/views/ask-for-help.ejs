@@ -3,6 +3,16 @@
 
 <head>
   <%include layui-head.ejs%>
+  <script id="demo" type="text/html">
+    <form class="layui-form" action="">
+      <div class="layui-form-item">
+        <label class="layui-form-label">{{ title }}</label>
+        <div class="layui-input-block">
+          <input type="text" name="title" required  lay-verify="required" placeholder="请输入标题" autocomplete="off" class="layui-input">
+        </div>
+      </div>
+    </form?
+  </script>
 </head>
 
 <body>
@@ -33,8 +43,6 @@
                 <div class="layui-input-block">
                   <div class="tool">
                       <a href="javascript:void(0)"><i class="layui-icon" style="font-size: 30px; color: #FF5722;">&#xe60d;</i>图片</a>
-                      <a href="javascript:void(0)"><i class="layui-icon" style="font-size: 30px; color: #FF5722;">&#xe60c;</i>图片</a>
-                      <a href="javascript:void(0)"><i class="layui-icon" style="font-size: 30px; color: #FF5722;">&#xe660;</i>图片</a>
                   </div>
                 </div>
               </div>
@@ -51,20 +59,10 @@
                 <div class="layui-inline">
                   <label class="layui-form-label">协助人</label>
                   <div class="layui-input-inline" style="width: 100px;">
-                    <select name="first_help_people" lay-verify="" lay-search>
-                      <option value="">第一协助人</option>
-                      <% assistancePeople.forEach(function(item, index){%>
-                      <option value="<%= item.id%>"><%= item.user_name%></option>
-                      <%})%>
-                    </select>
+                    <input type="text" name="first_help_people" placeholder="第一协助人" autocomplete="off" class="layui-input">
                   </div>
                   <div class="layui-input-inline" style="width: 100px;">
-                    <select name="second_help_people" lay-verify="" lay-search>
-                      <option value="">第二协助人</option>
-                      <% assistancePeople.forEach(function(item, index){%>
-                      <option value="<%= item.id%>"><%= item.user_name%></option>
-                      <%})%>
-                    </select>
+                    <input type="text" name="second_help_people" placeholder="第二协助人" autocomplete="off" class="layui-input">
                   </div>
                 </div>
               </div>
@@ -88,6 +86,11 @@
                 </header>
                 <section>
                   <p><%=item.description%></p>
+                  <p>
+                    <% item.imageArr.forEach(function(img){%>
+                    <img src="<%= img%>"></img>
+                    <%})%>
+                  </p>
                 </section>
                 <hr>
                 <ul>
@@ -101,8 +104,6 @@
           </div>
           <div class="layui-col-md4">
             <div class="asider">
-              <p>【褚时健背后的女人，只读过三年书，却在丈夫锒铛入狱后，露出了绝不一般的真面目…】在褚时健的起伏人生中，始终藏着一个女人的身影。王石、王健林等商界大佬，在她面前都自愧不如，甘当学生。
-                她只读过三年的书，却影响了褚时健一辈子！而在褚时健跌落谷底，锒铛入狱之时，一向贤惠、低调的她，也露出 </p>
               <p>XSS攻击全称跨站脚本攻击，是为不和层叠样式表(Cascading Style Sheets, CSS)的缩写混淆，
                 故将跨站脚本攻击缩写为XSS，XSS是一种在web应用中的计算机安全漏洞，它允许恶意web用户将代码植入到
                 提供给其它用户使用的页面中。从而达到攻击的目的。如，盗取用户Cookie、破坏页面结构、重定向到其它网站等。
@@ -146,84 +147,95 @@
             </div>
           </div>
         </div>
-        <div class="layui-row">
-          <div class="layui-col-md7 layui-col-md-offset1">
-            
-          </div>
-        </div>
       </div>
     </div>
   </div>
-    <!-- 中间内容区 -->
-  <div class="layer_notice" style="display:none;">
-    <ul style="font-size:24px;padding:10px;">
-      <!-- <li><a href="">sdkjhgd</a></li>
-      <li><a href="">sdkjhgd</a></li>
-      <li><a href="">sdkjhgd</a></li> -->
-    </ul>
-  </div>
-    <script>
-      layui.use(['jquery', 'layer', 'form'], function () {
-        var layedit = layui.layedit,
-          layer = layui.layer,
-          form = layui.form,
-          $ = layui.jquery;
-        form.on('submit(formSubmit)', function(data){
-          console.log(JSON.stringify(data.field))
-          var datas = data.field;
-          $.post("/admin/help", {
-            description: datas.description,
-            first_help_people: datas.first_help_people,
-            second_help_people: datas.second_help_people,
-            referer: datas.referer
-          }, function (data) {
-            layer.msg(data.msg);
-          })
-          return false;
-        });
-        //删除协助
-        $(".article").on("click", "#J-del", function(){
-          var id = $(this).data("id");
-          console.log(id)
-          $.ajax({
-            url: "/admin/help/"+id,
-            type: "delete",
-            success: function(data){
-              layer.msg(data.msg);
-            }
-          })
+  <!-- 选择协助人模板 -->
+  <div id="view"></div>
+  
+  <script>
+    layui.use(['jquery', 'layer', 'form'], function () {
+      var layedit = layui.layedit,
+        layer = layui.layer,
+        form = layui.form,
+        laytpl = layui.laytpl,
+        $ = layui.jquery;
+      form.on('submit(formSubmit)', function(data){
+        console.log(JSON.stringify(data.field))
+        var datas = data.field;
+        $.post("/admin/help", {
+          description: datas.description,
+          first_help_people: datas.first_help_people,
+          second_help_people: datas.second_help_people,
+          referer: datas.referer
+        }, function (data) {
+          layer.msg(data.msg);
         })
-        //监听@
-        $("#description").on("input propertychange", function(e){
-          var value = $(this).val();
-          //正则：/@[^\s\n]*[\s$]+/g.test(value)
-          //匹配@开头的字符串
-          if (/@[^\s\n]*/g.test(value)) {
-            console.log(">>>>>>>>", value)
-            var user_name = value.replace(/[^\s\n]*@/, '');
-            console.log("截取后：", user_name)
-            if (user_name) {
-              $.get("/admin/assistance-peolpe", {
-                user_name: user_name
-              }, function (data) {
-                console.log(data)
-                var html = "";
-                data.assistancePeople.forEach(function(element) {
-                  html +='<li><a href="javascript:void(0)">'+element.user_name+'</a></li>'
-                }, this);
-                $(".layer_notice ul").empty().append(html);
-                layer.open({
-                  type: 1,
-                  shade: false,
-                  title: false, //不显示标题
-                  content: $('.layer_notice'), //捕获的元素，注意：最好该指定的元素要存放在body最外层，否则可能被其它的相对元素所影响
-                });
-              })
-            }
+        return false;
+      });
+      //删除协助
+      $(".article").on("click", "#J-del", function(){
+        var id = $(this).data("id");
+        console.log(id)
+        $.ajax({
+          url: "/admin/help/"+id,
+          type: "delete",
+          success: function(data){
+            layer.msg(data.msg);
           }
         })
       });
-    </script>
+      //选择协助人
+      $("input[name=first_help_people]").on("click", function(data){
+        console.log(data);
+        var data = { //数据
+          "title":"Layui常用模块"
+          ,"list":[{"modname":"弹层","alias":"layer","site":"layer.layui.com"},{"modname":"表单","alias":"form"}]
+        }
+        var tpl = $(demo).html()
+        , r = Handlebars.compile(tpl)
+        , d = r(data);
+        $("#view").html(d);
+
+        layer.open({
+          type: 1,
+          title: "刷选协助人",
+          skin: 'layui-layer-rim', //加上边框
+          area: ['520px', '340px'], //宽高
+          content: $('#view')
+        })
+      });
+      //监听@
+      $("#description").on("input propertychange", function(e){
+        var value = $(this).val();
+        //正则：/@[^\s\n]*[\s$]+/g.test(value)
+        //匹配@开头的字符串
+        if (/@[^\s\n]*/g.test(value)) {
+          console.log(">>>>>>>>", value)
+          var user_name = value.replace(/[^\s\n]*@/, '');
+          console.log("截取后：", user_name)
+          if (user_name) {
+            $.get("/admin/assistance-peolpe", {
+              user_name: user_name
+            }, function (data) {
+              console.log(data)
+              var html = "";
+              data.assistancePeople.forEach(function(element) {
+                html +='<li><a href="javascript:void(0)">'+element.user_name+'</a></li>'
+              }, this);
+              $(".layer_notice ul").empty().append(html);
+              layer.open({
+                type: 1,
+                shade: false,
+                title: false, //不显示标题
+                content: $('.layer_notice'), //捕获的元素，注意：最好该指定的元素要存放在body最外层，否则可能被其它的相对元素所影响
+              });
+            })
+          }
+        }
+      })
+    });
+  </script>
 </body>
 
 </html>

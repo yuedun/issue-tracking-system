@@ -176,7 +176,8 @@ router.get('/admin/help', function (ctx, next) {
                                     case 1:
                                         userRecord = _a.sent();
                                         item.user_name = userRecord.user_name;
-                                        // item.images = item.images.split(",")
+                                        item.imageArr = item.images ? item.imageArr = item.images.split(",") : [];
+                                        console.log(item.imageArr);
                                         item.setDataValue("created_at", moment(item.created_at).format("YYYY-MM-DD HH:ss:mm"));
                                         return [2 /*return*/, item];
                                 }
