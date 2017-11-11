@@ -3,9 +3,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var Sequelize = require("sequelize");
 var db_connection_1 = require("../utils/db-connection");
 ;
-/**
- * 功能列表
- */
 var Model = db_connection_1.default.define('AssistancePeople', {
     feature_name: Sequelize.STRING,
 }, {

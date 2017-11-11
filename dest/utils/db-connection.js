@@ -1,7 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var Sequelize = require("sequelize");
-//新的操作符 [Op.and]: {a: 5} 等于 AND (a = 5)
 var Op = Sequelize.Op;
 var operatorsAliases = {
     $eq: Op.eq,
