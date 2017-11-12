@@ -1,4 +1,5 @@
 import * as Sequelize from 'sequelize';
+import {mysql} from '../config';
 //新的操作符 [Op.and]: {a: 5} 等于 AND (a = 5)
 const Op = Sequelize.Op;
 
@@ -39,8 +40,8 @@ const operatorsAliases = {
 	$col: Op.col
 };
 
-const sequelize = new Sequelize('issue', 'root', 'root', {
-	host: 'localhost',
+const sequelize = new Sequelize(mysql.db, mysql.username, mysql.password, {
+	host: mysql.host,
 	dialect: 'mysql',
 
 	pool: {

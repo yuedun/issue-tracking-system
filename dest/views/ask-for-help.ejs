@@ -3,16 +3,6 @@
 
 <head>
   <%include layui-head.ejs%>
-  <script id="demo" type="text/html">
-    <form class="layui-form" action="">
-      <div class="layui-form-item">
-        <label class="layui-form-label">{{ title }}</label>
-        <div class="layui-input-block">
-          <input type="text" name="title" required  lay-verify="required" placeholder="请输入标题" autocomplete="off" class="layui-input">
-        </div>
-      </div>
-    </form?
-  </script>
 </head>
 
 <body>
@@ -189,8 +179,7 @@
       $("input[name=first_help_people]").on("click", function(data){
         console.log(data);
         var data = { //数据
-          "title":"Layui常用模块"
-          ,"list":[{"modname":"弹层","alias":"layer","site":"layer.layui.com"},{"modname":"表单","alias":"form"}]
+          "list":[{"modname":"弹层","alias":"layer","site":"layer.layui.com"},{"modname":"表单","alias":"form"}]
         }
         var tpl = $(demo).html()
         , r = Handlebars.compile(tpl)
@@ -235,6 +224,16 @@
         }
       })
     });
+  </script>
+  <script id="demo" type="text/html">
+    <form class="layui-form" action="">
+      <div class="layui-form-item">
+        <label class="layui-form-label">姓名</label>
+        <div class="layui-input-block">
+          <input type="text" name="title" required  lay-verify="required" placeholder="请输入标题" autocomplete="off" class="layui-input">
+        </div>
+      </div>
+    </form?
   </script>
 </body>
 
