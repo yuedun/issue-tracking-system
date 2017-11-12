@@ -8,6 +8,8 @@ linux下npm脚本：
 windows:
 "dev": "set DEBUG=yuedun:*& cd ./dest & nodemon ./bin/www.js",
 
+复制config-sample.ts改名为config.ts
+
 koa.js获取url参数
 
 `ctx.request.body`获取`post body`中的参数

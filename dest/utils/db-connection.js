@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var Sequelize = require("sequelize");
+var config_1 = require("../config");
 var Op = Sequelize.Op;
 var operatorsAliases = {
     $eq: Op.eq,
@@ -38,8 +39,8 @@ var operatorsAliases = {
     $values: Op.values,
     $col: Op.col
 };
-var sequelize = new Sequelize('issue', 'root', 'root', {
-    host: 'localhost',
+var sequelize = new Sequelize(config_1.mysql.db, config_1.mysql.username, config_1.mysql.password, {
+    host: config_1.mysql.host,
     dialect: 'mysql',
     pool: {
         max: 5,

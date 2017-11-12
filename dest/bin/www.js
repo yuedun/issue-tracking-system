@@ -5,7 +5,7 @@ require("source-map-support/register");
 var app_1 = require("../app");
 var debug = require('debug')('yuedun:server');
 var http = require('http');
-var port = normalizePort(process.env.PORT || '3000');
+var port = normalizePort(process.env.PORT || '3002');
 var server = http.createServer(app_1.default.callback());
 server.listen(port);
 server.on('error', onError);
