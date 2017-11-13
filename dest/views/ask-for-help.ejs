@@ -176,19 +176,18 @@
         })
       });
       //选择协助人
-      $("input[name=first_help_people]").on("click", function(data){
-        console.log(data);
+      $("input[name=first_help_people]").on("click", function(){
         var data = { //数据
           "list":[{"modname":"弹层","alias":"layer","site":"layer.layui.com"},{"modname":"表单","alias":"form"}]
         }
-        var tpl = $(demo).html()
+        var tpl = $(searchPeople).html()
         , r = Handlebars.compile(tpl)
         , d = r(data);
         $("#view").html(d);
 
         layer.open({
           type: 1,
-          title: "刷选协助人",
+          title: "筛选协助人",
           skin: 'layui-layer-rim', //加上边框
           area: ['520px', '340px'], //宽高
           content: $('#view')
@@ -225,12 +224,12 @@
       })
     });
   </script>
-  <script id="demo" type="text/html">
+  <script id="searchPeople" type="text/x-handlebars-template">
     <form class="layui-form" action="">
       <div class="layui-form-item">
         <label class="layui-form-label">姓名</label>
-        <div class="layui-input-block">
-          <input type="text" name="title" required  lay-verify="required" placeholder="请输入标题" autocomplete="off" class="layui-input">
+        <div class="layui-input-inline">
+          <input type="text" name="title" required  lay-verify="required" placeholder="请输入姓名搜索" autocomplete="off" class="layui-input">
         </div>
       </div>
     </form?
