@@ -49,7 +49,11 @@ const sequelize = new Sequelize(mysql.db, mysql.username, mysql.password, {
 		min: 0,
 		idle: 10000
 	},
-	operatorsAliases
+	operatorsAliases,
+	// logging: function(message: string){
+	// 	// console.log(message);
+		
+	// }
 });
 
 export function select(sql: string) {
@@ -57,3 +61,5 @@ export function select(sql: string) {
 }
 
 export default sequelize;
+
+require("../models/models-relation");

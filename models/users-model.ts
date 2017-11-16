@@ -1,6 +1,5 @@
 import * as Sequelize from 'sequelize';
 import sequelize from '../utils/db-connection';
-import { default as AssistanceModel, ModelInstance as AssistanceInstance } from './assistance-model';
 
 export interface ModelAttributes {
     id?: number;
@@ -9,14 +8,16 @@ export interface ModelAttributes {
 }
 
 export interface ModelInstance
-    extends Sequelize.Instance<ModelAttributes>, ModelAttributes { };
+    extends Sequelize.Instance<ModelAttributes> {
+
+};
 /**
- * 用户表，该表为实际业务人员信息表
+ * 功能列表，只是提供一个可以选择的列表
  */
 var Model = sequelize.define<ModelInstance, ModelAttributes>(
-    'User', {
-        user_name: Sequelize.STRING(10),
-        mobile: Sequelize.STRING(11)
+    'Users', {
+        user_name: Sequelize.STRING,
+        mobile: Sequelize.STRING
     }, {
         underscored: true,
         tableName: 'users',
@@ -24,7 +25,6 @@ var Model = sequelize.define<ModelInstance, ModelAttributes>(
         collate: 'utf8_unicode_ci'
     }
 );
-
-Model.sync({ alter: true });
+// Model.sync({ alter: true });
 
 export default Model;

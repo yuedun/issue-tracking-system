@@ -140,8 +140,36 @@
       </div>
     </div>
   </div>
-  <!-- 选择协助人模板 -->
-  <div id="view"></div>
+  <!-- 选择协助人模态框 -->
+  <div id="view">
+    <div class="layui-row">
+      <div class="layui-form-item">
+        <label class="layui-form-label">姓名</label>
+        <div class="layui-input-inline">
+          <input type="text" name="J-search-name" required  lay-verify="required" placeholder="请输入姓名搜索" autocomplete="off" class="layui-input">
+        </div>
+      </div>
+      <div class="layui-form-item">
+        <table class="layui-table">
+          <colgroup>
+            <col width="150">
+            <col width="200">
+            <col>
+          </colgroup>
+          <thead>
+            <tr>
+              <th>姓名</th>
+              <th>负责模块</th>
+              <th>操作</th>
+            </tr> 
+          </thead>
+          <tbody class="J-assistance-people-list">
+            
+          </tbody>
+        </table>
+      </div>
+    </form>
+  </div>
   
   <script>
     layui.use(['jquery', 'layer', 'form'], function () {
@@ -153,7 +181,7 @@
       form.on('submit(formSubmit)', function(data){
         console.log(JSON.stringify(data.field))
         var datas = data.field;
-        $.post("/admin/help", {
+        $.post("/platform/help", {
           description: datas.description,
           first_help_people: datas.first_help_people,
           second_help_people: datas.second_help_people,
@@ -168,7 +196,7 @@
         var id = $(this).data("id");
         console.log(id)
         $.ajax({
-          url: "/admin/help/"+id,
+          url: "/platform/help/"+id,
           type: "delete",
           success: function(data){
             layer.msg(data.msg);
@@ -177,14 +205,6 @@
       });
       //选择协助人
       $("input[name=first_help_people]").on("click", function(){
-        var data = { //数据
-          "list":[{"modname":"弹层","alias":"layer","site":"layer.layui.com"},{"modname":"表单","alias":"form"}]
-        }
-        var tpl = $(searchPeople).html()
-        , r = Handlebars.compile(tpl)
-        , d = r(data);
-        $("#view").html(d);
-
         layer.open({
           type: 1,
           title: "筛选协助人",
@@ -193,6 +213,25 @@
           content: $('#view')
         })
       });
+
+      $("input[name=J-search-name]").on("change", function(){
+        var data = { //数据
+          "list":[{"user_name":"弹层","feature":"layer layer layer layer layer layer layer layer layer layer","site":"layer.layui.com"},
+          {"user_name":"表单","feature":"form"},{"user_name":"弹层","feature":"layer","site":"layer.layui.com"},
+          {"user_name":"弹层","feature":"layer","site":"layer.layui.com"},
+          {"user_name":"弹层","feature":"layer","site":"layer.layui.com"},
+          {"user_name":"弹层","feature":"layer","site":"layer.layui.com"},]
+        }
+        $.get("/platform/assistance-peolpe/features", {
+          user_name: $(this).val()
+        }, function (datas) {
+          var tpl = $(searchPeople).html()
+          , r = Handlebars.compile(tpl)
+          , d = r(data);
+          $(".J-assistance-people-list").html(d);
+          })
+      });
+
       //监听@
       $("#description").on("input propertychange", function(e){
         var value = $(this).val();
@@ -203,7 +242,7 @@
           var user_name = value.replace(/[^\s\n]*@/, '');
           console.log("截取后：", user_name)
           if (user_name) {
-            $.get("/admin/assistance-peolpe", {
+            $.get("/platform/assistance-peolpe", {
               user_name: user_name
             }, function (data) {
               console.log(data)
@@ -225,14 +264,13 @@
     });
   </script>
   <script id="searchPeople" type="text/x-handlebars-template">
-    <form class="layui-form" action="">
-      <div class="layui-form-item">
-        <label class="layui-form-label">姓名</label>
-        <div class="layui-input-inline">
-          <input type="text" name="title" required  lay-verify="required" placeholder="请输入姓名搜索" autocomplete="off" class="layui-input">
-        </div>
-      </div>
-    </form?
+    {{#each list}}
+    <tr>
+      <td>{{ user_name }}</td>
+      <td>{{ feature }}</td>
+      <td><button class="layui-btn layui-btn layui-btn-small">选择</button></td>
+    </tr>
+    {{/each}}
   </script>
 </body>
 

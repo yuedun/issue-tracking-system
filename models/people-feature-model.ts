@@ -3,7 +3,8 @@ import sequelize from '../utils/db-connection';
 
 export interface ModelAttributes {
     id?: number;
-    feature_name?: string;
+    assis_people_id?: number;
+    feature_id?: number;
 }
 
 export interface ModelInstance
@@ -11,18 +12,20 @@ export interface ModelInstance
 
 };
 /**
- * 功能列表，只是提供一个可以选择的列表
+ * 功能列表
  */
 var Model = sequelize.define<ModelInstance, ModelAttributes>(
-    'Features', {
-        feature_name: Sequelize.STRING,
+    'PeopleFeature', {
+        assis_people_id: Sequelize.INTEGER,
+        feature_id: Sequelize.INTEGER,
     }, {
         underscored: true,
-        tableName: 'features',
+        tableName: 'people_feature_relation',
         charset: 'utf8',
         collate: 'utf8_unicode_ci'
     }
 );
-Model.sync({ alter: true });
+
+// Model.sync({ alter: true });
 
 export default Model;

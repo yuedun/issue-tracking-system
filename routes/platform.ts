@@ -4,21 +4,22 @@ import * as Bluebird from 'bluebird';
 
 const router = new Router(
 	// {
-	// 	prefix: "/index"
+	// 	prefix: "/platform"
 	// }
 );
-const debug = require('debug')('yuedun:admin');
+const debug = require('debug')('yuedun:platform');
 import { select } from '../utils/db-connection';
+import { default as UserModel, ModelAttributes as UserPOJO, ModelInstance as UserInstance } from '../models/users-model';
 import { default as AssistanceModel, ModelAttributes as AssistancePOJO, ModelInstance as AssistanceInstance } from '../models/assistance-model';
 import { default as AssistancePeopleModel, ModelAttributes as AssistancePeoplePOJO, ModelInstance as AssistancePeopleInstance } from '../models/assistance-people-model';
-import { default as UserModel, ModelAttributes as UserPOJO, ModelInstance as UserInstance } from '../models/user-model';
+import { default as FeatureModel, ModelAttributes as FeaturePOJO, ModelInstance as FeatureInstance } from '../models/feature-model';
 /**
  * render 函数是koa-views中间件赋予ctx的，是一个promise函数，所以需要用await修饰
  */
-router.get('/admin', async function (ctx: any, next: Function) {
+router.get('/platform', async function (ctx: any, next: Function) {
 	debug(">>>admin输出");
-	await ctx.render('admin', {
-		title: 'hello admin',
+	await ctx.render('platform', {
+		title: 'hello platform',
 		body: "<h1>这是管理平台</h1>"
 	})
 });
@@ -41,24 +42,24 @@ router.get('/client', async function (ctx: any, next: Function) {
 
 router.get('/others/a', async function (ctx: any, next: Function) {
 	debug(">>>admin输出");
-	await ctx.render('admin', {
-		title: 'hello admin',
+	await ctx.render('platform', {
+		title: 'hello platform',
 		body: "<h1>这是管理平台</h1>"
 	})
 });
 
 router.get('/others/b', async function (ctx: any, next: Function) {
 	debug(">>>admin输出");
-	await ctx.render('admin', {
-		title: 'hello admin',
+	await ctx.render('platform', {
+		title: 'hello platform',
 		body: "<h1>这是管理平台</h1>"
 	})
 });
 
 router.get('/others/c', async function (ctx: any, next: Function) {
 	debug(">>>admin输出");
-	await ctx.render('admin', {
-		title: 'hello admin',
+	await ctx.render('platform', {
+		title: 'hello platform',
 		body: "<h1>这是管理平台</h1>"
 	})
 });
@@ -70,7 +71,7 @@ interface AssistanceInfo extends AssistanceInstance {
 /**
  * 进入协助申请页面
  */
-router.get('/admin/help', async function (ctx: any, next: Function) {
+router.get('/platform/help', async function (ctx: any, next: Function) {
 	let userAgent = ctx.req.headers['user-agent'];
 	let referer = ctx.req.headers['referer'];
 	let assistancies = await AssistanceModel.findAll({
@@ -80,7 +81,7 @@ router.get('/admin/help', async function (ctx: any, next: Function) {
 	let assistanceInfos: AssistanceInfo[] = assistancies;
 	await Bluebird.map(assistanceInfos, async (item, index)=>{
 		let userRecord = await item.getUser();
-		item.user_name = userRecord.user_name;
+		// item.user_name = userRecord.user_name;
 		item.imageArr = item.images? item.imageArr = item.images.split(","): [];
 		
 		item.setDataValue("created_at", moment(item.created_at).format("YYYY-MM-DD HH:ss:mm"));
@@ -93,7 +94,7 @@ router.get('/admin/help', async function (ctx: any, next: Function) {
 		assistanceInfos,
 		assistancePeople,
 		api: {
-			assistance: '/admin/help'
+			assistance: '/platform/help'
 		}
 	})
 });
@@ -101,7 +102,7 @@ router.get('/admin/help', async function (ctx: any, next: Function) {
 /**
  * 创建协助请求
  */
-router.post('/admin/help', async function (ctx: any, next: Function) {
+router.post('/platform/help', async function (ctx: any, next: Function) {
 	let args = ctx.request.body;
 	debug(">>>>>>>>>>>>>post", args)
 	let assistance = await AssistanceModel.create({
@@ -121,7 +122,7 @@ router.post('/admin/help', async function (ctx: any, next: Function) {
 /**
  * 删除协助
  */
-router.delete('/admin/help/:id', async function (ctx: any, next: Function) {
+router.delete('/platform/help/:id', async function (ctx: any, next: Function) {
 	let [id] = ctx.captures;
 	debug(">>>>>>>>>>>>>delete", id)
 	let assistance = await AssistanceModel.destroy({
@@ -133,56 +134,21 @@ router.delete('/admin/help/:id', async function (ctx: any, next: Function) {
 });
 
 /**
- * 创建协助人
- */
-router.post('/admin/assitance-people', async function (ctx: any, next: Function) {
-	let args = ctx.request.body;
-	debug(">>>>>>>>>>>>>post assistance people:", args)
-	let assistancePeople = await AssistancePeopleModel.create({
-		user_name: args.user_name,
-		mobile: args.mobile,
-		email: args.email,
-		in_charge_of: args.in_charge_of,
-		is_main: args.is_main,
-	})
-	ctx.body = {
-		msg: "创建成功",
-		assistancePeople
-	}
-});
-
-/**
  * 获取协助人
+ * /platform/assistance-peolpe/features
  */
-router.get('/admin/assistance-peolpe', async function (ctx: any, next: Function) {
+router.get('/platform/assistance-peolpe/features', async function (ctx: any, next: Function) {
 	let args = ctx.request.query;
 	debug(">>>>>>>>>>>>>post assistance people:", args)
 	let assistancePeople = await AssistancePeopleModel.findAll({
 		where: {
 			user_name: { $like: `${args.user_name}%` }
-		}
+		},
+		include: [{model: FeatureModel}]
 	})
+	debug(">>>>>>>>>>>>>",assistancePeople)
 	ctx.body = {
 		msg: "获取成功",
-		assistancePeople
-	}
-});
-/**
- * 修改协助人
- */
-router.patch('/admin/assitance-people', async function (ctx: any, next: Function) {
-	let args = ctx.request.body;
-	debug(">>>>>>>>>>>>>post assistance people:", args)
-	let assistancePeople = await AssistancePeopleModel.update({
-		user_name: args.user_name,
-		mobile: args.mobile,
-		email: args.email,
-		in_charge_of: args.in_charge_of
-	}, {
-			where: { id: 1 }
-		})
-	ctx.body = {
-		msg: "修改成功",
 		assistancePeople
 	}
 });

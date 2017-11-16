@@ -38,21 +38,19 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var Router = require("koa-router");
 var moment = require("moment");
 var Bluebird = require("bluebird");
-var router = new Router({
-    prefix: "/platform"
-});
-var debug = require('debug')('yuedun:admin');
+var router = new Router();
+var debug = require('debug')('yuedun:platform');
 var assistance_model_1 = require("../models/assistance-model");
 var assistance_people_model_1 = require("../models/assistance-people-model");
 var feature_model_1 = require("../models/feature-model");
-router.get('/admin', function (ctx, next) {
+router.get('/platform', function (ctx, next) {
     return __awaiter(this, void 0, void 0, function () {
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
                     debug(">>>admin输出");
-                    return [4, ctx.render('admin', {
-                            title: 'hello admin',
+                    return [4, ctx.render('platform', {
+                            title: 'hello platform',
                             body: "<h1>这是管理平台</h1>"
                         })];
                 case 1:
@@ -102,8 +100,8 @@ router.get('/others/a', function (ctx, next) {
             switch (_a.label) {
                 case 0:
                     debug(">>>admin输出");
-                    return [4, ctx.render('admin', {
-                            title: 'hello admin',
+                    return [4, ctx.render('platform', {
+                            title: 'hello platform',
                             body: "<h1>这是管理平台</h1>"
                         })];
                 case 1:
@@ -119,8 +117,8 @@ router.get('/others/b', function (ctx, next) {
             switch (_a.label) {
                 case 0:
                     debug(">>>admin输出");
-                    return [4, ctx.render('admin', {
-                            title: 'hello admin',
+                    return [4, ctx.render('platform', {
+                            title: 'hello platform',
                             body: "<h1>这是管理平台</h1>"
                         })];
                 case 1:
@@ -136,8 +134,8 @@ router.get('/others/c', function (ctx, next) {
             switch (_a.label) {
                 case 0:
                     debug(">>>admin输出");
-                    return [4, ctx.render('admin', {
-                            title: 'hello admin',
+                    return [4, ctx.render('platform', {
+                            title: 'hello platform',
                             body: "<h1>这是管理平台</h1>"
                         })];
                 case 1:
@@ -147,7 +145,7 @@ router.get('/others/c', function (ctx, next) {
         });
     });
 });
-router.get('/admin/help', function (ctx, next) {
+router.get('/platform/help', function (ctx, next) {
     return __awaiter(this, void 0, void 0, function () {
         var _this = this;
         var userAgent, referer, assistancies, assistancePeople, assistanceInfos;
@@ -172,7 +170,6 @@ router.get('/admin/help', function (ctx, next) {
                                     case 0: return [4, item.getUser()];
                                     case 1:
                                         userRecord = _a.sent();
-                                        item.user_name = userRecord.user_name;
                                         item.imageArr = item.images ? item.imageArr = item.images.split(",") : [];
                                         item.setDataValue("created_at", moment(item.created_at).format("YYYY-MM-DD HH:ss:mm"));
                                         return [2, item];
@@ -188,7 +185,7 @@ router.get('/admin/help', function (ctx, next) {
                             assistanceInfos: assistanceInfos,
                             assistancePeople: assistancePeople,
                             api: {
-                                assistance: '/admin/help'
+                                assistance: '/platform/help'
                             }
                         })];
                 case 4:
@@ -198,7 +195,7 @@ router.get('/admin/help', function (ctx, next) {
         });
     });
 });
-router.post('/admin/help', function (ctx, next) {
+router.post('/platform/help', function (ctx, next) {
     return __awaiter(this, void 0, void 0, function () {
         var args, assistance;
         return __generator(this, function (_a) {
@@ -226,7 +223,7 @@ router.post('/admin/help', function (ctx, next) {
         });
     });
 });
-router.delete('/admin/help/:id', function (ctx, next) {
+router.delete('/platform/help/:id', function (ctx, next) {
     return __awaiter(this, void 0, void 0, function () {
         var id, assistance;
         return __generator(this, function (_a) {
@@ -247,33 +244,7 @@ router.delete('/admin/help/:id', function (ctx, next) {
         });
     });
 });
-router.post('/admin/assitance-people', function (ctx, next) {
-    return __awaiter(this, void 0, void 0, function () {
-        var args, assistancePeople;
-        return __generator(this, function (_a) {
-            switch (_a.label) {
-                case 0:
-                    args = ctx.request.body;
-                    debug(">>>>>>>>>>>>>post assistance people:", args);
-                    return [4, assistance_people_model_1.default.create({
-                            user_name: args.user_name,
-                            mobile: args.mobile,
-                            email: args.email,
-                            in_charge_of: args.in_charge_of,
-                            is_main: args.is_main,
-                        })];
-                case 1:
-                    assistancePeople = _a.sent();
-                    ctx.body = {
-                        msg: "创建成功",
-                        assistancePeople: assistancePeople
-                    };
-                    return [2];
-            }
-        });
-    });
-});
-router.get('/admin/assistance-peolpe/features', function (ctx, next) {
+router.get('/platform/assistance-peolpe/features', function (ctx, next) {
     return __awaiter(this, void 0, void 0, function () {
         var args, assistancePeople;
         return __generator(this, function (_a) {
@@ -299,32 +270,5 @@ router.get('/admin/assistance-peolpe/features', function (ctx, next) {
         });
     });
 });
-router.patch('/admin/assitance-people', function (ctx, next) {
-    return __awaiter(this, void 0, void 0, function () {
-        var args, assistancePeople;
-        return __generator(this, function (_a) {
-            switch (_a.label) {
-                case 0:
-                    args = ctx.request.body;
-                    debug(">>>>>>>>>>>>>post assistance people:", args);
-                    return [4, assistance_people_model_1.default.update({
-                            user_name: args.user_name,
-                            mobile: args.mobile,
-                            email: args.email,
-                            in_charge_of: args.in_charge_of
-                        }, {
-                            where: { id: 1 }
-                        })];
-                case 1:
-                    assistancePeople = _a.sent();
-                    ctx.body = {
-                        msg: "修改成功",
-                        assistancePeople: assistancePeople
-                    };
-                    return [2];
-            }
-        });
-    });
-});
 exports.default = router;
-//# sourceMappingURL=index.js.map
+//# sourceMappingURL=platform.js.map

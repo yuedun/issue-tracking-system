@@ -35,34 +35,21 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var Koa = require("koa");
-var app = new Koa();
 var Router = require("koa-router");
-var router = new Router();
-var views = require('koa-views');
-var json = require('koa-json');
-var onerror = require('koa-onerror');
-var bodyparser = require('koa-bodyparser');
-var logger = require('koa-logger');
-var cors = require('koa2-cors');
-var test_1 = require("./routes/test");
-var platform_1 = require("./routes/platform");
-var teacher_1 = require("./routes/teacher");
-onerror(app);
-app.use(function (ctx, next) {
+var router = new Router({
+    prefix: "/admin"
+});
+var debug = require('debug')('yuedun:admin');
+var assistance_people_model_1 = require("../models/assistance-people-model");
+var feature_model_1 = require("../models/feature-model");
+router.post('/people/features', function (ctx, next) {
     return __awaiter(this, void 0, void 0, function () {
         return __generator(this, function (_a) {
             switch (_a.label) {
-                case 0:
-                    ctx.set("Access-Control-Allow-Origin", ctx.request.header.origin);
-                    ctx.set("Access-Control-Allow-Credentials", true);
-                    ctx.set("Access-Control-Max-Age", 86400000);
-                    ctx.set("Access-Control-Allow-Methods", "OPTIONS, GET, PUT, POST, DELETE");
-                    ctx.set("Access-Control-Allow-Headers", "x-requested-with, accept, origin, content-type");
-                    if (ctx.request.method == "OPTIONS") {
-                        ctx.response.status = 200;
-                    }
-                    return [4, next()];
+                case 0: return [4, ctx.render('client', {
+                        title: 'hello client',
+                        body: "<h1>这是教学客户端</h1>"
+                    })];
                 case 1:
                     _a.sent();
                     return [2];
@@ -70,50 +57,79 @@ app.use(function (ctx, next) {
         });
     });
 });
-app.use(bodyparser({
-    enableTypes: ['json', 'form', 'text']
-}));
-app.use(json());
-app.use(logger());
-app.use(require('koa-static')(__dirname + '/public'));
-app.use(views(__dirname + '/views', {
-    extension: 'ejs'
-}));
-app.use(function (ctx, next) {
+router.post('/features', function (ctx, next) {
     return __awaiter(this, void 0, void 0, function () {
-        var start, ms;
+        var args, feature;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
-                    start = new Date().getTime();
-                    return [4, next()];
+                    args = ctx.request.body;
+                    return [4, feature_model_1.default.create({
+                            feature_name: args.feature_name
+                        })];
                 case 1:
-                    _a.sent();
-                    ms = new Date().getTime() - start;
-                    console.log(ctx.method + " " + ctx.url + " - " + ms + "ms");
+                    feature = _a.sent();
+                    ctx.body = {
+                        msg: "创建成功",
+                        feature: feature
+                    };
                     return [2];
             }
         });
     });
 });
-app.use(function (ctx, next) {
+router.post('/platform/assitance-people', function (ctx, next) {
     return __awaiter(this, void 0, void 0, function () {
+        var args, assistancePeople;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
-                    if (ctx.url == '/') {
-                        ctx.url = '/platform';
-                    }
-                    return [4, next()];
+                    args = ctx.request.body;
+                    debug(">>>>>>>>>>>>>post assistance people:", args);
+                    return [4, assistance_people_model_1.default.create({
+                            user_name: args.user_name,
+                            mobile: args.mobile,
+                            email: args.email,
+                            in_charge_of: args.in_charge_of,
+                            is_main: args.is_main,
+                        })];
                 case 1:
-                    _a.sent();
+                    assistancePeople = _a.sent();
+                    ctx.body = {
+                        msg: "创建成功",
+                        assistancePeople: assistancePeople
+                    };
                     return [2];
             }
         });
     });
 });
-app.use(test_1.default.routes());
-app.use(platform_1.default.routes());
-app.use(teacher_1.default.routes());
-exports.default = app;
-//# sourceMappingURL=app.js.map
+router.patch('/platform/assitance-people', function (ctx, next) {
+    return __awaiter(this, void 0, void 0, function () {
+        var args, assistancePeople;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0:
+                    args = ctx.request.body;
+                    debug(">>>>>>>>>>>>>post assistance people:", args);
+                    return [4, assistance_people_model_1.default.update({
+                            user_name: args.user_name,
+                            mobile: args.mobile,
+                            email: args.email,
+                            in_charge_of: args.in_charge_of
+                        }, {
+                            where: { id: 1 }
+                        })];
+                case 1:
+                    assistancePeople = _a.sent();
+                    ctx.body = {
+                        msg: "修改成功",
+                        assistancePeople: assistancePeople
+                    };
+                    return [2];
+            }
+        });
+    });
+});
+exports.default = router;
+//# sourceMappingURL=admin.js.map
