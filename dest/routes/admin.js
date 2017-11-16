@@ -42,16 +42,24 @@ var router = new Router({
 var debug = require('debug')('yuedun:admin');
 var assistance_people_model_1 = require("../models/assistance-people-model");
 var feature_model_1 = require("../models/feature-model");
+var people_feature_relation_model_1 = require("../models/people-feature-relation-model");
 router.post('/people/features', function (ctx, next) {
     return __awaiter(this, void 0, void 0, function () {
+        var args, peopleFeature;
         return __generator(this, function (_a) {
             switch (_a.label) {
-                case 0: return [4, ctx.render('client', {
-                        title: 'hello client',
-                        body: "<h1>这是教学客户端</h1>"
-                    })];
+                case 0:
+                    args = ctx.request.body;
+                    return [4, people_feature_relation_model_1.default.create({
+                            assis_people_id: args.people_id,
+                            feature_id: args.feature_id
+                        })];
                 case 1:
-                    _a.sent();
+                    peopleFeature = _a.sent();
+                    ctx.body = {
+                        msg: "创建成功",
+                        peopleFeature: peopleFeature
+                    };
                     return [2];
             }
         });
@@ -78,7 +86,7 @@ router.post('/features', function (ctx, next) {
         });
     });
 });
-router.post('/platform/assitance-people', function (ctx, next) {
+router.post('/assitance-people', function (ctx, next) {
     return __awaiter(this, void 0, void 0, function () {
         var args, assistancePeople;
         return __generator(this, function (_a) {
@@ -89,9 +97,7 @@ router.post('/platform/assitance-people', function (ctx, next) {
                     return [4, assistance_people_model_1.default.create({
                             user_name: args.user_name,
                             mobile: args.mobile,
-                            email: args.email,
-                            in_charge_of: args.in_charge_of,
-                            is_main: args.is_main,
+                            email: args.email
                         })];
                 case 1:
                     assistancePeople = _a.sent();
@@ -115,8 +121,7 @@ router.patch('/platform/assitance-people', function (ctx, next) {
                     return [4, assistance_people_model_1.default.update({
                             user_name: args.user_name,
                             mobile: args.mobile,
-                            email: args.email,
-                            in_charge_of: args.in_charge_of
+                            email: args.email
                         }, {
                             where: { id: 1 }
                         })];

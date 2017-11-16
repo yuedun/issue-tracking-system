@@ -23,6 +23,6 @@ var Model = sequelize.define<ModelInstance, ModelAttributes>(
         collate: 'utf8_unicode_ci'
     }
 );
-Model.sync({ alter: true });
+Model.sync({ alter: false });
 
 export default Model;

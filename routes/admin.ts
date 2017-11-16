@@ -13,16 +13,21 @@ import { default as UserModel, ModelAttributes as UserPOJO, ModelInstance as Use
 import { default as AssistanceModel, ModelAttributes as AssistancePOJO, ModelInstance as AssistanceInstance } from '../models/assistance-model';
 import { default as AssistancePeopleModel, ModelAttributes as AssistancePeoplePOJO, ModelInstance as AssistancePeopleInstance } from '../models/assistance-people-model';
 import { default as FeatureModel, ModelAttributes as FeaturePOJO, ModelInstance as FeatureInstance } from '../models/feature-model';
+import { default as PeopleFeatureModel, ModelAttributes as PeopleFeaturePOJO, ModelInstance as PeopleFeatureInstance } from '../models/people-feature-relation-model';
 
 /**
  * 协助人和功能关联
  */
 router.post('/people/features', async function (ctx: any, next: Function) {
-
-	await ctx.render('client', {
-		title: 'hello client',
-		body: "<h1>这是教学客户端</h1>"
+	let args = ctx.request.body;
+	let peopleFeature = await PeopleFeatureModel.create({
+		assis_people_id: args.people_id,
+		feature_id: args.feature_id
 	})
+	ctx.body = {
+		msg: "创建成功",
+		peopleFeature
+	}
 });
 
 /**
@@ -42,15 +47,13 @@ router.post('/features', async function (ctx: any, next: Function) {
 /**
  * 创建协助人
  */
-router.post('/platform/assitance-people', async function (ctx: any, next: Function) {
+router.post('/assitance-people', async function (ctx: any, next: Function) {
 	let args = ctx.request.body;
 	debug(">>>>>>>>>>>>>post assistance people:", args)
 	let assistancePeople = await AssistancePeopleModel.create({
 		user_name: args.user_name,
 		mobile: args.mobile,
-		email: args.email,
-		in_charge_of: args.in_charge_of,
-		is_main: args.is_main,
+		email: args.email
 	})
 	ctx.body = {
 		msg: "创建成功",
@@ -67,8 +70,7 @@ router.patch('/platform/assitance-people', async function (ctx: any, next: Funct
 	let assistancePeople = await AssistancePeopleModel.update({
 		user_name: args.user_name,
 		mobile: args.mobile,
-		email: args.email,
-		in_charge_of: args.in_charge_of
+		email: args.email
 	}, {
 			where: { id: 1 }
 		})

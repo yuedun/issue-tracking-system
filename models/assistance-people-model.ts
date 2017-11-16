@@ -7,8 +7,7 @@ export interface ModelAttributes {
     mobile?: string;
     email?: string;
     superior?: number;
-    in_charge_of?: string;
-    is_main?: number;
+    features?: string;
 }
 
 export interface ModelInstance

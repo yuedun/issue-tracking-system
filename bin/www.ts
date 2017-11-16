@@ -6,6 +6,7 @@
 import 'source-map-support/register';
 import sequelize from '../utils/db-connection';
 sequelize.sync({
+	alter: false,
 	logging: function (message: string) {
 		console.log(message);
 	}

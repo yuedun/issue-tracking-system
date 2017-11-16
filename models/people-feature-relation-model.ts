@@ -16,6 +16,11 @@ export interface ModelInstance
  */
 var Model = sequelize.define<ModelInstance, ModelAttributes>(
     'PeopleFeature', {
+        id: {
+            type: Sequelize.INTEGER,
+            primaryKey: true,
+            autoIncrement: true
+        },
         assis_people_id: Sequelize.INTEGER,
         feature_id: Sequelize.INTEGER,
     }, {
@@ -26,6 +31,6 @@ var Model = sequelize.define<ModelInstance, ModelAttributes>(
     }
 );
 
-// Model.sync({ alter: true });
+Model.sync({ alter: true });
 
 export default Model;

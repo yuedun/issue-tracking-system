@@ -11,6 +11,7 @@ const cors = require('koa2-cors')
 
 import { default as test } from './routes/test';
 import { default as platform } from './routes/platform';
+import { default as admin } from './routes/admin';
 import { default as teacher } from './routes/teacher';
 
 /**
@@ -63,6 +64,7 @@ app.use(async function(ctx: any, next: Function){
 // routes
 app.use(test.routes());
 app.use(platform.routes());
+app.use(admin.routes());
 app.use(teacher.routes());
 
 export default app;

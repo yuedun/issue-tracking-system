@@ -47,6 +47,7 @@ var logger = require('koa-logger');
 var cors = require('koa2-cors');
 var test_1 = require("./routes/test");
 var platform_1 = require("./routes/platform");
+var admin_1 = require("./routes/admin");
 var teacher_1 = require("./routes/teacher");
 onerror(app);
 app.use(function (ctx, next) {
@@ -114,6 +115,7 @@ app.use(function (ctx, next) {
 });
 app.use(test_1.default.routes());
 app.use(platform_1.default.routes());
+app.use(admin_1.default.routes());
 app.use(teacher_1.default.routes());
 exports.default = app;
 //# sourceMappingURL=app.js.map

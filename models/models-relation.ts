@@ -1,7 +1,7 @@
 import AssistancePeopleModel from './assistance-people-model';
 import AssistanceModel from './assistance-model';
 import FeatureModel from './feature-model';
-import PeopleFreatureModel from './people-feature-model';
+import PeopleFreatureModel from './people-feature-relation-model';
 import UsersModel from './users-model';
 
 AssistanceModel.belongsTo(UsersModel, { constraints: false });//不在数据库加约束
