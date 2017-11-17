@@ -43,13 +43,13 @@ router.get('/', function (ctx, next) {
     return __awaiter(this, void 0, void 0, function () {
         return __generator(this, function (_a) {
             switch (_a.label) {
-                case 0: return [4 /*yield*/, ctx.render('teacher', {
+                case 0: return [4, ctx.render('teacher', {
                         title: 'hello teacher',
                         body: "<h1>这是讲师APP</h1>"
                     })];
                 case 1:
                     _a.sent();
-                    return [2 /*return*/];
+                    return [2];
             }
         });
     });
@@ -57,7 +57,7 @@ router.get('/', function (ctx, next) {
 router.get('/string', function (ctx, next) { return __awaiter(_this, void 0, void 0, function () {
     return __generator(this, function (_a) {
         ctx.body = 'koa2 string';
-        return [2 /*return*/];
+        return [2];
     });
 }); });
 router.get('/json', function (ctx, next) { return __awaiter(_this, void 0, void 0, function () {
@@ -65,20 +65,20 @@ router.get('/json', function (ctx, next) { return __awaiter(_this, void 0, void 
         ctx.body = {
             title: 'koa2 json'
         };
-        return [2 /*return*/];
+        return [2];
     });
 }); });
 router.get('/test', function (ctx, next) { return __awaiter(_this, void 0, void 0, function () {
     var data;
     return __generator(this, function (_a) {
         switch (_a.label) {
-            case 0: return [4 /*yield*/, fs.rf('npm-debug.log')];
+            case 0: return [4, fs.rf('npm-debug.log')];
             case 1:
                 data = _a.sent();
-                return [4 /*yield*/, ctx.render('test', { title: 'Koa2-Easy', data: data })];
+                return [4, ctx.render('test', { title: 'Koa2-Easy', data: data })];
             case 2:
                 _a.sent();
-                return [2 /*return*/];
+                return [2];
         }
     });
 }); });

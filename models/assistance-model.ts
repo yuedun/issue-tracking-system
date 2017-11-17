@@ -1,7 +1,6 @@
 import * as Sequelize from 'sequelize';
 import sequelize from '../utils/db-connection';
-import { default as UserModel, ModelInstance as UserInstance } from './user-model';
-
+import { default as UserModel, ModelInstance as UserInstance } from './users-model';
 /**
  * 定义方式@types/sequelize GitHub上有示例
  */
@@ -60,4 +59,8 @@ Model.sync({ alter: true });
 
 export default Model;
 
-Model.belongsTo(UserModel);
+// Model.belongsTo(UserModel, { constraints: false });//不在数据库加约束
+// Model.belongsTo(UserModel, {as: 'u',foreignKey: 'uu_id'});
+//给user表起一个别名，会在assistance表加一个u_id外键，而不是user_id，如果直接指定foreignKey则使用uu_id作为外键
+//belongTo和hasOne都可以用作1：1关系，区别在于belongTo会在源表加外键，hasOne会在目标表加外键
+//源.belongTo(目标)，源.hasOne(目标)

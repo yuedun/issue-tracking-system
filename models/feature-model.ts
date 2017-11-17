@@ -7,12 +7,14 @@ export interface ModelAttributes {
 }
 
 export interface ModelInstance
-    extends Sequelize.Instance<ModelAttributes> { };
+    extends Sequelize.Instance<ModelAttributes> {
+
+};
 /**
- * 功能列表
+ * 功能列表，只是提供一个可以选择的列表
  */
 var Model = sequelize.define<ModelInstance, ModelAttributes>(
-    'AssistancePeople', {
+    'Features', {
         feature_name: Sequelize.STRING,
     }, {
         underscored: true,
@@ -21,7 +23,6 @@ var Model = sequelize.define<ModelInstance, ModelAttributes>(
         collate: 'utf8_unicode_ci'
     }
 );
-
-Model.sync({ alter: true });
+Model.sync({ alter: false });
 
 export default Model;

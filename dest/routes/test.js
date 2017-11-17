@@ -43,14 +43,14 @@ router.get('/', function (ctx, next) {
         var user;
         return __generator(this, function (_a) {
             switch (_a.label) {
-                case 0: return [4 /*yield*/, user_model_1.default.findById(1)];
+                case 0: return [4, user_model_1.default.findById(1)];
                 case 1:
                     user = _a.sent();
                     console.log(">>>>>>>>>>>", JSON.stringify(user));
                     ctx.body = {
                         user: user
                     };
-                    return [2 /*return*/];
+                    return [2];
             }
         });
     });

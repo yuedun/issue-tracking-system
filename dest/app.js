@@ -45,17 +45,18 @@ var onerror = require('koa-onerror');
 var bodyparser = require('koa-bodyparser');
 var logger = require('koa-logger');
 var cors = require('koa2-cors');
+var db_connection_1 = require("./utils/db-connection");
+db_connection_1.default.sync({
+    alter: false,
+    logging: function (message) {
+        console.log(message);
+    }
+});
 var test_1 = require("./routes/test");
-var index_1 = require("./routes/index");
+var platform_1 = require("./routes/platform");
+var admin_1 = require("./routes/admin");
 var teacher_1 = require("./routes/teacher");
-// import { default as client } from './routes/client'
-// import { default as others } from './routes/other'
-/**
- * app.env defaulting to the NODE_ENV or "development"
- */
-// error handler
 onerror(app);
-// middlewares
 app.use(function (ctx, next) {
     return __awaiter(this, void 0, void 0, function () {
         return __generator(this, function (_a) {
@@ -69,10 +70,10 @@ app.use(function (ctx, next) {
                     if (ctx.request.method == "OPTIONS") {
                         ctx.response.status = 200;
                     }
-                    return [4 /*yield*/, next()];
+                    return [4, next()];
                 case 1:
                     _a.sent();
-                    return [2 /*return*/];
+                    return [2];
             }
         });
     });
@@ -86,7 +87,6 @@ app.use(require('koa-static')(__dirname + '/public'));
 app.use(views(__dirname + '/views', {
     extension: 'ejs'
 }));
-// logger
 app.use(function (ctx, next) {
     return __awaiter(this, void 0, void 0, function () {
         var start, ms;
@@ -94,42 +94,35 @@ app.use(function (ctx, next) {
             switch (_a.label) {
                 case 0:
                     start = new Date().getTime();
-                    return [4 /*yield*/, next()];
+                    return [4, next()];
                 case 1:
                     _a.sent();
                     ms = new Date().getTime() - start;
                     console.log(ctx.method + " " + ctx.url + " - " + ms + "ms");
-                    return [2 /*return*/];
+                    return [2];
             }
         });
     });
 });
-/**
- * next参数返回的是Promise，所以用await方式执行
- */
 app.use(function (ctx, next) {
     return __awaiter(this, void 0, void 0, function () {
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
-                    //url重写：当url为"/"时，将url重写为"/admin"，
-                    //相当于请求”/admin”，有redirect的作用，但不是重定向，浏览器url还是“/”
                     if (ctx.url == '/') {
-                        ctx.url = '/admin';
+                        ctx.url = '/platform';
                     }
-                    return [4 /*yield*/, next()];
+                    return [4, next()];
                 case 1:
                     _a.sent();
-                    return [2 /*return*/];
+                    return [2];
             }
         });
     });
 });
-// routes
 app.use(test_1.default.routes());
-app.use(index_1.default.routes());
+app.use(platform_1.default.routes());
+app.use(admin_1.default.routes());
 app.use(teacher_1.default.routes());
-// app.use(client.routes())
-// app.use(others.routes())
 exports.default = app;
 //# sourceMappingURL=app.js.map

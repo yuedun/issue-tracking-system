@@ -1,4 +1,5 @@
 import * as Sequelize from 'sequelize';
+import { mysql } from '../config';
 //新的操作符 [Op.and]: {a: 5} 等于 AND (a = 5)
 const Op = Sequelize.Op;
 
@@ -39,8 +40,8 @@ const operatorsAliases = {
 	$col: Op.col
 };
 
-const sequelize = new Sequelize('issue', 'root', 'root', {
-	host: 'localhost',
+const sequelize = new Sequelize(mysql.db, mysql.username, mysql.password, {
+	host: mysql.host,
 	dialect: 'mysql',
 
 	pool: {
@@ -48,7 +49,11 @@ const sequelize = new Sequelize('issue', 'root', 'root', {
 		min: 0,
 		idle: 10000
 	},
-	operatorsAliases
+	operatorsAliases,
+	// logging: function(message: string){
+	// 	// console.log(message);
+		
+	// }
 });
 
 export function select(sql: string) {
@@ -56,3 +61,5 @@ export function select(sql: string) {
 }
 
 export default sequelize;
+
+require("../models/models-relation");

@@ -1,11 +1,10 @@
 import AssistancePeopleModel from './assistance-people-model';
-import UserModel from './user-model';
 import AssistanceModel from './assistance-model';
-//这种方法设置associate会出现import的进来的mondel可能为undefined的情况
-console.log(">>>>>>2")
-console.log(">>>>>>>>>>AssistanceModel", AssistanceModel);
-console.log(">>>>>>>>>>AssistancePeopleModel", AssistancePeopleModel);
-console.log(">>>>>>>>>>UserModel", UserModel);
+import FeatureModel from './feature-model';
+import PeopleFreatureModel from './people-feature-relation-model';
+import UsersModel from './users-model';
 
-// AssistanceModel.belongsTo(UserModel);
-// UserModel.hasOne(AssistanceModel);
+AssistanceModel.belongsTo(UsersModel, { constraints: false });//不在数据库加约束
+// AssistancePeopleModel.belongsToMany(FeatureModel, { through: PeopleFreatureModel, foreignKey: "assis_people_id" });
+// FeatureModel.belongsToMany(AssistancePeopleModel, { through: PeopleFreatureModel, foreignKey: "feature_id" });
+//through如果是字符串会自动创建PeopleFreatureModel，如果要自定义PeopleFreatureModel内容就先定义该model

@@ -7,15 +7,11 @@ export interface ModelAttributes {
     mobile?: string;
     email?: string;
     superior?: number;
-    in_charge_of?: string;
-    is_main?: number;
+    features?: string;
 }
 
 export interface ModelInstance
     extends Sequelize.Instance<ModelAttributes>, ModelAttributes { };
-/**
- * 可以选择的协助人信息，此类人不一定在业务用户表中，所以需要单独设置
- */
 var Model = sequelize.define<ModelInstance, ModelAttributes>(
     'AssistancePeople', {
         user_name: Sequelize.STRING,
@@ -25,12 +21,12 @@ var Model = sequelize.define<ModelInstance, ModelAttributes>(
             validate: { isEmail: true }
         },
         superior: Sequelize.INTEGER,//上级主管
-        in_charge_of: Sequelize.STRING,//负责的功能，字符串：逗号分割
-        is_main: {
-            type: Sequelize.INTEGER,
-            defaultValue: 0,
-            comment: '是否主要负责人，0[否]，1[是]'
-        }
+        features: {
+            type: Sequelize.STRING,
+            allowNull: false,
+            defaultValue: "",
+            comment: "负责的功能，字符串：逗号分割"
+        },//负责的功能，字符串：逗号分割
     }, {
         underscored: true,
         tableName: 'assistance_people',
@@ -38,7 +34,6 @@ var Model = sequelize.define<ModelInstance, ModelAttributes>(
         collate: 'utf8_unicode_ci'
     }
 );
-
 Model.sync({ alter: true });
 
 export default Model;

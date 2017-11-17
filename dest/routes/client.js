@@ -41,13 +41,13 @@ router.get('/', function (ctx, next) {
     return __awaiter(this, void 0, void 0, function () {
         return __generator(this, function (_a) {
             switch (_a.label) {
-                case 0: return [4 /*yield*/, ctx.render('client', {
+                case 0: return [4, ctx.render('client', {
                         title: 'hello client',
                         body: "<h1>这是教学客户端</h1>"
                     })];
                 case 1:
                     _a.sent();
-                    return [2 /*return*/];
+                    return [2];
             }
         });
     });
