@@ -11,12 +11,18 @@ var Model = db_connection_1.default.define('AssistancePeople', {
         validate: { isEmail: true }
     },
     superior: Sequelize.INTEGER,
-    features: Sequelize.STRING,
+    features: {
+        type: Sequelize.STRING,
+        allowNull: false,
+        defaultValue: "",
+        comment: "负责的功能，字符串：逗号分割"
+    },
 }, {
     underscored: true,
     tableName: 'assistance_people',
     charset: 'utf8',
     collate: 'utf8_unicode_ci'
 });
+Model.sync({ alter: true });
 exports.default = Model;
 //# sourceMappingURL=assistance-people-model.js.map

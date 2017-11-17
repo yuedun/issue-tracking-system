@@ -8,8 +8,8 @@ export interface ModelAttributes {
 }
 
 export interface ModelInstance
-    extends Sequelize.Instance<ModelAttributes> {
-
+    extends Sequelize.Instance<ModelAttributes>, ModelAttributes {
+    //继承的第二个ModelAttributes如果省略会造成实例无法访问到属性
 };
 /**
  * 功能列表，只是提供一个可以选择的列表

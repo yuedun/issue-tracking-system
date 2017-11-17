@@ -29,5 +29,6 @@ var Model = db_connection_1.default.define('Assistance', {
     charset: 'utf8',
     collate: 'utf8_unicode_ci'
 });
+Model.sync({ alter: true });
 exports.default = Model;
 //# sourceMappingURL=assistance-model.js.map

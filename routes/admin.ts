@@ -80,4 +80,18 @@ router.patch('/platform/assitance-people', async function (ctx: any, next: Funct
 	}
 });
 
+/**
+ * 协助人添加负责模块
+ */
+router.patch('/assitance-people/features', async function (ctx: any, next: Function) {
+	let args = ctx.request.body;
+	let assistancePeople = await AssistancePeopleModel.findById(args.person_id)
+	assistancePeople.features = assistancePeople.features.concat(",", args.feature_name);
+	assistancePeople.save();
+	ctx.body = {
+		msg: "修改成功",
+		assistancePeople
+	}
+});
+
 export default router

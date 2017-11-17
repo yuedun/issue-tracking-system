@@ -55,7 +55,7 @@ var Model = sequelize.define<ModelInstance, ModelAttributes>(
     }
 );
 
-// Model.sync({ alter: true });
+Model.sync({ alter: true });
 
 export default Model;
 

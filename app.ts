@@ -8,7 +8,13 @@ const onerror = require('koa-onerror')
 const bodyparser = require('koa-bodyparser')
 const logger = require('koa-logger')
 const cors = require('koa2-cors')
-
+import sequelize from './utils/db-connection';
+sequelize.sync({
+	alter: false,
+	logging: function (message: string) {
+		console.log(message);
+	}
+})
 import { default as test } from './routes/test';
 import { default as platform } from './routes/platform';
 import { default as admin } from './routes/admin';

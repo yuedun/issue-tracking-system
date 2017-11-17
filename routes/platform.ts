@@ -81,7 +81,7 @@ router.get('/platform/help', async function (ctx: any, next: Function) {
 	let assistanceInfos: AssistanceInfo[] = assistancies;
 	await Bluebird.map(assistanceInfos, async (item, index)=>{
 		let userRecord = await item.getUser();
-		// item.user_name = userRecord.user_name;
+		item.user_name = userRecord.user_name;//发起协助的用户名（业务用户users）
 		item.imageArr = item.images? item.imageArr = item.images.split(","): [];
 		
 		item.setDataValue("created_at", moment(item.created_at).format("YYYY-MM-DD HH:ss:mm"));
@@ -139,17 +139,18 @@ router.delete('/platform/help/:id', async function (ctx: any, next: Function) {
  */
 router.get('/platform/assistance-peolpe/features', async function (ctx: any, next: Function) {
 	let args = ctx.request.query;
-	debug(">>>>>>>>>>>>>post assistance people:", args)
-	let assistancePeople = await AssistancePeopleModel.findAll({
+	let assistancePeopleList = await AssistancePeopleModel.findAll({
+		attributes: ["user_name", "features"],
 		where: {
 			user_name: { $like: `${args.user_name}%` }
-		},
-		include: [{model: FeatureModel}]
+		}
 	})
-	debug(">>>>>>>>>>>>>",assistancePeople)
+	debug(">>>>>>>>>>>>>",JSON.stringify(assistancePeopleList))
 	ctx.body = {
 		msg: "获取成功",
-		assistancePeople
+		data:{
+			list: assistancePeopleList
+		}
 	}
 });
 

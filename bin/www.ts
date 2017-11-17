@@ -4,13 +4,6 @@
  * Module dependencies.
  */
 import 'source-map-support/register';
-import sequelize from '../utils/db-connection';
-sequelize.sync({
-	alter: false,
-	logging: function (message: string) {
-		console.log(message);
-	}
-})
 import app from '../app';
 var debug = require('debug')('yuedun:server');
 var http = require('http');

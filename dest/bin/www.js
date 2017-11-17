@@ -2,13 +2,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 require("source-map-support/register");
-var db_connection_1 = require("../utils/db-connection");
-db_connection_1.default.sync({
-    alter: false,
-    logging: function (message) {
-        console.log(message);
-    }
-});
 var app_1 = require("../app");
 var debug = require('debug')('yuedun:server');
 var http = require('http');

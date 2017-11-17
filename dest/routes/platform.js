@@ -42,7 +42,6 @@ var router = new Router();
 var debug = require('debug')('yuedun:platform');
 var assistance_model_1 = require("../models/assistance-model");
 var assistance_people_model_1 = require("../models/assistance-people-model");
-var feature_model_1 = require("../models/feature-model");
 router.get('/platform', function (ctx, next) {
     return __awaiter(this, void 0, void 0, function () {
         return __generator(this, function (_a) {
@@ -170,6 +169,7 @@ router.get('/platform/help', function (ctx, next) {
                                     case 0: return [4, item.getUser()];
                                     case 1:
                                         userRecord = _a.sent();
+                                        item.user_name = userRecord.user_name;
                                         item.imageArr = item.images ? item.imageArr = item.images.split(",") : [];
                                         item.setDataValue("created_at", moment(item.created_at).format("YYYY-MM-DD HH:ss:mm"));
                                         return [2, item];
@@ -246,24 +246,25 @@ router.delete('/platform/help/:id', function (ctx, next) {
 });
 router.get('/platform/assistance-peolpe/features', function (ctx, next) {
     return __awaiter(this, void 0, void 0, function () {
-        var args, assistancePeople;
+        var args, assistancePeopleList;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
                     args = ctx.request.query;
-                    debug(">>>>>>>>>>>>>post assistance people:", args);
                     return [4, assistance_people_model_1.default.findAll({
+                            attributes: ["user_name", "features"],
                             where: {
                                 user_name: { $like: args.user_name + "%" }
-                            },
-                            include: [{ model: feature_model_1.default }]
+                            }
                         })];
                 case 1:
-                    assistancePeople = _a.sent();
-                    debug(">>>>>>>>>>>>>", assistancePeople);
+                    assistancePeopleList = _a.sent();
+                    debug(">>>>>>>>>>>>>", JSON.stringify(assistancePeopleList));
                     ctx.body = {
                         msg: "获取成功",
-                        assistancePeople: assistancePeople
+                        data: {
+                            list: assistancePeopleList
+                        }
                     };
                     return [2];
             }

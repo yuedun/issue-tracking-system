@@ -215,19 +215,12 @@
       });
 
       $("input[name=J-search-name]").on("change", function(){
-        var data = { //数据
-          "list":[{"user_name":"弹层","feature":"layer layer layer layer layer layer layer layer layer layer","site":"layer.layui.com"},
-          {"user_name":"表单","feature":"form"},{"user_name":"弹层","feature":"layer","site":"layer.layui.com"},
-          {"user_name":"弹层","feature":"layer","site":"layer.layui.com"},
-          {"user_name":"弹层","feature":"layer","site":"layer.layui.com"},
-          {"user_name":"弹层","feature":"layer","site":"layer.layui.com"},]
-        }
         $.get("/platform/assistance-peolpe/features", {
           user_name: $(this).val()
-        }, function (datas) {
+        }, function (res) {
           var tpl = $(searchPeople).html()
           , r = Handlebars.compile(tpl)
-          , d = r(data);
+          , d = r(res.data);
           $(".J-assistance-people-list").html(d);
           })
       });
@@ -267,7 +260,7 @@
     {{#each list}}
     <tr>
       <td>{{ user_name }}</td>
-      <td>{{ feature }}</td>
+      <td>{{ features }}</td>
       <td><button class="layui-btn layui-btn layui-btn-small">选择</button></td>
     </tr>
     {{/each}}

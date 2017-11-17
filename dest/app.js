@@ -45,6 +45,13 @@ var onerror = require('koa-onerror');
 var bodyparser = require('koa-bodyparser');
 var logger = require('koa-logger');
 var cors = require('koa2-cors');
+var db_connection_1 = require("./utils/db-connection");
+db_connection_1.default.sync({
+    alter: false,
+    logging: function (message) {
+        console.log(message);
+    }
+});
 var test_1 = require("./routes/test");
 var platform_1 = require("./routes/platform");
 var admin_1 = require("./routes/admin");

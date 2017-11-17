@@ -136,5 +136,26 @@ router.patch('/platform/assitance-people', function (ctx, next) {
         });
     });
 });
+router.patch('/assitance-people/features', function (ctx, next) {
+    return __awaiter(this, void 0, void 0, function () {
+        var args, assistancePeople;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0:
+                    args = ctx.request.body;
+                    return [4, assistance_people_model_1.default.findById(args.person_id)];
+                case 1:
+                    assistancePeople = _a.sent();
+                    assistancePeople.features = assistancePeople.features.concat(",", args.feature_name);
+                    assistancePeople.save();
+                    ctx.body = {
+                        msg: "修改成功",
+                        assistancePeople: assistancePeople
+                    };
+                    return [2];
+            }
+        });
+    });
+});
 exports.default = router;
 //# sourceMappingURL=admin.js.map
