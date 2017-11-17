@@ -38,10 +38,13 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var Router = require("koa-router");
 var moment = require("moment");
 var Bluebird = require("bluebird");
-var router = new Router();
+var router = new Router({
+    prefix: "/platform"
+});
 var debug = require('debug')('yuedun:admin');
 var assistance_model_1 = require("../models/assistance-model");
 var assistance_people_model_1 = require("../models/assistance-people-model");
+var feature_model_1 = require("../models/feature-model");
 router.get('/admin', function (ctx, next) {
     return __awaiter(this, void 0, void 0, function () {
         return __generator(this, function (_a) {
@@ -270,7 +273,7 @@ router.post('/admin/assitance-people', function (ctx, next) {
         });
     });
 });
-router.get('/admin/assistance-peolpe', function (ctx, next) {
+router.get('/admin/assistance-peolpe/features', function (ctx, next) {
     return __awaiter(this, void 0, void 0, function () {
         var args, assistancePeople;
         return __generator(this, function (_a) {
@@ -281,10 +284,12 @@ router.get('/admin/assistance-peolpe', function (ctx, next) {
                     return [4, assistance_people_model_1.default.findAll({
                             where: {
                                 user_name: { $like: args.user_name + "%" }
-                            }
+                            },
+                            include: [{ model: feature_model_1.default }]
                         })];
                 case 1:
                     assistancePeople = _a.sent();
+                    debug(">>>>>>>>>>>>>", assistancePeople);
                     ctx.body = {
                         msg: "获取成功",
                         assistancePeople: assistancePeople

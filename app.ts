@@ -8,9 +8,16 @@ const onerror = require('koa-onerror')
 const bodyparser = require('koa-bodyparser')
 const logger = require('koa-logger')
 const cors = require('koa2-cors')
-
+import sequelize from './utils/db-connection';
+sequelize.sync({
+	alter: false,
+	logging: function (message: string) {
+		console.log(message);
+	}
+})
 import { default as test } from './routes/test';
-import { default as index } from './routes/index';
+import { default as platform } from './routes/platform';
+import { default as admin } from './routes/admin';
 import { default as teacher } from './routes/teacher';
 
 /**
@@ -56,13 +63,14 @@ app.use(async function(ctx: any, next: Function){
 	//url重写：当url为"/"时，将url重写为"/admin"，
 	//相当于请求”/admin”，有redirect的作用，但不是重定向，浏览器url还是“/”
 	if (ctx.url == '/') {
-		ctx.url = '/admin'
+		ctx.url = '/platform'
 	}
 	await next();
 });
 // routes
 app.use(test.routes());
-app.use(index.routes());
+app.use(platform.routes());
+app.use(admin.routes());
 app.use(teacher.routes());
 
 export default app;

@@ -11,12 +11,12 @@ var Model = db_connection_1.default.define('AssistancePeople', {
         validate: { isEmail: true }
     },
     superior: Sequelize.INTEGER,
-    in_charge_of: Sequelize.STRING,
-    is_main: {
-        type: Sequelize.INTEGER,
-        defaultValue: 0,
-        comment: '是否主要负责人，0[否]，1[是]'
-    }
+    features: {
+        type: Sequelize.STRING,
+        allowNull: false,
+        defaultValue: "",
+        comment: "负责的功能，字符串：逗号分割"
+    },
 }, {
     underscored: true,
     tableName: 'assistance_people',

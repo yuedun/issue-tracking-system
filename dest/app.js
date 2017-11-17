@@ -45,8 +45,16 @@ var onerror = require('koa-onerror');
 var bodyparser = require('koa-bodyparser');
 var logger = require('koa-logger');
 var cors = require('koa2-cors');
+var db_connection_1 = require("./utils/db-connection");
+db_connection_1.default.sync({
+    alter: false,
+    logging: function (message) {
+        console.log(message);
+    }
+});
 var test_1 = require("./routes/test");
-var index_1 = require("./routes/index");
+var platform_1 = require("./routes/platform");
+var admin_1 = require("./routes/admin");
 var teacher_1 = require("./routes/teacher");
 onerror(app);
 app.use(function (ctx, next) {
@@ -102,7 +110,7 @@ app.use(function (ctx, next) {
             switch (_a.label) {
                 case 0:
                     if (ctx.url == '/') {
-                        ctx.url = '/admin';
+                        ctx.url = '/platform';
                     }
                     return [4, next()];
                 case 1:
@@ -113,7 +121,8 @@ app.use(function (ctx, next) {
     });
 });
 app.use(test_1.default.routes());
-app.use(index_1.default.routes());
+app.use(platform_1.default.routes());
+app.use(admin_1.default.routes());
 app.use(teacher_1.default.routes());
 exports.default = app;
 //# sourceMappingURL=app.js.map

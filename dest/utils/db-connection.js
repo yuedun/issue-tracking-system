@@ -47,11 +47,12 @@ var sequelize = new Sequelize(config_1.mysql.db, config_1.mysql.username, config
         min: 0,
         idle: 10000
     },
-    operatorsAliases: operatorsAliases
+    operatorsAliases: operatorsAliases,
 });
 function select(sql) {
     return sequelize.query(sql, { type: sequelize.QueryTypes.SELECT });
 }
 exports.select = select;
 exports.default = sequelize;
+require("../models/models-relation");
 //# sourceMappingURL=db-connection.js.map

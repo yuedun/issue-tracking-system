@@ -2,7 +2,6 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 var Sequelize = require("sequelize");
 var db_connection_1 = require("../utils/db-connection");
-var user_model_1 = require("./user-model");
 ;
 var Model = db_connection_1.default.define('Assistance', {
     user_id: Sequelize.INTEGER,
@@ -32,5 +31,4 @@ var Model = db_connection_1.default.define('Assistance', {
 });
 Model.sync({ alter: true });
 exports.default = Model;
-Model.belongsTo(user_model_1.default, { constraints: false });
 //# sourceMappingURL=assistance-model.js.map
