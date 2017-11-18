@@ -11,7 +11,7 @@ const debug = require('debug')('yuedun:platform');
 import { select } from '../utils/db-connection';
 import { default as UserModel, ModelAttributes as UserPOJO, ModelInstance as UserInstance } from '../models/users-model';
 import { default as AssistanceModel, ModelAttributes as AssistancePOJO, ModelInstance as AssistanceInstance } from '../models/assistance-model';
-import { default as AssistancePeopleModel, ModelAttributes as AssistancePeoplePOJO, ModelInstance as AssistancePeopleInstance } from '../models/assistance-people-model';
+import { default as HelperModel, ModelAttributes as HelperPOJO, ModelInstance as HelperInstance } from '../models/helper-model';
 import { default as FeatureModel, ModelAttributes as FeaturePOJO, ModelInstance as FeatureInstance } from '../models/feature-model';
 /**
  * render 函数是koa-views中间件赋予ctx的，是一个promise函数，所以需要用await修饰
@@ -77,13 +77,13 @@ router.get('/platform/help', async function (ctx: any, next: Function) {
 	let assistancies = await AssistanceModel.findAll({
 		order: [['created_at', 'desc']]
 	});
-	let assistancePeople = await AssistancePeopleModel.findAll();
+	let assistancePeople = await HelperModel.findAll();
 	let assistanceInfos: AssistanceInfo[] = assistancies;
-	await Bluebird.map(assistanceInfos, async (item, index)=>{
+	await Bluebird.map(assistanceInfos, async (item, index) => {
 		let userRecord = await item.getUser();
 		item.user_name = userRecord.user_name;//发起协助的用户名（业务用户users）
-		item.imageArr = item.images? item.imageArr = item.images.split(","): [];
-		
+		item.imageArr = item.images ? item.imageArr = item.images.split(",") : [];
+
 		item.setDataValue("created_at", moment(item.created_at).format("YYYY-MM-DD HH:ss:mm"));
 		return item;
 	})
@@ -107,8 +107,8 @@ router.post('/platform/help', async function (ctx: any, next: Function) {
 	debug(">>>>>>>>>>>>>post", args)
 	let assistance = await AssistanceModel.create({
 		description: args.description,
-		first_help_people: args.first_help_people,
-		second_help_people: args.second_help_people,
+		first_helper: args.first_helper ? parseInt(args.first_helper) : 0,
+		second_helper: args.second_helper ? parseInt(args.second_helper) : 0,
 		referer: args.referer,
 		user_agent: args.user_agent,
 		user_id: 1,
@@ -135,21 +135,20 @@ router.delete('/platform/help/:id', async function (ctx: any, next: Function) {
 
 /**
  * 获取协助人
- * /platform/assistance-peolpe/features
+ * /platform/helper/features
  */
-router.get('/platform/assistance-peolpe/features', async function (ctx: any, next: Function) {
+router.get('/platform/helper/features', async function (ctx: any, next: Function) {
 	let args = ctx.request.query;
-	let assistancePeopleList = await AssistancePeopleModel.findAll({
-		attributes: ["user_name", "features"],
+	let helperList = await HelperModel.findAll({
+		attributes: ["id", "user_name", "features"],
 		where: {
 			user_name: { $like: `${args.user_name}%` }
 		}
 	})
-	debug(">>>>>>>>>>>>>",JSON.stringify(assistancePeopleList))
 	ctx.body = {
 		msg: "获取成功",
-		data:{
-			list: assistancePeopleList
+		data: {
+			list: helperList
 		}
 	}
 });

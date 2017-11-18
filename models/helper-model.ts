@@ -14,7 +14,7 @@ export interface ModelInstance
     extends Sequelize.Instance<ModelAttributes>, ModelAttributes { };
 
 var Model = sequelize.define<ModelInstance, ModelAttributes>(
-    'AssistancePeople', {
+    'Helper', {
         user_name: Sequelize.STRING,
         mobile: Sequelize.STRING,
         email: {
@@ -30,7 +30,7 @@ var Model = sequelize.define<ModelInstance, ModelAttributes>(
         },//负责的功能，字符串：逗号分割
     }, {
         underscored: true,
-        tableName: 'assistance_people',
+        tableName: 'helpers',
         charset: 'utf8',
         collate: 'utf8_unicode_ci'
     }

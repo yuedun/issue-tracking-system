@@ -6,8 +6,14 @@ var db_connection_1 = require("../utils/db-connection");
 var Model = db_connection_1.default.define('Assistance', {
     user_id: Sequelize.INTEGER,
     description: Sequelize.STRING,
-    first_help_people: Sequelize.STRING,
-    second_help_people: Sequelize.STRING,
+    first_helper: {
+        type: Sequelize.INTEGER,
+        defaultValue: 0
+    },
+    second_helper: {
+        type: Sequelize.INTEGER,
+        defaultValue: 0
+    },
     user_agent: Sequelize.STRING,
     referer: Sequelize.STRING,
     images: Sequelize.STRING,

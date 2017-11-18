@@ -41,7 +41,7 @@ var Bluebird = require("bluebird");
 var router = new Router();
 var debug = require('debug')('yuedun:platform');
 var assistance_model_1 = require("../models/assistance-model");
-var assistance_people_model_1 = require("../models/assistance-people-model");
+var helper_model_1 = require("../models/helper-model");
 router.get('/platform', function (ctx, next) {
     return __awaiter(this, void 0, void 0, function () {
         return __generator(this, function (_a) {
@@ -158,7 +158,7 @@ router.get('/platform/help', function (ctx, next) {
                         })];
                 case 1:
                     assistancies = _a.sent();
-                    return [4, assistance_people_model_1.default.findAll()];
+                    return [4, helper_model_1.default.findAll()];
                 case 2:
                     assistancePeople = _a.sent();
                     assistanceInfos = assistancies;
@@ -205,8 +205,8 @@ router.post('/platform/help', function (ctx, next) {
                     debug(">>>>>>>>>>>>>post", args);
                     return [4, assistance_model_1.default.create({
                             description: args.description,
-                            first_help_people: args.first_help_people,
-                            second_help_people: args.second_help_people,
+                            first_helper: args.first_helper ? parseInt(args.first_helper) : 0,
+                            second_helper: args.second_helper ? parseInt(args.second_helper) : 0,
                             referer: args.referer,
                             user_agent: args.user_agent,
                             user_id: 1,
@@ -244,26 +244,25 @@ router.delete('/platform/help/:id', function (ctx, next) {
         });
     });
 });
-router.get('/platform/assistance-peolpe/features', function (ctx, next) {
+router.get('/platform/helper/features', function (ctx, next) {
     return __awaiter(this, void 0, void 0, function () {
-        var args, assistancePeopleList;
+        var args, helperList;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
                     args = ctx.request.query;
-                    return [4, assistance_people_model_1.default.findAll({
-                            attributes: ["user_name", "features"],
+                    return [4, helper_model_1.default.findAll({
+                            attributes: ["id", "user_name", "features"],
                             where: {
                                 user_name: { $like: args.user_name + "%" }
                             }
                         })];
                 case 1:
-                    assistancePeopleList = _a.sent();
-                    debug(">>>>>>>>>>>>>", JSON.stringify(assistancePeopleList));
+                    helperList = _a.sent();
                     ctx.body = {
                         msg: "获取成功",
                         data: {
-                            list: assistancePeopleList
+                            list: helperList
                         }
                     };
                     return [2];

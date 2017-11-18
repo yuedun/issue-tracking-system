@@ -3,7 +3,7 @@ import sequelize from '../utils/db-connection';
 
 export interface ModelAttributes {
     id?: number;
-    assis_people_id?: number;
+    helper_id?: number;
     feature_id?: number;
 }
 
@@ -15,17 +15,17 @@ export interface ModelInstance
  * 功能列表
  */
 var Model = sequelize.define<ModelInstance, ModelAttributes>(
-    'PeopleFeature', {
+    'HelperFeature', {
         id: {
             type: Sequelize.INTEGER,
             primaryKey: true,
             autoIncrement: true
-        },//如果不指定的话，会由assistance-people和feature自动指定assis_people_id和feature_id为主键，不能在添加id为主键
-        assis_people_id: Sequelize.INTEGER,
+        },//如果不指定的话，会由assistance-people和feature自动指定helper_id和feature_id为主键，不能在添加id为主键
+        helper_id: Sequelize.INTEGER,
         feature_id: Sequelize.INTEGER,
     }, {
         underscored: true,
-        tableName: 'people_feature_relation',
+        tableName: 'helper_feature_relation',
         charset: 'utf8',
         collate: 'utf8_unicode_ci'
     }
