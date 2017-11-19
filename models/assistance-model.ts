@@ -10,6 +10,7 @@ export interface ModelAttributes {
     description?: string;
     first_helper?: number;
     second_helper?: number;
+    user_mobile?: string;
     user_agent?: string;
     referer?: string;
     images?: string;
@@ -38,6 +39,7 @@ var Model = sequelize.define<ModelInstance, ModelAttributes>(
             type: Sequelize.INTEGER,
             defaultValue: 0
         },
+        user_mobile: Sequelize.STRING,//需要查询的用户手机
         user_agent: Sequelize.STRING,//浏览器
         referer: Sequelize.STRING,//来源页面
         images: Sequelize.STRING,//图片

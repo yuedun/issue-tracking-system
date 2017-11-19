@@ -246,6 +246,7 @@ router.post('/platform/help', function (ctx) {
                             description: args.description,
                             first_helper: args.first_helper ? parseInt(args.first_helper) : 0,
                             second_helper: args.second_helper ? parseInt(args.second_helper) : 0,
+                            user_mobile: args.user_mobile,
                             referer: args.referer,
                             user_agent: args.user_agent,
                             user_id: 1,
