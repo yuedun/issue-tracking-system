@@ -10,7 +10,9 @@
   },
   "scripts": {
     "start": "DEBUG=yuedun:* node dest/bin/www",
-    "dev": "set DEBUG=yuedun:*& cd ./dest & nodemon ./bin/www.js",
+    "tsc": "tsc -w",
+    "serve": "set DEBUG=yuedun:*& cd ./dest & nodemon ./bin/www.js",
+    "dev": "parallelshell \"npm run tsc\" \"npm run serve\"",
     "prd": "pm2 start bin/www",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -43,6 +45,7 @@
     "html-webpack-plugin": "^2.30.1",
     "koa-livereload": "^0.2.0",
     "nodemon": "^1.12.1",
+    "parallelshell": "^3.0.2",
     "source-map-support": "^0.5.0",
     "style-loader": "^0.19.0",
     "webpack": "^3.7.1"

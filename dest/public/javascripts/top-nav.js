@@ -8,11 +8,11 @@ layui.config({
     var As = $('.layui-nav.layui-layout-left a');
     obj = As[0];
     for (var i = 1; i < As.length; i++) {
-        if (window.location.href.indexOf(As[i].href) >= 0)
+        if (window.location.href == As[i].href)
             obj = As[i];
     }
     $(obj).parent().addClass("layui-this");
-    var ss=$(obj).parents(".layui-nav-child").length;
+    var ss = $(obj).parents(".layui-nav-child").length;
     if (ss) {
         $(obj).parents(".layui-nav-item").addClass("layui-this");
     }

@@ -63,7 +63,7 @@ app.use(async function(ctx: any, next: Function){
 	//url重写：当url为"/"时，将url重写为"/admin"，
 	//相当于请求”/admin”，有redirect的作用，但不是重定向，浏览器url还是“/”
 	if (ctx.url == '/') {
-		ctx.url = '/platform'
+		ctx.url = '/platform/assistance-list'
 	}
 	await next();
 });

@@ -40,9 +40,9 @@ var router = new Router({
     prefix: "/admin"
 });
 var debug = require('debug')('yuedun:admin');
-var assistance_people_model_1 = require("../models/assistance-people-model");
+var helper_model_1 = require("../models/helper-model");
 var feature_model_1 = require("../models/feature-model");
-var people_feature_relation_model_1 = require("../models/people-feature-relation-model");
+var helper_feature_relation_model_1 = require("../models/helper-feature-relation-model");
 router.post('/people/features', function (ctx, next) {
     return __awaiter(this, void 0, void 0, function () {
         var args, peopleFeature;
@@ -50,8 +50,8 @@ router.post('/people/features', function (ctx, next) {
             switch (_a.label) {
                 case 0:
                     args = ctx.request.body;
-                    return [4, people_feature_relation_model_1.default.create({
-                            assis_people_id: args.people_id,
+                    return [4, helper_feature_relation_model_1.default.create({
+                            helper_id: args.people_id,
                             feature_id: args.feature_id
                         })];
                 case 1:
@@ -86,7 +86,7 @@ router.post('/features', function (ctx, next) {
         });
     });
 });
-router.post('/assitance-people', function (ctx, next) {
+router.post('/helper', function (ctx, next) {
     return __awaiter(this, void 0, void 0, function () {
         var args, assistancePeople;
         return __generator(this, function (_a) {
@@ -94,7 +94,7 @@ router.post('/assitance-people', function (ctx, next) {
                 case 0:
                     args = ctx.request.body;
                     debug(">>>>>>>>>>>>>post assistance people:", args);
-                    return [4, assistance_people_model_1.default.create({
+                    return [4, helper_model_1.default.create({
                             user_name: args.user_name,
                             mobile: args.mobile,
                             email: args.email
@@ -110,7 +110,7 @@ router.post('/assitance-people', function (ctx, next) {
         });
     });
 });
-router.patch('/platform/assitance-people', function (ctx, next) {
+router.patch('/platform/helper', function (ctx, next) {
     return __awaiter(this, void 0, void 0, function () {
         var args, assistancePeople;
         return __generator(this, function (_a) {
@@ -118,7 +118,7 @@ router.patch('/platform/assitance-people', function (ctx, next) {
                 case 0:
                     args = ctx.request.body;
                     debug(">>>>>>>>>>>>>post assistance people:", args);
-                    return [4, assistance_people_model_1.default.update({
+                    return [4, helper_model_1.default.update({
                             user_name: args.user_name,
                             mobile: args.mobile,
                             email: args.email
@@ -136,14 +136,14 @@ router.patch('/platform/assitance-people', function (ctx, next) {
         });
     });
 });
-router.patch('/assitance-people/features', function (ctx, next) {
+router.patch('/helper/features', function (ctx, next) {
     return __awaiter(this, void 0, void 0, function () {
         var args, assistancePeople;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
                     args = ctx.request.body;
-                    return [4, assistance_people_model_1.default.findById(args.person_id)];
+                    return [4, helper_model_1.default.findById(args.person_id)];
                 case 1:
                     assistancePeople = _a.sent();
                     assistancePeople.features = assistancePeople.features.concat(",", args.feature_name);
