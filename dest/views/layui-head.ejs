@@ -11,3 +11,14 @@
     <%- JSON.stringify(api)%>
     <%}%>
 </script>
+<script>
+    layui.use(['jquery', 'layer'], function () {
+        var $ = layui.jquery,
+        layer = layui.layer;
+        $(".J-new-assistance").hover(function(){
+            layer.tips('新建帮助请求', '.J-new-assistance', {
+                tips: 3
+            });
+        })
+    })
+</script>

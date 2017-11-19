@@ -17,7 +17,7 @@
         <div class="layui-row">
           <div class="layui-col-md12">
             <div class="system-description">
-              <p>业务适用方发起请求协助，可指定一个或多个协助人，问题会发送邮件和短信至被请求协助</p>
+              <p>业务使用者发起请求协助，可指定一个或多个协助人，问题会发送邮件和短信至被请求协助</p>
             </div>
           </div>
         </div>
@@ -70,29 +70,6 @@
                 </div>
               </div>
             </form>
-            <% assistanceInfos.forEach(function(item, index){%>
-              <article class="article">
-                <header>
-                  <p><b><%=item.user_name%></b></p>
-                  <time class="time-text"><%=item.created_at%></time>
-                </header>
-                <section>
-                  <p><%=item.description%></p>
-                  <p>
-                    <% item.imageArr.forEach(function(img){%>
-                    <img src="<%= img%>"></img>
-                    <%})%>
-                  </p>
-                </section>
-                <hr>
-                <ul>
-                  <li><a href="javascript:void(0)" id="J-up" data-id="<%=item.id%>"><span><i class="layui-icon">&#xe756;</i>顶起</span></a></li>
-                  <li><a href="javascript:void(0)" id="J-comment" data-id="<%=item.id%>"><span><i class="layui-icon">&#xe63a;</i>评论</span></a></li>
-                  <li><a href="javascript:void(0)" id="J-del" data-id="<%=item.id%>"><span><i class="layui-icon">&#xe640;</i>删除</span></a></li>
-                  <li><a href="javascript:void(0)" id="J-transform" data-id="<%=item.id%>"><span><i class="layui-icon">&#xe756;</i>转发</span></a></li>
-                </ul>
-              </article>
-              <%})%>
           </div>
           <div class="layui-col-md4">
             <div class="asider">
@@ -190,20 +167,9 @@
           referer: datas.referer
         }, function (data) {
           layer.msg(data.msg);
+          window.location.href = data.url.assistanceList
         })
         return false;
-      });
-      //删除协助
-      $(".article").on("click", "#J-del", function(){
-        var id = $(this).data("id");
-        console.log(id)
-        $.ajax({
-          url: "/platform/help/"+id,
-          type: "delete",
-          success: function(data){
-            layer.msg(data.msg);
-          }
-        })
       });
       //选择协助人弹窗
       var modalIndex;
