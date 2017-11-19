@@ -110,7 +110,7 @@ app.use(function (ctx, next) {
             switch (_a.label) {
                 case 0:
                     if (ctx.url == '/') {
-                        ctx.url = '/platform';
+                        ctx.url = '/platform/assistance-list';
                     }
                     return [4, next()];
                 case 1:
