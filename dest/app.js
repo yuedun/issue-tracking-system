@@ -48,14 +48,8 @@ var cors = require('koa2-cors');
 var db_connection_1 = require("./utils/db-connection");
 db_connection_1.default.sync({
     alter: false,
-    logging: function (message) {
-        console.log(message);
-    }
 });
-var test_1 = require("./routes/test");
-var platform_1 = require("./routes/platform");
-var admin_1 = require("./routes/admin");
-var teacher_1 = require("./routes/teacher");
+var auto_register_routes_1 = require("./utils/auto-register-routes");
 onerror(app);
 app.use(function (ctx, next) {
     return __awaiter(this, void 0, void 0, function () {
@@ -120,9 +114,22 @@ app.use(function (ctx, next) {
         });
     });
 });
-app.use(test_1.default.routes());
-app.use(platform_1.default.routes());
-app.use(admin_1.default.routes());
-app.use(teacher_1.default.routes());
+app.use(function (ctx, next) {
+    return __awaiter(this, void 0, void 0, function () {
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0: return [4, next()];
+                case 1:
+                    _a.sent();
+                    if (typeof ctx.body == "object") {
+                        ctx.body = Object.assign(ctx.body, { code: 0 });
+                        console.log(">>>>>>>>>>>>>>", ctx.body);
+                    }
+                    return [2];
+            }
+        });
+    });
+});
+auto_register_routes_1.registerRoute(app);
 exports.default = app;
 //# sourceMappingURL=app.js.map
