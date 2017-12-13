@@ -11,7 +11,7 @@
             "program": "${workspaceFolder}/dest/bin/www.js",
             "stopOnEntry": false,
             "args": [],
-            "cwd": "${workspaceFolder}/dest",
+            "cwd": "${workspaceFolder}",
             "preLaunchTask": null,
             "runtimeExecutable": null,
             "runtimeArgs": [

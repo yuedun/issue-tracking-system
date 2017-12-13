@@ -1,5 +1,5 @@
 import * as Sequelize from 'sequelize';
-import { mysql } from '../config';
+import { mysql, sequelizeLog } from '../config';
 //新的操作符 [Op.and]: {a: 5} 等于 AND (a = 5)
 const Op = Sequelize.Op;
 
@@ -50,10 +50,7 @@ const sequelize = new Sequelize(mysql.db, mysql.username, mysql.password, {
 		idle: 10000
 	},
 	operatorsAliases,
-	// logging: function(message: string){
-	// 	// console.log(message);
-		
-	// }
+	logging: sequelizeLog
 });
 
 export function select(sql: string) {

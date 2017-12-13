@@ -11,9 +11,6 @@ const cors = require('koa2-cors')
 import sequelize from './utils/db-connection';
 sequelize.sync({
 	alter: false,
-	logging: function (message: string) {
-		console.log(message);
-	}
 })
 import { registerRoute } from './utils/auto-register-routes';
 
@@ -64,6 +61,14 @@ app.use(async function (ctx: any, next: Function) {
 	}
 	await next();
 });
+
+//对response进行包装,对获取的数据添加其他数据
+app.use(async function (ctx: any, next: Function) {
+	await next()
+	ctx.body = Object.assign(ctx.body, { code: 0 })
+	console.log(">>>>>>>>>>>>>>", ctx.body);
+})
+
 // routes
 registerRoute(app);//自动注册路由
 
