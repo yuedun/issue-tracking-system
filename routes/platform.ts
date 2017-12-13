@@ -80,7 +80,7 @@ router.get('/platform/assistance-list', async function (ctx: any) {
 	let assistanceInfos: AssistanceInfo[] = assistancies;
 	await Bluebird.map(assistanceInfos, async (item, index) => {
 		let userRecord = await item.getUser();
-		item.user_name = userRecord.user_name;//发起协助的用户名（业务用户users）
+		item.user_name = userRecord ? userRecord.user_name : "无";//发起协助的用户名（业务用户users）
 		item.imageArr = item.images ? item.imageArr = item.images.split(",") : [];
 
 		item.setDataValue("created_at", moment(item.created_at).format("YYYY-MM-DD HH:ss:mm"));
@@ -105,10 +105,6 @@ router.get('/platform/new-assistance', async function (ctx: any) {
 	});
 	let assistanceInfos: AssistanceInfo[] = assistancies;
 	await Bluebird.map(assistanceInfos, async (item, index) => {
-		let userRecord = await item.getUser();
-		item.user_name = userRecord.user_name;//发起协助的用户名（业务用户users）
-		item.imageArr = item.images ? item.imageArr = item.images.split(",") : [];
-
 		item.setDataValue("created_at", moment(item.created_at).format("YYYY-MM-DD HH:ss:mm"));
 		return item;
 	})
