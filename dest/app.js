@@ -121,8 +121,10 @@ app.use(function (ctx, next) {
                 case 0: return [4, next()];
                 case 1:
                     _a.sent();
-                    ctx.body = Object.assign(ctx.body, { code: 0 });
-                    console.log(">>>>>>>>>>>>>>", ctx.body);
+                    if (typeof ctx.body == "object") {
+                        ctx.body = Object.assign(ctx.body, { code: 0 });
+                        console.log(">>>>>>>>>>>>>>", ctx.body);
+                    }
                     return [2];
             }
         });

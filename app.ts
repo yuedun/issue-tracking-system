@@ -65,8 +65,10 @@ app.use(async function (ctx: any, next: Function) {
 //对response进行包装,对获取的数据添加其他数据
 app.use(async function (ctx: any, next: Function) {
 	await next()
-	ctx.body = Object.assign(ctx.body, { code: 0 })
-	console.log(">>>>>>>>>>>>>>", ctx.body);
+	if (typeof ctx.body == "object") {
+		ctx.body = Object.assign(ctx.body, { code: 0 })
+		console.log(">>>>>>>>>>>>>>", ctx.body);
+	}
 })
 
 // routes

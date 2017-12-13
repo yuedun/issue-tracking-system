@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <%include layui-head.ejs%>
+</head>
+
+<body>
+
+  <div class="layui-layout layui-layout-admin">
+    <!-- 顶部栏 -->
+    <%include layui-header.ejs%>
+    <!-- 顶部栏 -->
+    <!-- 中间内容区 -->
+    <div style="padding: 15px;">
+      <div class="layui-container">
+        <div class="layui-row">
+          <div class="layui-col-md12">
+            <div class="system-description">
+              <p>高效率的模块建站工具、全自由度的网页前端设计工具、可视化的小程序UI设计工具，三款专业工具满足您不同阶段的设计需求</p>
+            </div>
+          </div>
+        </div>
+        <div class="layui-row">
+          <div class="layui-col-md3">
+            <div class="layui-bg-green entry">
+                <div><a href="/admin/help">请求协助</a></div>
+            </div>
+          </div>
+          <div class="layui-col-md3">
+            <div class="layui-bg-orange entry">
+                <div><a href="/admin/help">我的</a></div>
+            </div>
+          </div>
+          <div class="layui-col-md3">
+            <div class="layui-bg-blue entry">
+                <div><a href="/admin/help">bug反馈</a></div>
+            </div>
+          </div>
+          <div class="layui-col-md3">
+              <div class="layui-bg-cyan entry">
+                  <div><a href="/admin/help">产品建议</a></div>
+              </div>
+            </div>
+        </div>
+      </div>
+    </div>
+    <!-- 中间内容区 -->
+
+    <script src="javascripts/admin.js"></script>
+</body>
+
+</html>
