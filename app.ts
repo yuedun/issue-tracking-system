@@ -53,23 +53,20 @@ app.use(async function (ctx: any, next: Function) {
 /**
  * next参数返回的是Promise，所以用await方式执行
  */
-app.use(async function (ctx: any, next: Function) {
+app.use(async function (ctx: Koa.Context, next: Function) {
 	//url重写：当url为"/"时，将url重写为"/admin"，
 	//相当于请求”/admin”，有redirect的作用，但不是重定向，浏览器url还是“/”
 	if (ctx.url == '/') {
-		ctx.url = '/platform/assistance-list'
+		// ctx.url = '/platform/assistance-list'
+		ctx.redirect('/platform/assistance-list')
 	}
 	await next();
-});
-
-//对response进行包装,对获取的数据添加其他数据
-app.use(async function (ctx: any, next: Function) {
-	await next()
+	//对response进行包装,对获取的数据添加其他数据
 	if (typeof ctx.body == "object") {
 		ctx.body = Object.assign(ctx.body, { code: 0 })
 		console.log(">>>>>>>>>>>>>>", ctx.body);
 	}
-})
+});
 
 // routes
 registerRoute(app);//自动注册路由
