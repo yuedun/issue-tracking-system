@@ -20,6 +20,36 @@ koa.js获取url参数
 `let [id] = ctx.captures`，如果是多个参数`/user/123/yuedun` `/user/:id/:name` `let [id, name] = ctx.captures`
 `ctx.query`获取`/user/?name=yuedun`
 
+## pm2运行项目
+> pm2 start pm2.json --env production
+`--env production`参数是为了设置环境变量，由pm2.json中的配置决定设置什么样的环境变量
+```
+"env": {
+    "NODE_ENV": "development",
+    "PORT": 3002
+},
+"env_production" : {
+    "NODE_ENV": "production",
+    "PORT": 3003
+}
+```
+如果不加参数则使用
+```
+"env": {
+    "NODE_ENV": "development",
+    "PORT": 3002
+}
+```
+加`--env production`则选择的是
+```
+"env_production" : {
+    "NODE_ENV": "production",
+    "PORT": 3003
+}
+```
+#项目架构
+使用的框架和技术包括：TypeScript,Koa2,Sequelize
+
 # 需求设计
 
 提供两个入口：

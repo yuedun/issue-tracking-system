@@ -123,7 +123,7 @@ router.get('/platform/new-assistance', async function (ctx: Context) {
 /**
  * 创建协助请求
  */
-router.post('/platform/help', async function (ctx: Context) {
+router.post('/platform/help', async function (ctx: any) {
 	// @ts-ignore
 	let args = ctx.request.body;//request本身不带body属性，这种写法是由bodyparser添加的body属性，所以ts会报错，忽略即可
 	let assistance = await AssistanceModel.create({

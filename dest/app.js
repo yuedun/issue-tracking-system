@@ -103,6 +103,7 @@ app.use(function (ctx, next) {
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
+                    console.log(">>>>>>>>>>>process.env.NODE_ENV:", process.env.NODE_ENV);
                     if (ctx.url == '/') {
                         ctx.redirect('/platform/assistance-list');
                     }
@@ -110,8 +111,7 @@ app.use(function (ctx, next) {
                 case 1:
                     _a.sent();
                     if (typeof ctx.body == "object") {
-                        ctx.body = Object.assign(ctx.body, { code: 0 });
-                        console.log(">>>>>>>>>>>>>>", ctx.body);
+                        ctx.body = Object.assign(ctx.body, { code: 0, msg: "success" });
                     }
                     return [2];
             }
