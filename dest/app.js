@@ -50,6 +50,7 @@ db_connection_1.default.sync({
     alter: false,
 });
 var auto_register_routes_1 = require("./utils/auto-register-routes");
+var debug = require('debug')('yuedun:app');
 onerror(app);
 app.use(function (ctx, next) {
     return __awaiter(this, void 0, void 0, function () {
@@ -92,7 +93,7 @@ app.use(function (ctx, next) {
                 case 1:
                     _a.sent();
                     ms = new Date().getTime() - start;
-                    console.log(ctx.method + " " + ctx.url + " - " + ms + "ms");
+                    debug(ctx.method + " " + ctx.url + " - " + ms + "ms");
                     return [2];
             }
         });
@@ -103,7 +104,7 @@ app.use(function (ctx, next) {
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
-                    console.log(">>>>>>>>>>>process.env.NODE_ENV:", process.env.NODE_ENV);
+                    debug(">>>>>>>>>>>process.env.NODE_ENV:", process.env.NODE_ENV);
                     if (ctx.url == '/') {
                         ctx.redirect('/platform/assistance-list');
                     }
