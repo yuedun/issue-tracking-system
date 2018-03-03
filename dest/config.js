@@ -7,5 +7,6 @@ exports.mysql = {
     host: "localhost"
 };
 exports.sequelizeLog = function (msg) {
+    console.log(msg);
 };
 //# sourceMappingURL=config.js.map

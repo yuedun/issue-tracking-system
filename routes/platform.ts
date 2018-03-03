@@ -15,9 +15,9 @@ import { default as AssistanceModel, ModelAttributes as AssistancePOJO, ModelIns
 import { default as HelperModel, ModelAttributes as HelperPOJO, ModelInstance as HelperInstance } from '../models/helper-model';
 import { default as FeatureModel, ModelAttributes as FeaturePOJO, ModelInstance as FeatureInstance } from '../models/feature-model';
 /**
- * render 函数是koa-views中间件赋予ctx的，是一个promise函数，所以需要用await修饰
+ * ctx.render函数是koa-views中间件赋予ctx的，返回一个promise函数，所以需要用await修饰
  */
-router.get('/platform', async function (ctx: Context) {
+router.get('/platform', async function (ctx: any) {
 	debug(">>>admin输出");
 	await ctx.render('platform', {
 		title: 'hello platform',
@@ -25,7 +25,7 @@ router.get('/platform', async function (ctx: Context) {
 	})
 });
 
-router.get('/teacher', async function (ctx: Context) {
+router.get('/teacher', async function (ctx: any) {
 	debug(">>>teacher输出");
 	await ctx.render('teacher', {
 		title: 'hello teacher',
@@ -33,7 +33,7 @@ router.get('/teacher', async function (ctx: Context) {
 	})
 });
 
-router.get('/client', async function (ctx: Context) {
+router.get('/client', async function (ctx: any) {
 	debug(">>>client输出");
 	await ctx.render('client', {
 		title: 'hello client',
@@ -41,7 +41,7 @@ router.get('/client', async function (ctx: Context) {
 	})
 });
 
-router.get('/others/a', async function (ctx: Context) {
+router.get('/others/a', async function (ctx: any) {
 	debug(">>>admin输出");
 	await ctx.render('platform', {
 		title: 'hello platform',
@@ -49,7 +49,7 @@ router.get('/others/a', async function (ctx: Context) {
 	})
 });
 
-router.get('/others/b', async function (ctx: Context) {
+router.get('/others/b', async function (ctx: any) {
 	debug(">>>admin输出");
 	await ctx.render('platform', {
 		title: 'hello platform',
@@ -57,7 +57,7 @@ router.get('/others/b', async function (ctx: Context) {
 	})
 });
 
-router.get('/others/c', async function (ctx: Context) {
+router.get('/others/c', async function (ctx: any) {
 	debug(">>>admin输出");
 	await ctx.render('platform', {
 		title: 'hello platform',
@@ -72,7 +72,7 @@ interface AssistanceInfo extends AssistanceInstance {
 /**
  * 协助列表
  */
-router.get('/platform/assistance-list', async function (ctx: Context) {
+router.get('/platform/assistance-list', async function (ctx: any) {
 	let userAgent = ctx.req.headers['user-agent'];
 	let referer = ctx.req.headers['referer'];
 	let assistancies = await AssistanceModel.findAll({
@@ -98,7 +98,7 @@ router.get('/platform/assistance-list', async function (ctx: Context) {
 /**
  * 新建协助页面
  */
-router.get('/platform/new-assistance', async function (ctx: Context) {
+router.get('/platform/new-assistance', async function (ctx: any) {
 	let userAgent = ctx.req.headers['user-agent'];
 	let referer = ctx.req.headers['referer'];
 	let assistancies = await AssistanceModel.findAll({
@@ -123,7 +123,7 @@ router.get('/platform/new-assistance', async function (ctx: Context) {
 /**
  * 创建协助请求
  */
-router.post('/platform/help', async function (ctx: Context) {
+router.post('/platform/help', async function (ctx: any) {
 	// @ts-ignore
 	let args = ctx.request.body;//request本身不带body属性，这种写法是由bodyparser添加的body属性，所以ts会报错，忽略即可
 	let assistance = await AssistanceModel.create({
@@ -147,7 +147,7 @@ router.post('/platform/help', async function (ctx: Context) {
 /**
  * 删除协助
  */
-router.delete('/platform/help/:id', async function (ctx: Context) {
+router.delete('/platform/help/:id', async function (ctx: any) {
 	let [id] = ctx.captures;
 	debug(">>>>>>>>>>>>>delete", id)
 	let assistance = await AssistanceModel.destroy({
