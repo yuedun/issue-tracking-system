@@ -11,7 +11,7 @@
   "scripts": {
     "start": "DEBUG=yuedun:* node dest/bin/www",
     "tsc": "tsc -w",
-    "serve": "set DEBUG=yuedun:*& cd ./dest & nodemon ./bin/www.js",
+    "serve": "set DEBUG=yuedun:*& cd ./dest & nodemon --delay 2 ./bin/www.js",
     "dev": "parallelshell \"npm run tsc\" \"npm run serve\"",
     "prd": "pm2 start bin/www",
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -31,7 +31,6 @@
     "koa-static": "^4.0.2",
     "koa-views": "^6.1.3",
     "koa2-cors": "^2.0.5",
-    
     "moment": "^2.21.0",
     "mysql2": "^1.5.1",
     "nodemailer": "^4.6.0",
