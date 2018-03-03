@@ -73,11 +73,17 @@ interface AssistanceInfo extends AssistanceInstance {
  * 协助列表
  */
 router.get('/platform/assistance-list', async function (ctx: any) {
+	let args = ctx.request.query;
+	debug(">>>>args:", args)
 	let userAgent = ctx.req.headers['user-agent'];
 	let referer = ctx.req.headers['referer'];
+	let pageIndex = args.pageIndex ? (args.pageIndex - 1) * 5 : 0;
 	let assistancies = await AssistanceModel.findAll({
+		offset: pageIndex,
+		limit: 5,
 		order: [['created_at', 'desc']]
 	});
+	let total = await AssistanceModel.count();
 	let assistanceInfos: AssistanceInfo[] = assistancies;
 	await Bluebird.map(assistanceInfos, async (item, index) => {
 		let userRecord = await item.getUser();
@@ -91,6 +97,8 @@ router.get('/platform/assistance-list', async function (ctx: any) {
 		title: '申请协助',
 		userAgent,
 		referer,
+		currentIndex: args.pageIndex || 1,
+		total,
 		assistanceInfos
 	})
 });
@@ -166,7 +174,7 @@ router.get('/platform/helper/features', async function (ctx: Context) {
 	let args = ctx.request.query;
 	let where: any = {};
 	if (args.user_name) {
-		where.user_name = { $like: `${args.user_name}%`};
+		where.user_name = { $like: `${args.user_name}%` };
 	}
 	let helperList = await HelperModel.findAll({
 		attributes: ["id", "user_name", "features"],
