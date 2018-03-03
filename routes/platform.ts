@@ -1,3 +1,4 @@
+import { Context } from 'koa';
 import * as Router from 'koa-router';
 import * as moment from 'moment';
 import * as Bluebird from 'bluebird';
@@ -16,7 +17,7 @@ import { default as FeatureModel, ModelAttributes as FeaturePOJO, ModelInstance 
 /**
  * render 函数是koa-views中间件赋予ctx的，是一个promise函数，所以需要用await修饰
  */
-router.get('/platform', async function (ctx: any) {
+router.get('/platform', async function (ctx: Context) {
 	debug(">>>admin输出");
 	await ctx.render('platform', {
 		title: 'hello platform',
@@ -24,7 +25,7 @@ router.get('/platform', async function (ctx: any) {
 	})
 });
 
-router.get('/teacher', async function (ctx: any) {
+router.get('/teacher', async function (ctx: Context) {
 	debug(">>>teacher输出");
 	await ctx.render('teacher', {
 		title: 'hello teacher',
@@ -32,7 +33,7 @@ router.get('/teacher', async function (ctx: any) {
 	})
 });
 
-router.get('/client', async function (ctx: any) {
+router.get('/client', async function (ctx: Context) {
 	debug(">>>client输出");
 	await ctx.render('client', {
 		title: 'hello client',
@@ -40,7 +41,7 @@ router.get('/client', async function (ctx: any) {
 	})
 });
 
-router.get('/others/a', async function (ctx: any) {
+router.get('/others/a', async function (ctx: Context) {
 	debug(">>>admin输出");
 	await ctx.render('platform', {
 		title: 'hello platform',
@@ -48,7 +49,7 @@ router.get('/others/a', async function (ctx: any) {
 	})
 });
 
-router.get('/others/b', async function (ctx: any) {
+router.get('/others/b', async function (ctx: Context) {
 	debug(">>>admin输出");
 	await ctx.render('platform', {
 		title: 'hello platform',
@@ -56,7 +57,7 @@ router.get('/others/b', async function (ctx: any) {
 	})
 });
 
-router.get('/others/c', async function (ctx: any) {
+router.get('/others/c', async function (ctx: Context) {
 	debug(">>>admin输出");
 	await ctx.render('platform', {
 		title: 'hello platform',
@@ -71,7 +72,7 @@ interface AssistanceInfo extends AssistanceInstance {
 /**
  * 协助列表
  */
-router.get('/platform/assistance-list', async function (ctx: any) {
+router.get('/platform/assistance-list', async function (ctx: Context) {
 	let userAgent = ctx.req.headers['user-agent'];
 	let referer = ctx.req.headers['referer'];
 	let assistancies = await AssistanceModel.findAll({
@@ -80,7 +81,7 @@ router.get('/platform/assistance-list', async function (ctx: any) {
 	let assistanceInfos: AssistanceInfo[] = assistancies;
 	await Bluebird.map(assistanceInfos, async (item, index) => {
 		let userRecord = await item.getUser();
-		item.user_name = userRecord.user_name;//发起协助的用户名（业务用户users）
+		item.user_name = userRecord ? userRecord.user_name : "无";//发起协助的用户名（业务用户users）
 		item.imageArr = item.images ? item.imageArr = item.images.split(",") : [];
 
 		item.setDataValue("created_at", moment(item.created_at).format("YYYY-MM-DD HH:ss:mm"));
@@ -97,7 +98,7 @@ router.get('/platform/assistance-list', async function (ctx: any) {
 /**
  * 新建协助页面
  */
-router.get('/platform/new-assistance', async function (ctx: any) {
+router.get('/platform/new-assistance', async function (ctx: Context) {
 	let userAgent = ctx.req.headers['user-agent'];
 	let referer = ctx.req.headers['referer'];
 	let assistancies = await AssistanceModel.findAll({
@@ -105,10 +106,6 @@ router.get('/platform/new-assistance', async function (ctx: any) {
 	});
 	let assistanceInfos: AssistanceInfo[] = assistancies;
 	await Bluebird.map(assistanceInfos, async (item, index) => {
-		let userRecord = await item.getUser();
-		item.user_name = userRecord.user_name;//发起协助的用户名（业务用户users）
-		item.imageArr = item.images ? item.imageArr = item.images.split(",") : [];
-
 		item.setDataValue("created_at", moment(item.created_at).format("YYYY-MM-DD HH:ss:mm"));
 		return item;
 	})
@@ -126,8 +123,9 @@ router.get('/platform/new-assistance', async function (ctx: any) {
 /**
  * 创建协助请求
  */
-router.post('/platform/help', async function (ctx: any) {
-	let args = ctx.request.body;
+router.post('/platform/help', async function (ctx: Context) {
+	// @ts-ignore
+	let args = ctx.request.body;//request本身不带body属性，这种写法是由bodyparser添加的body属性，所以ts会报错，忽略即可
 	let assistance = await AssistanceModel.create({
 		description: args.description,
 		first_helper: args.first_helper ? parseInt(args.first_helper) : 0,
@@ -149,7 +147,7 @@ router.post('/platform/help', async function (ctx: any) {
 /**
  * 删除协助
  */
-router.delete('/platform/help/:id', async function (ctx: any) {
+router.delete('/platform/help/:id', async function (ctx: Context) {
 	let [id] = ctx.captures;
 	debug(">>>>>>>>>>>>>delete", id)
 	let assistance = await AssistanceModel.destroy({
@@ -164,7 +162,7 @@ router.delete('/platform/help/:id', async function (ctx: any) {
  * 获取协助人
  * /platform/helper/features
  */
-router.get('/platform/helper/features', async function (ctx: any) {
+router.get('/platform/helper/features', async function (ctx: Context) {
 	let args = ctx.request.query;
 	let helperList = await HelperModel.findAll({
 		attributes: ["id", "user_name", "features"],

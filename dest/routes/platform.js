@@ -166,7 +166,7 @@ router.get('/platform/assistance-list', function (ctx) {
                                     case 0: return [4, item.getUser()];
                                     case 1:
                                         userRecord = _a.sent();
-                                        item.user_name = userRecord.user_name;
+                                        item.user_name = userRecord ? userRecord.user_name : "无";
                                         item.imageArr = item.images ? item.imageArr = item.images.split(",") : [];
                                         item.setDataValue("created_at", moment(item.created_at).format("YYYY-MM-DD HH:ss:mm"));
                                         return [2, item];
@@ -204,17 +204,9 @@ router.get('/platform/new-assistance', function (ctx) {
                     assistancies = _a.sent();
                     assistanceInfos = assistancies;
                     return [4, Bluebird.map(assistanceInfos, function (item, index) { return __awaiter(_this, void 0, void 0, function () {
-                            var userRecord;
                             return __generator(this, function (_a) {
-                                switch (_a.label) {
-                                    case 0: return [4, item.getUser()];
-                                    case 1:
-                                        userRecord = _a.sent();
-                                        item.user_name = userRecord.user_name;
-                                        item.imageArr = item.images ? item.imageArr = item.images.split(",") : [];
-                                        item.setDataValue("created_at", moment(item.created_at).format("YYYY-MM-DD HH:ss:mm"));
-                                        return [2, item];
-                                }
+                                item.setDataValue("created_at", moment(item.created_at).format("YYYY-MM-DD HH:ss:mm"));
+                                return [2, item];
                             });
                         }); })];
                 case 2:

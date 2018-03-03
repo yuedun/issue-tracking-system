@@ -48,6 +48,7 @@ var sequelize = new Sequelize(config_1.mysql.db, config_1.mysql.username, config
         idle: 10000
     },
     operatorsAliases: operatorsAliases,
+    logging: config_1.sequelizeLog
 });
 function select(sql) {
     return sequelize.query(sql, { type: sequelize.QueryTypes.SELECT });

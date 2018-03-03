@@ -6,4 +6,6 @@ exports.mysql = {
     password: "root",
     host: "localhost"
 };
+exports.sequelizeLog = function (msg) {
+};
 //# sourceMappingURL=config.js.map
