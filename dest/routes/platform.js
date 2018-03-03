@@ -281,21 +281,22 @@ router.delete('/platform/help/:id', function (ctx) {
 });
 router.get('/platform/helper/features', function (ctx) {
     return __awaiter(this, void 0, void 0, function () {
-        var args, helperList;
+        var args, where, helperList;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
                     args = ctx.request.query;
+                    where = {};
+                    if (args.user_name) {
+                        where.user_name = { $like: args.user_name + "%" };
+                    }
                     return [4, helper_model_1.default.findAll({
                             attributes: ["id", "user_name", "features"],
-                            where: {
-                                user_name: { $like: args.user_name + "%" }
-                            }
+                            where: where
                         })];
                 case 1:
                     helperList = _a.sent();
                     ctx.body = {
-                        msg: "获取成功",
                         data: {
                             list: helperList
                         }

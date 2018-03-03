@@ -164,14 +164,15 @@ router.delete('/platform/help/:id', async function (ctx: any) {
  */
 router.get('/platform/helper/features', async function (ctx: Context) {
 	let args = ctx.request.query;
+	let where: any = {};
+	if (args.user_name) {
+		where.user_name = { $like: `${args.user_name}%`};
+	}
 	let helperList = await HelperModel.findAll({
 		attributes: ["id", "user_name", "features"],
-		where: {
-			user_name: { $like: `${args.user_name}%` }
-		}
+		where
 	})
 	ctx.body = {
-		msg: "获取成功",
 		data: {
 			list: helperList
 		}
