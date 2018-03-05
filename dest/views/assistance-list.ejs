@@ -38,51 +38,11 @@
                   <li><a href="javascript:void(0)" id="J-transform" data-id="<%=item.id%>"><span><i class="layui-icon">&#xe756;</i>转发</span></a></li>
                 </ul>
               </article>
-              <%})%>
+			  <%})%>
+			<div id="page"></div>
           </div>
           <div class="layui-col-md4">
-            <div class="asider">
-              <p>XSS攻击全称跨站脚本攻击，是为不和层叠样式表(Cascading Style Sheets, CSS)的缩写混淆，
-                故将跨站脚本攻击缩写为XSS，XSS是一种在web应用中的计算机安全漏洞，它允许恶意web用户将代码植入到
-                提供给其它用户使用的页面中。从而达到攻击的目的。如，盗取用户Cookie、破坏页面结构、重定向到其它网站等。
-                  XSS攻击案例：
-                  
-                  新浪微博遭受XX攻击：
-                  
-                  http://soft.yesky.com/security/156/30179156.shtml
-                  
-                  人人网遭受XSS攻击：
-                  
-                  http://www.freebuf.com/articles/6295.html
-                  简单的测试方法：
-                  
-                  所有提交数据的地方都有可能存在XSS，可以用最简单脚本进行测试：
-
-                  XSS攻击类型
-                  
-                  反射型：
-                  
-                  黑客构造一个包含XSS代码的URL（服务器中没有这样的页面和内容），诱导或等待用户去点击链接，才能触发XSS代码，达到劫持访问、获取cookies的目的。一般容易出现在搜索页面。 例如：https://m.wuage.com/search/self-shop?memberId=4lv8ll4g&keywords=x%22alert(1)%22&psa=M3.s10.0.j4 （此漏洞已经修复，请勿再测，造成访问压力。）
-                  
-                  图片描述
-                  
-                  持久型：
-                  
-                  如果黑客可以将脚本代码通过发布内容（如发论坛、博文、写留言等）的方式发布后，存储在服务端的数据库或者文件中，成为某个url正常的页面的一部分，所有访问这个页面的所有用户都是受害者，看似正常的url，则其页面已经包含了xss代码，持久型XSS更具有隐蔽性，带来的危害也更大
-                  
-                  例如：在页面中不容注意的地方加一段js脚本（如下），当页面被打开时，页面会加载这段脚本，加系统登录的cookies发送到远端hacker的手中。
-                  
-                  DOM型：
-                  
-                  图片描述
-                  DOM就是一个树状的模型，你可以编写Javascript代码根据DOM一层一层的节点，去遍历/获取/修改对应的节点，
-                  对象，值。dom xss并不复杂，他也属于反射型xss的一种(，domxss取决于输出位置，并不取决于输出环境，
-                  因此domxss既有可能是反射型的，也有可能是存储型的)，简单去理解就是因为他输出点在DOM，所以在道哥的
-                  《白帽子讲Web安全里》也有详细介绍。xss代码可能是简短的插入script节点的语句，载入来自第三方域的含有
-                  具体恶意代码的脚本。具体的恶意代码，常见的行为是读取cookie，构造例如一个img标签，将其src属性指向
-                  恶意第三方网站，将cookie的内容作为参数附在src的url上，这样黑客就能在其网站上获得你的cookie信息，
-                  这就是所谓的cookie劫持。</p>
-            </div>
+            <% include layui-asider.ejs%>
           </div>
         </div>
       </div>
@@ -120,12 +80,30 @@
   </div>
   
   <script>
-    layui.use(['jquery', 'layer', 'form'], function () {
+    layui.use(['jquery', 'layer', 'form', 'laypage'], function () {
       var layedit = layui.layedit,
         layer = layui.layer,
         form = layui.form,
         laytpl = layui.laytpl,
-        $ = layui.jquery;
+        $ = layui.jquery,
+		laypage = layui.laypage;
+	
+	var next = parseInt('<%=currentIndex%>')+1;
+	var prev = parseInt('<%=currentIndex%>')-1;
+	//执行一个laypage实例
+	laypage.render({
+		elem: 'page' //注意，这里的 test1 是 ID，不用加 # 号
+		, limit: 5
+		, curr: '<%=currentIndex%>'
+		, count: '<%=total%>' //数据总数，从服务端得到
+		, hash: true
+		, jump: function(obj, first){
+			//首次不执行
+			if(!first){
+				location.href = '/platform/assistance-list?pageIndex='+obj.curr;
+			}
+		}
+	});
       //删除协助
       $(".article").on("click", "#J-del", function(){
         var id = $(this).data("id");
