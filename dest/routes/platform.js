@@ -221,7 +221,7 @@ router.get('/platform/new-assistance', function (ctx) {
                         }); })];
                 case 2:
                     _a.sent();
-                    return [4, ctx.render('ask-for-help', {
+                    return [4, ctx.render('new-assistance', {
                             title: '申请协助',
                             userAgent: userAgent,
                             referer: referer,
