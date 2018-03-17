@@ -117,7 +117,7 @@ router.get('/platform/new-assistance', async function (ctx: any) {
 		item.setDataValue("created_at", moment(item.created_at).format("YYYY-MM-DD HH:ss:mm"));
 		return item;
 	})
-	await ctx.render('ask-for-help', {
+	await ctx.render('new-assistance', {
 		title: '申请协助',
 		userAgent,
 		referer,
