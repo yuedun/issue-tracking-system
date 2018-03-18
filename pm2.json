@@ -1,0 +1,19 @@
+{
+  "apps" : [{
+    "name": "issue",
+    "cwd": "dest",
+    "script"    : "bin/www.js",
+    "instances" : "2",
+    "exec_mode" : "cluster",
+    "env": {
+      "NODE_ENV": "development",
+      "PORT": 3002
+    },
+    "env_production" : {
+       "NODE_ENV": "production",
+       "PORT": 3003
+    },
+    "log_date_format": "YYYY-MM-DD_HH:mm Z",
+    "merge_logs": true
+  }]
+}

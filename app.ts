@@ -13,9 +13,11 @@ sequelize.sync({
 	alter: false,
 })
 import { registerRoute } from './utils/auto-register-routes';
+const debug = require('debug')('yuedun:app');
 
 /**
  * app.env defaulting to the NODE_ENV or "development"
+ * 生产环境由pm2启动时根据pm2.json配置来设置
  */
 // error handler
 onerror(app);
@@ -48,12 +50,14 @@ app.use(async function (ctx: any, next: Function) {
 	const start = new Date().getTime()
 	await next()
 	const ms = new Date().getTime() - start;
-	console.log(`${ctx.method} ${ctx.url} - ${ms}ms`)
+	debug(`${ctx.method} ${ctx.url} - ${ms}ms`)
 })
 /**
  * next参数返回的是Promise，所以用await方式执行
  */
 app.use(async function (ctx: Koa.Context, next: Function) {
+	debug(">>>>>>>>>>>process.env.NODE_ENV:",process.env.NODE_ENV);
+	
 	//url重写：当url为"/"时，将url重写为"/admin"，
 	//相当于请求”/admin”，有redirect的作用，但不是重定向，浏览器url还是“/”
 	if (ctx.url == '/') {
@@ -67,8 +71,7 @@ app.use(async function (ctx: Koa.Context, next: Function) {
 	await next();
 	//对response进行包装,对获取的数据添加其他数据
 	if (typeof ctx.body == "object") {
-		ctx.body = Object.assign(ctx.body, { code: 0 })
-		console.log(">>>>>>>>>>>>>>", ctx.body);
+		ctx.body = Object.assign(ctx.body, { code: 0, msg: "success" })
 	}
 });
 

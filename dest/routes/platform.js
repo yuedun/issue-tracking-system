@@ -147,17 +147,25 @@ router.get('/others/c', function (ctx) {
 router.get('/platform/assistance-list', function (ctx) {
     return __awaiter(this, void 0, void 0, function () {
         var _this = this;
-        var userAgent, referer, assistancies, assistanceInfos;
+        var args, userAgent, referer, pageIndex, assistancies, total, assistanceInfos;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
+                    args = ctx.request.query;
+                    debug(">>>>args:", args);
                     userAgent = ctx.req.headers['user-agent'];
                     referer = ctx.req.headers['referer'];
+                    pageIndex = args.pageIndex ? (args.pageIndex - 1) * 5 : 0;
                     return [4, assistance_model_1.default.findAll({
+                            offset: pageIndex,
+                            limit: 5,
                             order: [['created_at', 'desc']]
                         })];
                 case 1:
                     assistancies = _a.sent();
+                    return [4, assistance_model_1.default.count()];
+                case 2:
+                    total = _a.sent();
                     assistanceInfos = assistancies;
                     return [4, Bluebird.map(assistanceInfos, function (item, index) { return __awaiter(_this, void 0, void 0, function () {
                             var userRecord;
@@ -173,15 +181,17 @@ router.get('/platform/assistance-list', function (ctx) {
                                 }
                             });
                         }); })];
-                case 2:
+                case 3:
                     _a.sent();
                     return [4, ctx.render('assistance-list', {
                             title: '申请协助',
                             userAgent: userAgent,
                             referer: referer,
+                            currentIndex: args.pageIndex || 1,
+                            total: total,
                             assistanceInfos: assistanceInfos
                         })];
-                case 3:
+                case 4:
                     _a.sent();
                     return [2];
             }
@@ -211,7 +221,7 @@ router.get('/platform/new-assistance', function (ctx) {
                         }); })];
                 case 2:
                     _a.sent();
-                    return [4, ctx.render('ask-for-help', {
+                    return [4, ctx.render('new-assistance', {
                             title: '申请协助',
                             userAgent: userAgent,
                             referer: referer,
@@ -281,21 +291,22 @@ router.delete('/platform/help/:id', function (ctx) {
 });
 router.get('/platform/helper/features', function (ctx) {
     return __awaiter(this, void 0, void 0, function () {
-        var args, helperList;
+        var args, where, helperList;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
                     args = ctx.request.query;
+                    where = {};
+                    if (args.user_name) {
+                        where.user_name = { $like: args.user_name + "%" };
+                    }
                     return [4, helper_model_1.default.findAll({
                             attributes: ["id", "user_name", "features"],
-                            where: {
-                                user_name: { $like: args.user_name + "%" }
-                            }
+                            where: where
                         })];
                 case 1:
                     helperList = _a.sent();
                     ctx.body = {
-                        msg: "获取成功",
                         data: {
                             list: helperList
                         }
