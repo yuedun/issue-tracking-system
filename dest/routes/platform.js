@@ -174,7 +174,7 @@ router.get('/platform/assistance-list', function (ctx) {
                                     case 0: return [4, item.getUser()];
                                     case 1:
                                         userRecord = _a.sent();
-                                        item.user_name = userRecord ? userRecord.user_name : "无";
+                                        item.user_name = (userRecord && userRecord.user_name) ? userRecord.user_name : "缺省";
                                         item.imageArr = item.images ? item.imageArr = item.images.split(",") : [];
                                         item.setDataValue("created_at", moment(item.created_at).format("YYYY-MM-DD HH:ss:mm"));
                                         return [2, item];
