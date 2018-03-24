@@ -2,7 +2,7 @@ import HelperModel from './helper-model';
 import AssistanceModel from './assistance-model';
 import FeatureModel from './feature-model';
 import PeopleFreatureModel from './helper-feature-relation-model';
-import UsersModel from './users-model';
+import UsersModel from './user-model';
 
 AssistanceModel.belongsTo(UsersModel, { constraints: false });//不在数据库加约束
 // HelperModelModel.belongsToMany(FeatureModel, { through: PeopleFreatureModel, foreignKey: "helper_id" });
