@@ -1,6 +1,6 @@
 import * as Sequelize from 'sequelize';
 import sequelize from '../utils/db-connection';
-import { default as UserModel, ModelInstance as UserInstance } from './users-model';
+import { default as UserModel, ModelInstance as UserInstance } from './user-model';
 /**
  * 定义方式@types/sequelize GitHub上有示例
  */
