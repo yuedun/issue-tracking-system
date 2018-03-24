@@ -61,8 +61,12 @@ app.use(async function (ctx: Koa.Context, next: Function) {
 	//url重写：当url为"/"时，将url重写为"/admin"，
 	//相当于请求”/admin”，有redirect的作用，但不是重定向，浏览器url还是“/”
 	if (ctx.url == '/') {
+<<<<<<< HEAD
+		ctx.url = '/platform/assistance-list'
+=======
 		// ctx.url = '/platform/assistance-list'
 		ctx.redirect('/platform/assistance-list')
+>>>>>>> 13ecdb3610b9280fb349df094a7a8694e258f48e
 	}
 	await next();
 	//对response进行包装,对获取的数据添加其他数据

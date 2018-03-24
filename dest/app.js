@@ -106,7 +106,7 @@ app.use(function (ctx, next) {
                 case 0:
                     debug(">>>>>>>>>>>process.env.NODE_ENV:", process.env.NODE_ENV);
                     if (ctx.url == '/') {
-                        ctx.redirect('/platform/assistance-list');
+                        ctx.url = '/platform/assistance-list';
                     }
                     return [4, next()];
                 case 1:
