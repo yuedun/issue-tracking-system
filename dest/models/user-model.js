@@ -12,6 +12,6 @@ var Model = db_connection_1.default.define('Users', {
     charset: 'utf8',
     collate: 'utf8_unicode_ci'
 });
-Model.sync({ alter: true });
+Model.sync({ alter: false });
 exports.default = Model;
 //# sourceMappingURL=user-model.js.map
