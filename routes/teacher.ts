@@ -1,6 +1,10 @@
-const router = require('koa-router')();
-const fs = require('../services/readFile');
-router.prefix('/teacher');
+import * as Router from 'koa-router';
+import { rf } from '../services/readFile';
+const router = new Router(
+	{
+		prefix: "/teacher"
+	}
+);
 
 router.get('/', async function (ctx: any, next: Function) {
 	await ctx.render('teacher', {
@@ -20,7 +24,7 @@ router.get('/json', async (ctx: any, next: Function) => {
 })
 
 router.get('/test', async (ctx: any, next: Function) => {
-	const data = await fs.rf('npm-debug.log');
+	const data = await rf('npm-debug.log');
 	await ctx.render('test', { title: 'Koa2-Easy', data: data })
 })
 
