@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 require("source-map-support/register");
 var app_1 = require("../app");
-var debug = require('debug')('yuedun:server');
+var debug = require('debug')('yuedun:www');
 var http = require('http');
 var port = normalizePort(process.env.PORT || '3002');
 var server = http.createServer(app_1.default.callback());
@@ -45,6 +45,7 @@ function onListening() {
     var bind = typeof addr === 'string'
         ? 'pipe ' + addr
         : 'port ' + addr.port;
+    debug(">>>>>>>>>>>process.env.NODE_ENV:", process.env.NODE_ENV);
     debug(new Date() + 'Listening on ' + bind);
 }
 //# sourceMappingURL=www.js.map

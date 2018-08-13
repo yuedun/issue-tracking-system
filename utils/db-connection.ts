@@ -1,4 +1,5 @@
 import * as Sequelize from 'sequelize';
+var debug = require('debug')('yuedun:db-connection');
 import { mysql, sequelizeLog } from '../config';
 //新的操作符 [Op.and]: {a: 5} 等于 AND (a = 5)
 const Op = Sequelize.Op;
@@ -50,7 +51,11 @@ const sequelize = new Sequelize(mysql.db, mysql.username, mysql.password, {
 		idle: 10000
 	},
 	operatorsAliases,
-	logging: sequelizeLog
+	logging: function (msg: string) {
+		if (sequelizeLog) {
+			debug(msg);
+		}
+	}
 });
 
 export function select(sql: string) {

@@ -104,7 +104,6 @@ app.use(function (ctx, next) {
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
-                    debug(">>>>>>>>>>>process.env.NODE_ENV:", process.env.NODE_ENV);
                     if (ctx.url == '/') {
                         ctx.redirect('/platform/assistance-list');
                     }
