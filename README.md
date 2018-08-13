@@ -4,14 +4,21 @@ nodejs-koa
 基于koa框架的测试程序，需nodejs 7.X以上，stable版本
 
 # 项目运行
-linux下npm脚本：
-"dev": "DEBUG=yuedun:*& cd ./dest ./node_modules/.bin/nodemon ./dest/bin/www.js",
-windows:
-"dev": "set DEBUG=yuedun:*& cd ./dest & nodemon ./bin/www.js",
 
 复制config-sample.ts改名为config.ts
 
+安装依赖：
+> npm install
+
+启动服务：
 >`npm run dev`
+
+linux下npm脚本：
+
+> "dev": "DEBUG=yuedun:*& cd ./dest ./node_modules/.bin/nodemon ./dest/bin/www.js",
+
+windows:
+> "dev": "set DEBUG=yuedun:*& cd ./dest & nodemon ./bin/www.js",
 
 koa.js获取url参数
 
