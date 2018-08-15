@@ -1,13 +1,11 @@
 import * as Koa from 'koa';
 const app = new Koa();
-import * as Router from 'koa-router';
-const router = new Router();
-const views = require('koa-views')
-const json = require('koa-json')
-const onerror = require('koa-onerror')
-const bodyparser = require('koa-bodyparser')
-const logger = require('koa-logger')
-const cors = require('koa2-cors')
+const views = require('koa-views');
+const json = require('koa-json');
+const onerror = require('koa-onerror');
+const bodyparser = require('koa-bodyparser');
+const logger = require('koa-logger');
+const cors = require('koa2-cors');//跨域中间件
 import sequelize from './utils/db-connection';
 sequelize.sync({
 	alter: false,

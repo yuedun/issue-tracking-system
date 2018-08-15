@@ -45,7 +45,7 @@ function onListening() {
     var bind = typeof addr === 'string'
         ? 'pipe ' + addr
         : 'port ' + addr.port;
-    debug(">>>>>>>>>>>process.env.NODE_ENV:", process.env.NODE_ENV);
+    debug(">>>>>>>>>>>process.env.NODE_ENV:", process.env.NODE_ENV, "app.env:", app_1.default.env);
     debug(new Date() + 'Listening on ' + bind);
 }
 //# sourceMappingURL=www.js.map

@@ -37,8 +37,6 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var Koa = require("koa");
 var app = new Koa();
-var Router = require("koa-router");
-var router = new Router();
 var views = require('koa-views');
 var json = require('koa-json');
 var onerror = require('koa-onerror');

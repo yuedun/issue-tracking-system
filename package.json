@@ -11,9 +11,9 @@
   "scripts": {
     "start": "DEBUG=yuedun:* node dest/bin/www",
     "tsc": "tsc -w",
-    "serve": "DEBUG=yuedun:*& NODE_ENV=development& cd ./dest & nodemon --delay 2 ./bin/www.js",
+    "serve": "DEBUG=yuedun:*& cd ./dest & nodemon --delay 2 ./bin/www.js",
     "dev": "parallelshell \"npm run tsc\" \"npm run serve\"",
-    "prd": "pm2 start bin/www",
+    "prd": "pm2 start pm2.json --env production",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {

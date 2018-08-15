@@ -6,7 +6,5 @@ export const mysql = {
     host: "localhost"
 }
 
-//sequelize SQL日志输出
-export const sequelizeLog = function (msg:string) {
-    console.log(msg);
-}
+//sequelize 是否输出SQL日志
+export const sequelizeLog = false;
