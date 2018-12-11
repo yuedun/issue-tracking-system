@@ -35,127 +35,131 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var Router = require("koa-router");
-var router = new Router({
-    prefix: "/admin"
-});
 var debug = require('debug')('yuedun:admin');
 var helper_model_1 = require("../models/helper-model");
 var feature_model_1 = require("../models/feature-model");
 var helper_feature_relation_model_1 = require("../models/helper-feature-relation-model");
-router.post('/people/features', function (ctx, next) {
-    return __awaiter(this, void 0, void 0, function () {
-        var args, peopleFeature;
-        return __generator(this, function (_a) {
-            switch (_a.label) {
-                case 0:
-                    args = ctx.request.body;
-                    return [4, helper_feature_relation_model_1.default.create({
-                            helper_id: args.people_id,
-                            feature_id: args.feature_id
-                        })];
-                case 1:
-                    peopleFeature = _a.sent();
-                    ctx.body = {
-                        msg: "创建成功",
-                        peopleFeature: peopleFeature
-                    };
-                    return [2];
-            }
+var Controller = (function () {
+    function Controller() {
+    }
+    Controller.prototype.createHelperFeature = function (ctx) {
+        return __awaiter(this, void 0, void 0, function () {
+            var args, peopleFeature;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        args = ctx.request.body;
+                        return [4, helper_feature_relation_model_1.default.create({
+                                helper_id: args.people_id,
+                                feature_id: args.feature_id
+                            })];
+                    case 1:
+                        peopleFeature = _a.sent();
+                        ctx.body = {
+                            msg: "创建成功",
+                            peopleFeature: peopleFeature
+                        };
+                        return [2];
+                }
+            });
         });
-    });
-});
-router.post('/features', function (ctx, next) {
-    return __awaiter(this, void 0, void 0, function () {
-        var args, feature;
-        return __generator(this, function (_a) {
-            switch (_a.label) {
-                case 0:
-                    args = ctx.request.body;
-                    return [4, feature_model_1.default.create({
-                            feature_name: args.feature_name
-                        })];
-                case 1:
-                    feature = _a.sent();
-                    ctx.body = {
-                        msg: "创建成功",
-                        feature: feature
-                    };
-                    return [2];
-            }
+    };
+    Controller.prototype.createFeature = function (ctx) {
+        return __awaiter(this, void 0, void 0, function () {
+            var args, feature;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        args = ctx.request.body;
+                        return [4, feature_model_1.default.create({
+                                feature_name: args.feature_name
+                            })];
+                    case 1:
+                        feature = _a.sent();
+                        ctx.body = {
+                            msg: "创建成功",
+                            feature: feature
+                        };
+                        return [2];
+                }
+            });
         });
-    });
-});
-router.post('/helper', function (ctx, next) {
-    return __awaiter(this, void 0, void 0, function () {
-        var args, assistancePeople;
-        return __generator(this, function (_a) {
-            switch (_a.label) {
-                case 0:
-                    args = ctx.request.body;
-                    debug(">>>>>>>>>>>>>post assistance people:", args);
-                    return [4, helper_model_1.default.create({
-                            user_name: args.user_name,
-                            mobile: args.mobile,
-                            email: args.email
-                        })];
-                case 1:
-                    assistancePeople = _a.sent();
-                    ctx.body = {
-                        msg: "创建成功",
-                        assistancePeople: assistancePeople
-                    };
-                    return [2];
-            }
+    };
+    Controller.prototype.createHelper = function (ctx) {
+        return __awaiter(this, void 0, void 0, function () {
+            var args, assistancePeople;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        args = ctx.request.body;
+                        debug(">>>>>>>>>>>>>post assistance people:", args);
+                        return [4, helper_model_1.default.create({
+                                user_name: args.user_name,
+                                mobile: args.mobile,
+                                email: args.email
+                            })];
+                    case 1:
+                        assistancePeople = _a.sent();
+                        ctx.body = {
+                            msg: "创建成功",
+                            assistancePeople: assistancePeople
+                        };
+                        return [2];
+                }
+            });
         });
-    });
-});
-router.patch('/platform/helper', function (ctx, next) {
-    return __awaiter(this, void 0, void 0, function () {
-        var args, assistancePeople;
-        return __generator(this, function (_a) {
-            switch (_a.label) {
-                case 0:
-                    args = ctx.request.body;
-                    debug(">>>>>>>>>>>>>post assistance people:", args);
-                    return [4, helper_model_1.default.update({
-                            user_name: args.user_name,
-                            mobile: args.mobile,
-                            email: args.email
-                        }, {
-                            where: { id: 1 }
-                        })];
-                case 1:
-                    assistancePeople = _a.sent();
-                    ctx.body = {
-                        msg: "修改成功",
-                        assistancePeople: assistancePeople
-                    };
-                    return [2];
-            }
+    };
+    ;
+    Controller.prototype.updateHelper = function (ctx) {
+        return __awaiter(this, void 0, void 0, function () {
+            var args, assistancePeople;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        args = ctx.request.body;
+                        debug(">>>>>>>>>>>>>post assistance people:", args);
+                        return [4, helper_model_1.default.update({
+                                user_name: args.user_name,
+                                mobile: args.mobile,
+                                email: args.email
+                            }, {
+                                where: { id: 1 }
+                            })];
+                    case 1:
+                        assistancePeople = _a.sent();
+                        ctx.body = {
+                            msg: "修改成功",
+                            assistancePeople: assistancePeople
+                        };
+                        return [2];
+                }
+            });
         });
-    });
-});
-router.patch('/helper/features', function (ctx, next) {
-    return __awaiter(this, void 0, void 0, function () {
-        var args, assistancePeople;
-        return __generator(this, function (_a) {
-            switch (_a.label) {
-                case 0:
-                    args = ctx.request.body;
-                    return [4, helper_model_1.default.findById(args.person_id)];
-                case 1:
-                    assistancePeople = _a.sent();
-                    assistancePeople.features = assistancePeople.features.concat(",", args.feature_name);
-                    assistancePeople.save();
-                    ctx.body = {
-                        msg: "修改成功",
-                        assistancePeople: assistancePeople
-                    };
-                    return [2];
-            }
+    };
+    ;
+    Controller.prototype.createAssistancePeople = function (ctx) {
+        return __awaiter(this, void 0, void 0, function () {
+            var args, assistancePeople;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        args = ctx.request.body;
+                        return [4, helper_model_1.default.findById(args.person_id)];
+                    case 1:
+                        assistancePeople = _a.sent();
+                        assistancePeople.features = assistancePeople.features.concat(",", args.feature_name);
+                        assistancePeople.save();
+                        ctx.body = {
+                            msg: "修改成功",
+                            assistancePeople: assistancePeople
+                        };
+                        return [2];
+                }
+            });
         });
-    });
-});
-exports.default = router;
+    };
+    ;
+    return Controller;
+}());
+exports.default = new Controller();
 //# sourceMappingURL=admin.js.map

@@ -34,53 +34,62 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-var _this = this;
 Object.defineProperty(exports, "__esModule", { value: true });
-var router = require('koa-router')();
-var fs = require('../services/readFile');
-router.prefix('/others');
-router.get('/a', function (ctx, next) {
-    return __awaiter(this, void 0, void 0, function () {
-        return __generator(this, function (_a) {
-            switch (_a.label) {
-                case 0: return [4, ctx.render('others', {
-                        title: 'hello teacher',
-                        body: "<h1>其他系统</h1>"
-                    })];
-                case 1:
-                    _a.sent();
-                    return [2];
-            }
+var readFile_1 = require("../services/readFile");
+var Controller = (function () {
+    function Controller() {
+    }
+    Controller.prototype.index = function (ctx) {
+        return __awaiter(this, void 0, void 0, function () {
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4, ctx.render('others', {
+                            title: 'hello teacher',
+                            body: "<h1>其他系统</h1>"
+                        })];
+                    case 1:
+                        _a.sent();
+                        return [2];
+                }
+            });
         });
-    });
-});
-router.get('/string', function (ctx, next) { return __awaiter(_this, void 0, void 0, function () {
-    return __generator(this, function (_a) {
-        ctx.body = 'koa2 string';
-        return [2];
-    });
-}); });
-router.get('/json', function (ctx, next) { return __awaiter(_this, void 0, void 0, function () {
-    return __generator(this, function (_a) {
-        ctx.body = {
-            title: 'koa2 json'
-        };
-        return [2];
-    });
-}); });
-router.get('/test', function (ctx, next) { return __awaiter(_this, void 0, void 0, function () {
-    var data;
-    return __generator(this, function (_a) {
-        switch (_a.label) {
-            case 0: return [4, fs.rf('npm-debug.log')];
-            case 1:
-                data = _a.sent();
-                return [4, ctx.render('test', { title: 'Koa2-Easy', data: data })];
-            case 2:
-                _a.sent();
+    };
+    ;
+    Controller.prototype.a = function (ctx) {
+        return __awaiter(this, void 0, void 0, function () {
+            return __generator(this, function (_a) {
+                ctx.body = 'koa2 string';
                 return [2];
-        }
-    });
-}); });
-exports.default = router;
+            });
+        });
+    };
+    Controller.prototype.b = function (ctx) {
+        return __awaiter(this, void 0, void 0, function () {
+            return __generator(this, function (_a) {
+                ctx.body = {
+                    title: 'koa2 json'
+                };
+                return [2];
+            });
+        });
+    };
+    Controller.prototype.c = function (ctx) {
+        return __awaiter(this, void 0, void 0, function () {
+            var data;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4, readFile_1.rf('npm-debug.log')];
+                    case 1:
+                        data = _a.sent();
+                        return [4, ctx.render('test', { title: 'Koa2-Easy', data: data })];
+                    case 2:
+                        _a.sent();
+                        return [2];
+                }
+            });
+        });
+    };
+    return Controller;
+}());
+exports.default = new Controller();
 //# sourceMappingURL=other.js.map

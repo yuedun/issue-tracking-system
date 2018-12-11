@@ -12,6 +12,7 @@ sequelize.sync({
 	alter: false,
 })
 import { registerRoute } from './utils/auto-register-routes';
+import router from './routes/router';
 const debug = require('debug')('yuedun:app');
 
 /**
@@ -68,8 +69,8 @@ app.use(async function (ctx: Koa.Context, next: Function) {
 	}
 });
 
-global.Promise = Bluebird;
 // routes
-registerRoute(app);//自动注册路由
+// registerRoute(app);//自动注册路由
+app.use(router().routes())
 
 export default app;

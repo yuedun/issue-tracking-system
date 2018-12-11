@@ -36,7 +36,6 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var Koa = require("koa");
-var Bluebird = require("bluebird");
 var app = new Koa();
 var views = require('koa-views');
 var json = require('koa-json');
@@ -48,7 +47,7 @@ var db_connection_1 = require("./utils/db-connection");
 db_connection_1.default.sync({
     alter: false,
 });
-var auto_register_routes_1 = require("./utils/auto-register-routes");
+var router_1 = require("./routes/router");
 var debug = require('debug')('yuedun:app');
 onerror(app);
 app.use(function (ctx, next) {
@@ -117,7 +116,6 @@ app.use(function (ctx, next) {
         });
     });
 });
-global.Promise = Bluebird;
-auto_register_routes_1.registerRoute(app);
+app.use(router_1.default().routes());
 exports.default = app;
 //# sourceMappingURL=app.js.map

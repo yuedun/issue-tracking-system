@@ -1,15 +1,13 @@
-const router = require('koa-router')()
-router.prefix('/test')
+class Controller {
+	/**
+	 * index
+	 */
+    public async index(ctx: any) {
+        await ctx.render('client', {
+            title: 'hello client',
+            body: "<h1>这是教学客户端</h1>"
+        })
+    }
+}
 
-import { default as UserModel, ModelAttributes as UserPOJO, ModelInstance as UserInstance } from '../models/user-model';
-
-// router.get('/', async function (ctx: any, next: Function) {
-// 	let user = await UserModel.findById(1);
-// 	console.log(">>>>>>>>>>>",JSON.stringify(user));
-	
-// 	ctx.body = {
-// 		user
-// 	}
-// })
-
-export default router
+export default new Controller();

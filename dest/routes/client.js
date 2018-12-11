@@ -35,25 +35,34 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var router = require('koa-router')();
-router.prefix('/client');
-router.get('/', function (ctx, next) {
-    return __awaiter(this, void 0, void 0, function () {
-        return __generator(this, function (_a) {
-            switch (_a.label) {
-                case 0: return [4, ctx.render('client', {
-                        title: 'hello client',
-                        body: "<h1>这是教学客户端</h1>"
-                    })];
-                case 1:
-                    _a.sent();
-                    return [2];
-            }
+var Controller = (function () {
+    function Controller() {
+    }
+    Controller.prototype.index = function (ctx) {
+        return __awaiter(this, void 0, void 0, function () {
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4, ctx.render('client', {
+                            title: 'hello client',
+                            body: "<h1>这是教学客户端</h1>"
+                        })];
+                    case 1:
+                        _a.sent();
+                        return [2];
+                }
+            });
         });
-    });
-});
-router.get('/bar', function (ctx, next) {
-    ctx.body = 'this is a users/bar response';
-});
-exports.default = router;
+    };
+    ;
+    Controller.prototype.bar = function (ctx) {
+        return __awaiter(this, void 0, void 0, function () {
+            return __generator(this, function (_a) {
+                ctx.body = 'this is a users/bar response';
+                return [2];
+            });
+        });
+    };
+    return Controller;
+}());
+exports.default = new Controller();
 //# sourceMappingURL=client.js.map
