@@ -1,4 +1,5 @@
 import * as Koa from 'koa';
+import * as Bluebird from 'bluebird';
 const app = new Koa();
 const views = require('koa-views');
 const json = require('koa-json');
@@ -67,6 +68,7 @@ app.use(async function (ctx: Koa.Context, next: Function) {
 	}
 });
 
+global.Promise = Bluebird;
 // routes
 registerRoute(app);//自动注册路由
 
