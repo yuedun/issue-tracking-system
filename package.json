@@ -17,9 +17,9 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
-    "debug": "^3.2.6",
+    "debug": "^4.1.1",
     "ejs": "^2.6.1",
-    "koa": "^2.6.2",
+    "koa": "^2.7.0",
     "koa-bodyparser": "^4.2.1",
     "koa-convert": "^1.2.0",
     "koa-json": "^2.0.2",
@@ -27,21 +27,21 @@
     "koa-onerror": "^4.1.0",
     "koa-router": "^7.4.0",
     "koa-static": "^5.0.0",
-    "koa-views": "^6.1.4",
+    "koa-views": "^6.1.5",
     "koa2-cors": "^2.0.6",
-    "moment": "^2.22.2",
-    "mysql2": "^1.6.4",
+    "moment": "^2.24.0",
+    "mysql2": "^1.6.5",
     "nodemailer": "^4.7.0",
-    "sequelize": "^4.41.2"
+    "sequelize": "^4.43.0"
   },
   "devDependencies": {
-    "@types/koa": "^2.0.46",
-    "@types/koa-router": "^7.0.31",
+    "@types/koa": "^2.0.48",
+    "@types/koa-router": "^7.0.40",
     "@types/moment": "^2.13.0",
     "@types/node": "^8.10.0",
-    "@types/sequelize": "^4.27.4",
+    "@types/sequelize": "^4.27.41",
     "cross-env": "^5.2.0",
     "parallelshell": "^3.0.2",
-    "source-map-support": "^0.5.9"
+    "source-map-support": "^0.5.11"
   }
 }

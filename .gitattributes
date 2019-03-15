@@ -1,3 +1,3 @@
-*.js linguist-language = Node
-*.css linguist-language = Node
-*.ejs linguist-language = Node
+*.js linguist-language=TypeScript
+*.css linguist-language=TypeScript
+*.ejs linguist-language=TypeScript
