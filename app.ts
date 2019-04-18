@@ -8,9 +8,7 @@ const bodyparser = require('koa-bodyparser');
 const logger = require('koa-logger');
 const cors = require('koa2-cors');//跨域中间件
 import sequelize from './utils/db-connection';
-sequelize.sync({
-	alter: false,
-})
+sequelize.sync({ force: false })
 import { registerRoute } from './utils/auto-register-routes';
 import router from './routes/router';
 const debug = require('debug')('yuedun:app');
@@ -55,7 +53,7 @@ app.use(async function (ctx: any, next: Function) {
 /**
  * next参数返回的是Promise，所以用await方式执行
  */
-app.use(async function (ctx: Koa.Context, next: Function) {	
+app.use(async function (ctx: Koa.Context, next: Function) {
 	//url重写：当url为"/"时，将url重写为"/admin"，
 	//相当于请求”/admin”，有redirect的作用，但不是重定向，浏览器url还是“/”
 	if (ctx.url == '/') {

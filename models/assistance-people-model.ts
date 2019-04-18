@@ -1,4 +1,4 @@
-import * as Sequelize from 'sequelize';
+import { DataTypes, Model } from 'sequelize';
 import sequelize from '../utils/db-connection';
 
 export interface ModelAttributes {
@@ -9,31 +9,30 @@ export interface ModelAttributes {
     superior?: number;
     features?: string;
 }
-
-export interface ModelInstance
-    extends Sequelize.Instance<ModelAttributes>, ModelAttributes { };
-var Model = sequelize.define<ModelInstance, ModelAttributes>(
-    'AssistancePeople', {
-        user_name: Sequelize.STRING,
-        mobile: Sequelize.STRING,
-        email: {
-            type: Sequelize.STRING,
-            validate: { isEmail: true }
-        },
-        superior: Sequelize.INTEGER,//上级主管
-        features: {
-            type: Sequelize.STRING,
-            allowNull: false,
-            defaultValue: "",
-            comment: "负责的功能，字符串：逗号分割"
-        },//负责的功能，字符串：逗号分割
-    }, {
+class AssistancePeopleModel extends Model { }
+AssistancePeopleModel.init({
+    user_name: DataTypes.STRING,
+    mobile: DataTypes.STRING,
+    email: {
+        type: DataTypes.STRING,
+        validate: { isEmail: true }
+    },
+    superior: DataTypes.INTEGER,//上级主管
+    features: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        defaultValue: "",
+        comment: "负责的功能，字符串：逗号分割"
+    },//负责的功能，字符串：逗号分割
+}, {
+        sequelize,
         underscored: true,
         tableName: 'assistance_people',
         charset: 'utf8',
         collate: 'utf8_unicode_ci'
     }
 );
-Model.sync({ alter: true });
 
-export default Model;
+AssistancePeopleModel.sync()
+
+export default AssistancePeopleModel;

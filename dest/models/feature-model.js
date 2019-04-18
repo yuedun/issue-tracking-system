@@ -1,16 +1,18 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var Sequelize = require("sequelize");
-var db_connection_1 = require("../utils/db-connection");
-;
-var Model = db_connection_1.default.define('Features', {
-    feature_name: Sequelize.STRING,
+const sequelize_1 = require("sequelize");
+const db_connection_1 = require("../utils/db-connection");
+class FeatureModel extends sequelize_1.Model {
+}
+FeatureModel.init({
+    feature_name: sequelize_1.DataTypes.STRING,
 }, {
+    sequelize: db_connection_1.default,
     underscored: true,
     tableName: 'features',
     charset: 'utf8',
     collate: 'utf8_unicode_ci'
 });
-Model.sync({ alter: false });
-exports.default = Model;
+FeatureModel.sync();
+exports.default = FeatureModel;
 //# sourceMappingURL=feature-model.js.map

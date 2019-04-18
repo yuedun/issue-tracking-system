@@ -1,14 +1,14 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var Router = require("koa-router");
-var admin_1 = require("./admin");
-var platform_1 = require("./platform");
-var teacher_1 = require("./teacher");
-var client_1 = require("./client");
-var test_1 = require("./test");
-var other_1 = require("./other");
-exports.default = (function () {
-    var router = new Router();
+const Router = require("koa-router");
+const admin_1 = require("./admin");
+const platform_1 = require("./platform");
+const teacher_1 = require("./teacher");
+const client_1 = require("./client");
+const test_1 = require("./test");
+const other_1 = require("./other");
+exports.default = () => {
+    const router = new Router();
     router.get('/test', test_1.default.index);
     router.get('/admin/people/features', admin_1.default.createHelperFeature);
     router.post('/admin/features', admin_1.default.createFeature);
@@ -36,5 +36,5 @@ exports.default = (function () {
     router.get('/others/b', other_1.default.b);
     router.get('/others/c', other_1.default.c);
     return router;
-});
+};
 //# sourceMappingURL=router.js.map

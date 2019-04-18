@@ -1,8 +1,7 @@
-import * as Sequelize from 'sequelize';
+import { Sequelize, Op, QueryTypes } from 'sequelize';
 var debug = require('debug')('yuedun:db-connection');
 import { mysql, sequelizeLog } from '../config';
 //新的操作符 [Op.and]: {a: 5} 等于 AND (a = 5)
-const Op = Sequelize.Op;
 
 const operatorsAliases = {
 	$eq: Op.eq,
@@ -37,7 +36,6 @@ const operatorsAliases = {
 	$or: Op.or,
 	$any: Op.any,
 	$all: Op.all,
-	$values: Op.values,
 	$col: Op.col
 };
 
@@ -57,9 +55,17 @@ const sequelize = new Sequelize(mysql.db, mysql.username, mysql.password, {
 		}
 	}
 });
-
+sequelize
+	.authenticate()
+	.then(() => {
+		console.log('Connection has been established successfully.');
+	})
+	.catch(err => {
+		console.error('Unable to connect to the database:', err);
+	});
+	
 export function select(sql: string) {
-	return sequelize.query(sql, { type: sequelize.QueryTypes.SELECT })
+	return sequelize.query(sql, { type: QueryTypes.SELECT })
 }
 
 export default sequelize;

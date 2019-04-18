@@ -1,17 +1,20 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var Sequelize = require("sequelize");
-var db_connection_1 = require("../utils/db-connection");
-;
-var Model = db_connection_1.default.define('Users', {
-    user_name: Sequelize.STRING(10),
-    mobile: Sequelize.STRING(11)
+const sequelize_1 = require("sequelize");
+const db_connection_1 = require("../utils/db-connection");
+class UserModel extends sequelize_1.Model {
+}
+exports.UserModel = UserModel;
+UserModel.init({
+    user_name: sequelize_1.DataTypes.STRING(10),
+    mobile: sequelize_1.DataTypes.STRING(11)
 }, {
+    sequelize: db_connection_1.default,
     underscored: true,
     tableName: 'user',
     charset: 'utf8',
     collate: 'utf8_unicode_ci'
 });
-Model.sync({ alter: false });
-exports.default = Model;
+UserModel.sync();
+exports.default = UserModel;
 //# sourceMappingURL=user-model.js.map

@@ -1,4 +1,4 @@
-import * as Sequelize from 'sequelize';
+import { DataTypes, Model, } from 'sequelize';
 import sequelize from '../utils/db-connection';
 
 export interface ModelAttributes {
@@ -7,23 +7,20 @@ export interface ModelAttributes {
     feature_id?: number;
 }
 
-export interface ModelInstance
-    extends Sequelize.Instance<ModelAttributes> {
-
-};
 /**
  * 功能列表
  */
-var Model = sequelize.define<ModelInstance, ModelAttributes>(
-    'HelperFeature', {
-        id: {
-            type: Sequelize.INTEGER,
-            primaryKey: true,
-            autoIncrement: true
-        },//如果不指定的话，会由assistance-people和feature自动指定helper_id和feature_id为主键，不能在添加id为主键
-        helper_id: Sequelize.INTEGER,
-        feature_id: Sequelize.INTEGER,
-    }, {
+class HelperFeatureModel extends Model { }
+HelperFeatureModel.init({
+    id: {
+        type: DataTypes.INTEGER,
+        primaryKey: true,
+        autoIncrement: true
+    },//如果不指定的话，会由assistance-people和feature自动指定helper_id和feature_id为主键，不能在添加id为主键
+    helper_id: DataTypes.INTEGER,
+    feature_id: DataTypes.INTEGER,
+}, {
+        sequelize,
         underscored: true,
         tableName: 'helper_feature_relation',
         charset: 'utf8',
@@ -31,6 +28,6 @@ var Model = sequelize.define<ModelInstance, ModelAttributes>(
     }
 );
 
-// Model.sync({alter: true });
+HelperFeatureModel.sync();
 
-export default Model;
+export default HelperFeatureModel;

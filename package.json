@@ -27,21 +27,22 @@
     "koa-onerror": "^4.1.0",
     "koa-router": "^7.4.0",
     "koa-static": "^5.0.0",
-    "koa-views": "^6.1.5",
+    "koa-views": "^6.2.0",
     "koa2-cors": "^2.0.6",
     "moment": "^2.24.0",
     "mysql2": "^1.6.5",
     "nodemailer": "^4.7.0",
-    "sequelize": "^4.43.0"
+    "sequelize": "^5.6.1"
   },
   "devDependencies": {
+    "@types/bluebird": "^3.5.26",
     "@types/koa": "^2.0.48",
     "@types/koa-router": "^7.0.40",
     "@types/moment": "^2.13.0",
     "@types/node": "^8.10.0",
-    "@types/sequelize": "^4.27.41",
+    "@types/validator": "^10.11.0",
     "cross-env": "^5.2.0",
     "parallelshell": "^3.0.2",
-    "source-map-support": "^0.5.11"
+    "source-map-support": "^0.5.12"
   }
 }

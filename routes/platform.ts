@@ -4,13 +4,11 @@ import * as moment from 'moment';
 import * as Bluebird from "bluebird";
 
 const debug = require('debug')('yuedun:platform');
-import { select } from '../utils/db-connection';
-import { default as UserModel, ModelAttributes as UserPOJO, ModelInstance as UserInstance } from '../models/user-model';
-import { default as AssistanceModel, ModelAttributes as AssistancePOJO, ModelInstance as AssistanceInstance } from '../models/assistance-model';
-import { default as HelperModel, ModelAttributes as HelperPOJO, ModelInstance as HelperInstance } from '../models/helper-model';
-import { default as FeatureModel, ModelAttributes as FeaturePOJO, ModelInstance as FeatureInstance } from '../models/feature-model';
+import { select,default as sequelize } from '../utils/db-connection';
+import { default as AssistanceModel } from '../models/assistance-model';
+import { default as HelperModel } from '../models/helper-model';
 
-interface AssistanceInfo extends AssistanceInstance {
+interface AssistanceInfo extends AssistanceModel {
 	user_name?: string;
 	imageArr?: string[];
 }
@@ -83,10 +81,9 @@ class Controller {
 		let total = await AssistanceModel.count();
 		let assistanceInfos: AssistanceInfo[] = assistancies;
 		await Bluebird.map(assistanceInfos, async (item, index) => {
-			let userRecord = await item.getUser();
+			let userRecord = await item.getUserModel();
 			item.user_name = (userRecord && userRecord.user_name) ? userRecord.user_name : "缺省";//发起协助的用户名（业务用户users）
 			item.imageArr = item.images ? item.imageArr = item.images.split(",") : [];
-			item.setDataValue("created_at", moment(item.created_at).format("YYYY-MM-DD HH:ss:mm"));
 			return item;
 		})
 		await ctx.render('assistance-list', {
@@ -109,10 +106,6 @@ class Controller {
 			order: [['created_at', 'desc']]
 		});
 		let assistanceInfos: AssistanceInfo[] = assistancies;
-		await Bluebird.map(assistanceInfos, async (item, index) => {
-			item.setDataValue("created_at", moment(item.created_at).format("YYYY-MM-DD HH:ss:mm"));
-			return item;
-		})
 		await ctx.render('new-assistance', {
 			title: '申请协助',
 			userAgent,
@@ -172,6 +165,7 @@ class Controller {
 		if (args.user_name) {
 			where.user_name = { $like: `${args.user_name}%` };
 		}
+		
 		let helperList = await HelperModel.findAll({
 			attributes: ["id", "user_name", "features"],
 			where

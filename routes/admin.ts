@@ -2,11 +2,9 @@ import * as Router from 'koa-router';
 
 const debug = require('debug')('yuedun:admin');
 import { select } from '../utils/db-connection';
-import { default as UserModel, ModelAttributes as UserPOJO, ModelInstance as UserInstance } from '../models/user-model';
-import { default as AssistanceModel, ModelAttributes as AssistancePOJO, ModelInstance as AssistanceInstance } from '../models/assistance-model';
-import { default as HelperModel, ModelAttributes as HelperPOJO, ModelInstance as HelperInstance } from '../models/helper-model';
-import { default as FeatureModel, ModelAttributes as FeaturePOJO, ModelInstance as FeatureInstance } from '../models/feature-model';
-import { default as HelperFeatureModel, ModelAttributes as HelperFeaturePOJO, ModelInstance as HelperFeatureInstance } from '../models/helper-feature-relation-model';
+import { default as HelperModel } from '../models/helper-model';
+import { default as FeatureModel } from '../models/feature-model';
+import { default as HelperFeatureModel } from '../models/helper-feature-relation-model';
 
 class Controller {
 	/**
@@ -79,7 +77,7 @@ class Controller {
 	 */
 	public async createAssistancePeople(ctx: any) {
 		let args = ctx.request.body;
-		let assistancePeople = await HelperModel.findById(args.person_id)
+		let assistancePeople = await HelperModel.findByPk(args.person_id)
 		assistancePeople.features = assistancePeople.features.concat(",", args.feature_name);
 		assistancePeople.save();
 		ctx.body = {

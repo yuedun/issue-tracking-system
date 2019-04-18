@@ -2,7 +2,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 require("source-map-support/register");
-var app_1 = require("../app");
+const app_1 = require("../app");
 var debug = require('debug')('yuedun:www');
 var http = require('http');
 var port = normalizePort(process.env.PORT || '3002');
