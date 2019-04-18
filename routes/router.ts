@@ -41,5 +41,7 @@ export default () => {
     router.get('/others/b', Other.b);
     router.get('/others/c', Other.c);
 
+    router.get('/test/', Test.index);
+
     return router;
 }

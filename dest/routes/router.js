@@ -35,6 +35,7 @@ exports.default = () => {
     router.get('/others/a', other_1.default.a);
     router.get('/others/b', other_1.default.b);
     router.get('/others/c', other_1.default.c);
+    router.get('/test/', test_1.default.index);
     return router;
 };
 //# sourceMappingURL=router.js.map

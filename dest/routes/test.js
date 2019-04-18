@@ -8,9 +8,13 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+const user_model_1 = require("../models/user-model");
+const debug = require('debug')('yuedun:test');
 class Controller {
     index(ctx) {
         return __awaiter(this, void 0, void 0, function* () {
+            let user = yield user_model_1.default.findByPk(1);
+            let ass = yield user.getAssistanceModels();
             yield ctx.render('client', {
                 title: 'hello client',
                 body: "<h1>这是教学客户端</h1>"

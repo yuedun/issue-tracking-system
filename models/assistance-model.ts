@@ -5,10 +5,10 @@ import { default as User } from "./user-model";
 /**
  * 申请的协助信息
  */
-export default class AssistanceModel extends Model {
+export default class AssistanceModel extends Model<User> {
     public user_id?: number;
     public images?: string;
-    public getUserModel: BelongsToGetAssociationMixin<User>;
+    public getUserModel: BelongsToGetAssociationMixin<User>;//这个方法要从实例对象的__proto__查找
 }
 AssistanceModel.init({
     user_id: DataTypes.INTEGER,//发贴人

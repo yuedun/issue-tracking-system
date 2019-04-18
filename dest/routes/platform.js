@@ -89,6 +89,7 @@ class Controller {
             let assistanceInfos = assistancies;
             yield Bluebird.map(assistanceInfos, (item, index) => __awaiter(this, void 0, void 0, function* () {
                 let userRecord = yield item.getUserModel();
+                debug(userRecord.user_name);
                 item.user_name = (userRecord && userRecord.user_name) ? userRecord.user_name : "缺省";
                 item.imageArr = item.images ? item.imageArr = item.images.split(",") : [];
                 return item;
