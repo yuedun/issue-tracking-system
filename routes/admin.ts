@@ -1,5 +1,3 @@
-import * as Router from 'koa-router';
-
 const debug = require('debug')('yuedun:admin');
 import { select } from '../utils/db-connection';
 import { default as HelperModel } from '../models/helper-model';

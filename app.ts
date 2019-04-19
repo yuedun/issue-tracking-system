@@ -1,5 +1,4 @@
 import * as Koa from 'koa';
-import * as Bluebird from 'bluebird';
 const app = new Koa();
 const views = require('koa-views');
 const json = require('koa-json');
@@ -9,7 +8,6 @@ const logger = require('koa-logger');
 const cors = require('koa2-cors');//跨域中间件
 import sequelize from './utils/db-connection';
 sequelize.sync({ force: false })
-import { registerRoute } from './utils/auto-register-routes';
 import router from './routes/router';
 const debug = require('debug')('yuedun:app');
 
@@ -68,7 +66,6 @@ app.use(async function (ctx: Koa.Context, next: Function) {
 });
 
 // routes
-// registerRoute(app);//自动注册路由
 app.use(router().routes())
 
 export default app;

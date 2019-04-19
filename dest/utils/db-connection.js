@@ -1,7 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const sequelize_1 = require("sequelize");
-var debug = require('debug')('yuedun:db-connection');
 const config_1 = require("../config");
 const operatorsAliases = {
     $eq: sequelize_1.Op.eq,
@@ -49,7 +48,7 @@ const sequelize = new sequelize_1.Sequelize(config_1.mysql.db, config_1.mysql.us
     operatorsAliases,
     logging: function (msg) {
         if (config_1.sequelizeLog) {
-            debug(msg);
+            console.log(msg);
         }
     }
 });

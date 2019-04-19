@@ -1,6 +1,3 @@
-import { Context } from 'koa';
-import * as Router from 'koa-router';
-import * as moment from 'moment';
 import * as Bluebird from "bluebird";
 
 const debug = require('debug')('yuedun:platform');

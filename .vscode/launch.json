@@ -18,7 +18,8 @@
                 "--nolazy"
             ],
             "env": {
-                "DEBUG": "yuedun:*"
+                "DEBUG": "yuedun:*,-not_this",
+                "NODE_ENV": "development",
             },
             "console": "internalConsole",
             "sourceMaps": true,
