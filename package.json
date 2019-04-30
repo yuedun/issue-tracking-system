@@ -31,15 +31,14 @@
     "koa2-cors": "^2.0.6",
     "moment": "^2.24.0",
     "mysql2": "^1.6.5",
-    "nodemailer": "^4.7.0",
-    "sequelize": "^5.7.0"
+    "sequelize": "^5.8.0"
   },
   "devDependencies": {
     "@types/bluebird": "^3.5.26",
     "@types/koa": "^2.0.48",
     "@types/koa-router": "^7.0.40",
     "@types/moment": "^2.13.0",
-    "@types/node": "^8.10.0",
+    "@types/node": "^8.10.48",
     "@types/validator": "^10.11.0",
     "cross-env": "^5.2.0",
     "parallelshell": "^3.0.2",

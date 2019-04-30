@@ -1,53 +1,16 @@
-import { Sequelize, Op, QueryTypes } from 'sequelize';
+import { Sequelize, QueryTypes } from 'sequelize';
 import { mysql, sequelizeLog } from '../config';
 //新的操作符 [Op.and]: {a: 5} 等于 AND (a = 5)
-
-const operatorsAliases = {
-	$eq: Op.eq,
-	$ne: Op.ne,
-	$gte: Op.gte,
-	$gt: Op.gt,
-	$lte: Op.lte,
-	$lt: Op.lt,
-	$not: Op.not,
-	$in: Op.in,
-	$notIn: Op.notIn,
-	$is: Op.is,
-	$like: Op.like,
-	$notLike: Op.notLike,
-	$iLike: Op.iLike,
-	$notILike: Op.notILike,
-	$regexp: Op.regexp,
-	$notRegexp: Op.notRegexp,
-	$iRegexp: Op.iRegexp,
-	$notIRegexp: Op.notIRegexp,
-	$between: Op.between,
-	$notBetween: Op.notBetween,
-	$overlap: Op.overlap,
-	$contains: Op.contains,
-	$contained: Op.contained,
-	$adjacent: Op.adjacent,
-	$strictLeft: Op.strictLeft,
-	$strictRight: Op.strictRight,
-	$noExtendRight: Op.noExtendRight,
-	$noExtendLeft: Op.noExtendLeft,
-	$and: Op.and,
-	$or: Op.or,
-	$any: Op.any,
-	$all: Op.all,
-	$col: Op.col
-};
+// v5开始默认支持operatorsAliases
 
 const sequelize = new Sequelize(mysql.db, mysql.username, mysql.password, {
 	host: mysql.host,
 	dialect: 'mysql',
-
 	pool: {
 		max: 5,
 		min: 0,
 		idle: 10000
 	},
-	operatorsAliases,
 	logging: function (msg: string) {
 		if (sequelizeLog) {
 			console.log(msg);
