@@ -102,7 +102,7 @@ class Controller {
                 currentIndex: args.pageIndex || 1,
                 total,
                 assistanceInfos
-            });
+            }, { async: true });
         });
     }
     ;
