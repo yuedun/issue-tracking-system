@@ -9,39 +9,39 @@
     "url": "http://www.yuedun.wang"
   },
   "scripts": {
-    "start": "DEBUG=yuedun:* node dest/bin/www",
+    "start": "cross-env NODE_ENV=development DEBUG=yuedun:*,-not_this node dest/bin/www",
     "tsc": "tsc -w",
-    "serve": "set NODE_ENV=development &set DEBUG=yuedun:*,-not_this&cd ./dest & nodemon --delay 2 ./bin/www.js",
+    "serve": "cross-env NODE_ENV=development DEBUG=yuedun:*,-not_this&cd ./dest & nodemon --delay 2 ./bin/www.js",
     "dev": "parallelshell \"npm run tsc\" \"npm run serve\"",
     "prd": "pm2 start pm2.json --env production",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
     "debug": "^4.1.1",
-    "ejs": "^2.6.1",
+    "ejs": "^3.1.8",
     "koa": "^2.7.0",
     "koa-bodyparser": "^4.2.1",
-    "koa-convert": "^1.2.0",
+    "koa-convert": "^2.0.0",
     "koa-json": "^2.0.2",
     "koa-logger": "^3.2.0",
     "koa-onerror": "^4.1.0",
-    "koa-router": "^7.4.0",
+    "koa-router": "^12.0.0",
     "koa-static": "^5.0.0",
-    "koa-views": "^6.2.0",
+    "koa-views": "^8.0.0",
     "koa2-cors": "^2.0.6",
     "moment": "^2.24.0",
-    "mysql2": "^1.6.5",
-    "sequelize": "^5.8.0"
+    "mysql2": "^2.3.3",
+    "sequelize": "^6.28.0"
   },
   "devDependencies": {
     "@types/bluebird": "^3.5.26",
     "@types/koa": "^2.0.48",
     "@types/koa-router": "^7.0.40",
-    "@types/moment": "^2.13.0",
-    "@types/node": "^8.10.48",
-    "@types/validator": "^10.11.0",
-    "cross-env": "^5.2.0",
+    "@types/node": "^18.11.17",
+    "@types/validator": "^13.7.10",
+    "cross-env": "^7.0.3",
     "parallelshell": "^3.0.2",
-    "source-map-support": "^0.5.12"
+    "source-map-support": "^0.5.12",
+    "ts-node-dev": "^2.0.0"
   }
 }

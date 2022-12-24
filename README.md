@@ -1,4 +1,4 @@
-nodejs-koa
+issue-tracking-system
 ==========
 
 基于koa框架，需nodejs 7.X以上，stable版本，sequelize已升级到5.x版本
